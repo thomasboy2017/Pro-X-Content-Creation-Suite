@@ -22646,5 +22646,53 @@ fn fs(@builtin(position) pos: vec4<f32>) -> @location(0) vec4<f32> {
   console.info("Studio Editor PRO X 1.15 layer ready.");
 })();
 </script>
+	<script id="pxFixSplitPlayback">
+/* Fix: splitting a clip during playback left the second half frozen.
+   The split handler builds the new half with `{ ...clip }`, which also
+   copies the live playback flags (_pl/_pt/_ls). render() then thought
+   the new half was already playing, so it never called play() on the
+   shared <video> element — picture froze, timeline kept moving.
+   This wrapper clears those flags after a split (and after undo) and
+   re-renders once, so playback continues straight through the cut. */
+(() => {
+  const btn = document.getElementById("vsplit");
+  if (!btn || typeof btn.onclick !== "function") return;
+
+  const base = btn.onclick;
+  btn.onclick = function (ev) {
+    const before = cs;
+    const result = base.call(this, ev);
+    const after  = cs;
+
+    if (before && after && after !== before) {
+      after._pl = false;               // let render() start playback
+      after._pt = performance.now();   // fresh drift-check stamp
+      after._ls = performance.now();   // fresh seek stamp
+      after._sf = null;                // drop stale decoded frame
+      try { render(T); } catch (e) { console.warn(e); }
+    }
+    return result;
+  };
+
+  // Undo snapshots spread the same flags onto the restored clips.
+  const vr = window.vrestore;
+  if (typeof vr === "function") {
+    window.vrestore = function (list) {
+      const r = vr.apply(this, arguments);
+      try {
+        const arr = Array.isArray(list) ? list : clips;
+        arr.forEach((c) => {
+          if (!c || !c.g) return;
+          c._pl = false;
+          c._pt = performance.now();
+          c._ls = performance.now();
+        });
+        render(T);
+      } catch (e) { /* ignore */ }
+      return r;
+    };
+  }
+})();
+</script>
 </body>
 </html>
