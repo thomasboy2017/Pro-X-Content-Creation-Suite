@@ -22645,52 +22645,114 @@ fn fs(@builtin(position) pos: vec4<f32>) -> @location(0) vec4<f32> {
   window.px115 = Object.assign(window.px115 || {}, { measureBuffer, KMeter, buildRoot, setClip, applyPose, setSkeleton, rigOf, install3D });
   console.info("Studio Editor PRO X 1.15 layer ready.");
 })();
-</script>
-	<script id="pxFixSplitPlayback">
-/* Fix: splitting a clip during playback left the second half frozen.
-   The split handler builds the new half with `{ ...clip }`, which also
-   copies the live playback flags (_pl/_pt/_ls). render() then thought
-   the new half was already playing, so it never called play() on the
-   shared <video> element — picture froze, timeline kept moving.
-   This wrapper clears those flags after a split (and after undo) and
-   re-renders once, so playback continues straight through the cut. */
-(() => {
-  const btn = document.getElementById("vsplit");
-  if (!btn || typeof btn.onclick !== "function") return;
+<script id="pxFixSplitPlayback">
+/* Split-on-playback fix — replaces the Split handler and heals render().
+   Two things were going wrong:
+   1. The split copied { ...clip }, so the new half inherited _pl = true
+      from the first half. render() then thought it was already playing
+      and never called play() on the shared <video> element.
+   2. Any other path that leaves _pl === true while the element is paused
+      (undo across a cut, some transitions) hits the same short-circuit.
+   Fix 1: rebuild the second half without the runtime flags.
+   Fix 2: before every render, if a clip claims to be playing while its
+          element is paused, clear _pl so the normal play branch runs. */
+(function () {
+  "use strict";
+  var log = function (m, e) { (e ? console.warn : console.info).call(console, "[SplitFix]", m, e || ""); };
 
-  const base = btn.onclick;
-  btn.onclick = function (ev) {
-    const before = cs;
-    const result = base.call(this, ev);
-    const after  = cs;
-
-    if (before && after && after !== before) {
-      after._pl = false;               // let render() start playback
-      after._pt = performance.now();   // fresh drift-check stamp
-      after._ls = performance.now();   // fresh seek stamp
-      after._sf = null;                // drop stale decoded frame
-      try { render(T); } catch (e) { console.warn(e); }
-    }
-    return result;
-  };
-
-  // Undo snapshots spread the same flags onto the restored clips.
-  const vr = window.vrestore;
-  if (typeof vr === "function") {
-    window.vrestore = function (list) {
-      const r = vr.apply(this, arguments);
+  /* ---- 1. Heal render(): clear stale _pl on active clips ---- */
+  var rawRender = window.render;
+  if (typeof rawRender === "function") {
+    window.render = function (time) {
       try {
-        const arr = Array.isArray(list) ? list : clips;
-        arr.forEach((c) => {
-          if (!c || !c.g) return;
-          c._pl = false;
-          c._pt = performance.now();
-          c._ls = performance.now();
-        });
-        render(T);
-      } catch (e) { /* ignore */ }
-      return r;
+        for (var i = 0; i < clips.length; i++) {
+          var c = clips[i];
+          if (c && c.g && c._pl && c.el && c.el.paused && !c.el.seeking &&
+              time >= c.start && time < c.start + c.dur) {
+            c._pl = false;
+          }
+        }
+      } catch (e) { /* never break render */ }
+      return rawRender.call(this, time);
     };
+  } else {
+    log("render() not found yet — installing split handler anyway");
+  }
+
+  /* ---- 2. Replace the Split button handler ---- */
+  function installSplit() {
+    var btn = document.getElementById("vsplit");
+    if (!btn) return false;
+
+    btn.onclick = function () {
+      var e = cs;
+      if (!e || T <= e.start + 0.1 || T >= e.start + e.dur - 0.1) return;
+      if (typeof vpush === "function") vpush();
+
+      var t = T - e.start;
+      var censorBefore = (e.fx && Array.isArray(e.fx.censor)) ? e.fx.censor.slice() : [];
+      var spd = (e.fx && e.fx.speed) ? e.fx.speed / 100 : 1;
+
+      /* Build the second half explicitly — never spread the clip, so
+         _pl / _pt / _ls / _sf do not carry over. */
+      var a = {
+        name: e.name,
+        el: e.el,
+        track: e.track,
+        start: T,
+        in: e.in + t * spd,
+        dur: e.dur - t,
+        src: e.src,
+        fx: Object.assign({}, e.fx || {}, { tin: "none" }),
+        g: e.g,
+        audio: e.audio,
+        it: e.it,
+        title: e.title ? JSON.parse(JSON.stringify(e.title)) : null,
+        caption: e.caption,
+        cue: e.cue ? { start: e.cue.start, end: e.cue.end } : null,
+        kf: e.kf ? JSON.parse(JSON.stringify(e.kf)) : null,
+        ease: e.ease,
+        _pl: false, _pt: 0, _ls: 0, _sf: null
+      };
+
+      e.dur = t;
+      e.fx = e.fx || {};
+      e.fx.tout = "none";
+      e._pl = false; e._pt = 0; e._ls = 0;
+
+      /* Censors that PRO X stores on the clip: split them across halves. */
+      if (censorBefore.length) {
+        var first = [], second = [];
+        censorBefore.forEach(function (m) {
+          var s = m.at, en = m.at + m.dur;
+          if (en <= t + 1e-4) first.push(Object.assign({}, m));
+          else if (s >= t - 1e-4) second.push(Object.assign({}, m, { at: Math.max(0, s - t) }));
+          else {
+            if (t - s > 0.01) first.push(Object.assign({}, m, { dur: t - s }));
+            if (en - t > 0.01) second.push(Object.assign({}, m, { at: 0, dur: en - t }));
+          }
+        });
+        e.fx.censor = first;
+        a.fx.censor = second;
+      }
+
+      clips.push(a);
+      cs = a;
+
+      try { tl();    } catch (err) { log("tl()", err); }
+      try { fxUI();  } catch (err) { log("fxUI()", err); }
+      try { render(T); } catch (err) { log("render()", err); }
+    };
+    log("split handler installed");
+    return true;
+  }
+
+  if (!installSplit()) {
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", installSplit, { once: true });
+    } else {
+      setTimeout(installSplit, 0);
+    }
   }
 })();
 </script>
