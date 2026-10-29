@@ -1,4 +1,4 @@
-# Studio Editor PRO X 1.16
+# Studio Editor PRO X 1.0
 
 A local-first creative studio for photos, video, audio and 3D - delivered as one HTML file, with optional files for install, offline use and embedding.
 
@@ -18,51 +18,7 @@ Any static host works: GitHub Pages, Netlify, Cloudflare Pages, a plain web serv
 
 ---
 
-## What is new in 1.1
-
-### Photo tools and perspective
-- **Move, Crop, Hand and Transform** join the photo toolbar. Crop has a live overlay and **Auto crop**; Hand scrolls the canvas; Transform moves, scales and rotates the whole document.
-- **Resize & crop** changes the document pixel size with a choice of anchor.
-- **Perspective layer** warps the active layer from four draggable corners. The dialog previews the quad live, then applies a CPU homography/bilinear warp in place. It is destructive but fully undoable.
-
-### Colour temperature and grades
-- **Colour temperature** warms or cools the active layer's pixels, with undo.
-- Twelve **colour-grade presets** include Teal & Orange, Cinematic, Bleach, Noir, Warm Film, Cold Film, Matte and more. Grades live in the Looks panel and are saved inside photo documents and project files.
-
-### More imports
-- **PSD/PSB** files open as the flattened composite. Raw, RLE and ZIP compression, 8/16-bit, RGB, grayscale, CMYK, indexed, Lab, bitmap and multichannel modes are handled.
-- **PDF-compatible AI** artboards render through PDF.js on demand. If rendering fails, the largest embedded JPEG is used; EPS-only files get guidance to re-save with **Create PDF Compatible File**.
-- **RAW** files (DNG, CR2, CR3, NEF, ARW, RAF, RW2, ORF, PEF, SRW, X3F and more) import the camera's largest embedded JPEG preview. Full RAW demosaic is not performed; export a 16-bit TIFF from your RAW converter for the complete data.
-
-### Text and fonts
-- Text now supports **left, centre, right and justify** alignment, a wrap width as a percentage of the picture, line height, tracking, all caps, outline width, a background plate and rotation.
-- Text presets and a quick-add box make captions and titles faster.
-- More **Google Fonts** load on demand. You can **upload custom fonts**; they are embedded in `.studio` photo saves and restored on load.
-
-### Video effects
-- Per-clip effects now include **VHS, CRT, motion blur, glitch, RGB split, light leak, old film, glow, shake and bars**, with strengths and timing controls.
-- Effects are applied consistently in the program monitor and both export paths, using deterministic time-seeded randomness.
-
-### Aspect ratio and constant frame rate
-- Changing the sequence aspect ratio now updates the monitor's display ratio, so vertical, square and widescreen sequences are never stretched.
-- Video exports are **constant frame rate at the sequence fps** (or the fps chosen in the export dialog). The frame-by-frame WebCodecs encoder is always used for MP4/H.264/H.265, and the MediaRecorder fallback requests frames on a fixed cadence and converts to CFR on the FFmpeg path.
-
-### Real 3D text
-- **Add > 3D text** creates true extruded `TextGeometry` with regular and bold typefaces loaded on demand.
-- If the typeface cannot load, a readable textured sign is used instead, and it still saves and reloads with the model.
-
-### Audio: separate pitch and tempo
-- The Audio tab now has independent **Pitch** (semitones) and **Tempo** (%) controls.
-- Pitch resamples and time-stretches so the clip keeps its length; tempo time-stretches so the pitch is preserved. Apply to the selection or the whole track, and reset to the original.
-
-### Demos and docs
-- The **Demos** menu loads ready-made Photo, Video, Audio and 3D content, or all four at once.
-- **Download full .studio demo** builds a single project containing all four workspaces, including generated audio, a rendered demo clip and true 3D text.
-- Help and What's new now document the 1.1 tools.
-
----
-
-## From 1.0
+## What is new in 1.0
 
 ### Creator Hub
 One place for the publishing jobs that normally need three other apps. Open it from **Creator** in the top bar or with `Alt` + `C`.
@@ -131,7 +87,7 @@ One place for the publishing jobs that normally need three other apps. Open it f
 
 | File | Purpose |
 | --- | --- |
-| `studio-editor.html` | The editor. Single file; the 1.1 upgrade CSS and JS are inlined. |
+| `studio-editor.html` | The editor. Single file; the 1.0 upgrade CSS and JS are inlined. |
 | `index.html` | Friendly entry point that forwards to the editor and links the manifest. |
 | `manifest.webmanifest` | PWA name, icons, colours, shortcuts. |
 | `sw.js` | Offline shell and update handling. |
@@ -232,16 +188,13 @@ If a codec is missing, the editor falls back instead of failing the export. The 
 - Use **Save project** for anything important, and the recovery panel for accidents.
 - Each tone/tempo/pitch apply adds a rendered WAV to the media library, so a project grows a little. Split very long audio first (the tools cap a single pass at 5 minutes) and save a `.studio` file before a big session.
 - Censors are non-destructive: move or remove them at any time. They are saved with the project and are audible in the preview and every export.
-- For vertical video, choose Shorts/TikTok/Reels first, then **Fill frame** on existing clips. The monitor keeps the correct aspect ratio while you switch.
+- For vertical video, choose Shorts/TikTok/Reels first, then **Fill frame** on existing clips.
 - Captions are ordinary clips on V3 - trim and move them like any other clip.
 - The watermark is saved in this browser, not inside the project file.
-- Perspective, colour temperature and the older pixel filters are destructive; use undo or work on a duplicated layer.
-- RAW import is a preview workflow. For highlight recovery or 16-bit grading, develop the RAW file first and import a TIFF.
-- Video export is constant frame rate. Keep the tab visible during the MediaRecorder fallback; the MP4/WebCodecs path is faster and does not depend on wall-clock capture.
 
 ---
 
 ## Credits
 
-Studio Editor PRO X 1.1 - created by Matthew J Thomas.
+Studio Editor PRO X 1.0 - created by Matthew J Thomas.
 Built on the original Studio Editor with Three.js, mp4-muxer and ffmpeg.wasm.

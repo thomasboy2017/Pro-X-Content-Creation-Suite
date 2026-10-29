@@ -1,0 +1,43 @@
+{
+  "id": "./studio-editor.html",
+  "name": "Studio Editor PRO X",
+  "short_name": "Studio PRO X",
+  "description": "Local-first photo, video, audio and 3D studio with captions, thumbnails, platform presets, watermarks and recovery snapshots.",
+  "start_url": "./studio-editor.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#111418",
+  "theme_color": "#111418",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["photo", "video", "productivity", "entertainment"],
+  "icons": [
+    { "src": "icon-32.png", "sizes": "32x32", "type": "image/png", "purpose": "any" },
+    { "src": "icon-180.png", "sizes": "180x180", "type": "image/png", "purpose": "any" },
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Video editor",
+      "short_name": "Video",
+      "description": "Open the timeline",
+      "url": "./studio-editor.html?workspace=video"
+    },
+    {
+      "name": "Photo editor",
+      "short_name": "Photo",
+      "description": "Open the photo workspace",
+      "url": "./studio-editor.html?workspace=photo"
+    },
+    {
+      "name": "Creator Hub",
+      "short_name": "Creator",
+      "description": "Captions, thumbnails and publishing tools",
+      "url": "./studio-editor.html?open=creator"
+    }
+  ]
+}

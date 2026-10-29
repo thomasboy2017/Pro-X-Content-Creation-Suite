@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Studio Editor PRO X</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="theme-color" content="#111418">
+<meta name="description" content="Local-first photo, video, audio and 3D studio with creator tools. Open the editor to begin.">
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    display: grid; place-items: center; padding: 24px;
+    background: radial-gradient(circle at 30% 20%, #1c2a3d, #111418 55%, #0c0e11 100%);
+    color: #e9eef4; font: 14px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .card {
+    width: min(520px, 100%); padding: 26px 28px; border-radius: 14px;
+    border: 1px solid #ffffff1c; background: #1b1d21ee; box-shadow: 0 24px 70px #000b;
+  }
+  .mark {
+    width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center;
+    background: linear-gradient(135deg, #1b6fe0, #6f5bff 55%, #21c9a5); color: #fff;
+    font-weight: 800; font-size: 20px; margin-bottom: 14px;
+  }
+  h1 { margin: 0 0 4px; font-size: 20px; letter-spacing: .01em; }
+  h1 em { font-style: normal; color: #34d3b1; font-size: 12px; letter-spacing: .14em; }
+  p { margin: 0 0 12px; color: #a7b1bc; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+  a.btn {
+    display: inline-flex; align-items: center; justify-content: center; min-height: 36px;
+    padding: 8px 16px; border-radius: 7px; text-decoration: none; font-weight: 700; color: #fff;
+    background: linear-gradient(180deg, #4297f7, #2f7bd6); border: 1px solid #5ba7ff;
+  }
+  a.ghost { background: none; border-color: #ffffff26; color: #cdd6df; font-weight: 600; }
+  small { display: block; margin-top: 14px; color: #7d8792; font-size: 11px; }
+</style>
+</head>
+<body>
+  <main class="card">
+    <div class="mark">P</div>
+    <h1>Studio Editor <em>PRO X</em></h1>
+    <p>Opening the editor. If nothing happens, use the button below.</p>
+    <div class="row">
+      <a class="btn" id="open" href="studio-editor.html">Open Studio Editor</a>
+      <a class="btn ghost" href="wix-embed.html">Embedding example</a>
+    </div>
+    <small>Local-first. Your media stays in this browser unless you export it.</small>
+  </main>
+<script>
+  (function () {
+    var target = "studio-editor.html" + location.search + location.hash;
+    var link = document.getElementById("open");
+    if (link) link.href = target;
+    location.replace(target);
+  })();
+</script>
+</body>
+</html>

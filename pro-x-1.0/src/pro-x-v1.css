@@ -1,0 +1,568 @@
+/* ==========================================================================
+   Studio Editor PRO X 1.0 — upgrade layer
+   Desktop, touch, embed, PWA standalone and compatibility-mode styling.
+   Every class is prefixed with px- so the original editor stays untouched.
+   ========================================================================== */
+
+:root{
+  --px-accent:#378ef0;
+  --px-accent-2:#34d3b1;
+  --px-accent-3:#8b6cff;
+  --px-warn:#ffb020;
+  --px-danger:#ff5d6c;
+  --px-ok:#37c78f;
+  --px-line:#2c2c2c;
+  --px-panel:#232323;
+  --px-panel-2:#2b2b2b;
+  --px-ink:#f2f5f8;
+  --px-dim:#9ba3ad;
+  --px-radius:8px;
+  --px-shadow:0 18px 50px #000b;
+  --px-safe-bottom:env(safe-area-inset-bottom,0px);
+  --px-safe-top:env(safe-area-inset-top,0px);
+}
+
+/* ---------- Brand and new top-bar controls ---------- */
+.px-brand{
+  display:flex;align-items:center;gap:8px;margin-right:12px;
+  font-weight:700;letter-spacing:.01em;white-space:nowrap;flex:none;
+}
+.px-brand-mark{
+  width:19px;height:19px;border-radius:5px;display:inline-grid;place-items:center;
+  background:linear-gradient(135deg,var(--px-accent),var(--px-accent-3) 58%,var(--px-accent-2));
+  box-shadow:0 0 0 1px #ffffff22 inset,0 2px 8px #0007;color:#fff;font-size:11px;line-height:1;
+}
+.px-brand-name{font-size:13px;color:#fff}
+.px-brand-pro{
+  font-style:normal;font-size:9px;letter-spacing:.14em;font-weight:800;
+  color:var(--px-accent-2);border:1px solid #34d3b155;background:#34d3b112;
+  padding:1px 4px;border-radius:4px;position:relative;top:-1px;
+}
+.px-ver{
+  font-size:9px;font-weight:700;color:#b9c2cd;background:#ffffff0d;
+  border:1px solid #ffffff14;border-radius:999px;padding:1px 6px;letter-spacing:.03em;
+}
+.px-topbtn{
+  display:inline-flex;align-items:center;gap:5px;flex:none;
+  height:24px;padding:0 8px;border-radius:5px;
+  border:1px solid #ffffff14;background:#ffffff08;color:#dfe5ec;
+  font:600 11px/1 system-ui,sans-serif;cursor:pointer;white-space:nowrap;
+}
+.px-topbtn:hover{background:#ffffff14;border-color:#ffffff2b;color:#fff}
+.px-topbtn .px-ico{font-size:13px;line-height:1;color:var(--px-accent-2)}
+.px-topbtn.px-creator{border-color:#378ef055;background:#378ef014}
+.px-topbtn.px-creator .px-ico{color:#7db9ff}
+.px-topbtn.px-install{border-color:#34d3b155;background:#34d3b114}
+.px-topbtn[hidden]{display:none!important}
+.px-chip{
+  display:inline-flex;align-items:center;gap:5px;flex:none;height:24px;padding:0 8px;
+  border-radius:999px;border:1px solid #ffffff12;background:#ffffff07;
+  font:600 10px/1 ui-monospace,SFMono-Regular,Consolas,monospace;color:#aeb7c2;cursor:pointer;
+}
+.px-chip:hover{background:#ffffff10;color:#fff}
+.px-chip .px-dot{width:6px;height:6px;border-radius:50%;background:var(--px-ok);box-shadow:0 0 6px currentColor;flex:none}
+.px-chip[data-state="warn"] .px-dot{background:var(--px-warn)}
+.px-chip[data-state="bad"] .px-dot{background:var(--px-danger)}
+.px-chip[data-state="off"] .px-dot{background:#66707c;box-shadow:none}
+.px-chip.px-offline{display:none}
+body.px-is-offline .px-chip.px-offline{display:inline-flex}
+.px-chip.px-update{display:none;border-color:#ffb02066;color:#ffd37a;background:#ffb02010}
+body.px-has-update .px-chip.px-update{display:inline-flex}
+.px-top-sep{width:1px;height:18px;background:#ffffff12;margin:0 4px;flex:none}
+
+/* ---------- Buttons, fields and cards used by PRO X dialogs ---------- */
+.px-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  min-height:30px;padding:5px 11px;border-radius:6px;cursor:pointer;
+  border:1px solid #ffffff16;background:#ffffff0a;color:#e8edf3;
+  font:600 12px/1.2 system-ui,sans-serif;text-align:center;
+}
+.px-btn:hover{background:#ffffff14;border-color:#ffffff2a;color:#fff}
+.px-btn:active{transform:translateY(1px)}
+.px-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.px-btn.px-pri{background:linear-gradient(180deg,#4297f7,#2f7bd6);border-color:#5ba7ff;color:#fff}
+.px-btn.px-pri:hover{background:linear-gradient(180deg,#55a2f8,#3686e2)}
+.px-btn.px-good{background:#1c4a3c;border-color:#37c78f88;color:#c7ffe9}
+.px-btn.px-danger{background:#4a1c22;border-color:#ff5d6c66;color:#ffd3d8}
+.px-btn.px-ghost{background:none;border-color:transparent;color:#aeb7c2}
+.px-btn.px-ghost:hover{background:#ffffff0d;color:#fff}
+.px-btn.px-sm{min-height:24px;padding:3px 8px;font-size:11px}
+.px-btn.px-wide{width:100%}
+.px-iconbtn{
+  width:30px;height:30px;padding:0;display:inline-grid;place-items:center;border-radius:6px;
+  border:1px solid #ffffff14;background:#ffffff08;color:#cfd7e0;cursor:pointer;font-size:15px;
+}
+.px-iconbtn:hover{background:#ffffff14;color:#fff}
+
+.px-field{display:grid;gap:4px;min-width:0}
+.px-field > span,.px-label{font-size:11px;font-weight:600;color:#aeb7c2;letter-spacing:.01em}
+.px-input,.px-select,.px-area{
+  width:100%;min-height:30px;padding:5px 8px;border-radius:6px;
+  border:1px solid #ffffff18;background:#15181d;color:#eef2f7;
+  font:12px/1.35 system-ui,sans-serif;outline:none;
+}
+.px-input:focus,.px-select:focus,.px-area:focus{border-color:var(--px-accent);box-shadow:0 0 0 2px #378ef033}
+.px-area{min-height:88px;resize:vertical;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;line-height:1.45}
+.px-range{width:100%;accent-color:var(--px-accent)}
+.px-check{display:flex;align-items:center;gap:7px;font-size:12px;color:#d7dee6;cursor:pointer}
+.px-check input{accent-color:var(--px-accent);width:15px;height:15px;flex:none}
+.px-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.px-row.px-tight{gap:5px}
+.px-col{display:grid;gap:10px}
+.px-muted{color:var(--px-dim);font-size:11.5px;line-height:1.5}
+.px-hint{color:#8d96a2;font-size:11px;line-height:1.45}
+.px-sep{height:1px;background:#ffffff10;margin:14px 0;border:0}
+.px-touch-only{display:none!important}
+body.px-touch .px-touch-only{display:flex!important}
+.px-kbd{background:#ffffff10;border:1px solid #ffffff1c;border-bottom-width:2px;border-radius:4px;padding:0 5px;font:600 10px/1.6 ui-monospace,monospace;color:#dfe5ec}
+
+/* ---------- Creator Hub ---------- */
+#pxHub{
+  width:min(1060px,96vw);height:min(780px,92vh);max-width:none;max-height:none;
+  padding:0;border:1px solid #ffffff1c;border-radius:12px;background:#1b1d21;color:#e9eef4;
+  box-shadow:var(--px-shadow);overflow:hidden;
+}
+#pxHub::backdrop{background:#000b;backdrop-filter:blur(3px)}
+.px-hub{display:flex;flex-direction:column;height:100%;min-height:0}
+.px-hub-head{
+  display:flex;align-items:center;gap:12px;flex:none;padding:12px 16px;
+  border-bottom:1px solid #ffffff12;background:linear-gradient(180deg,#242830,#1e2126);
+}
+.px-hub-title{display:flex;align-items:center;gap:9px;font-size:15px;font-weight:800;color:#fff;letter-spacing:.01em}
+.px-hub-title .px-brand-mark{width:24px;height:24px;border-radius:7px;font-size:13px}
+.px-hub-sub{font-size:11px;color:#919ba6}
+.px-hub-head .px-row{margin-left:auto}
+.px-hub-close{font-size:18px}
+.px-hub-body{display:flex;flex:1;min-height:0}
+.px-hub-nav{
+  width:196px;flex:none;padding:10px;overflow:auto;border-right:1px solid #ffffff10;background:#1e2126;
+}
+.px-hub-nav button{
+  display:flex;align-items:center;gap:9px;width:100%;padding:9px 10px;margin-bottom:2px;
+  border:1px solid transparent;border-radius:7px;background:none;color:#aeb7c2;
+  font:600 12px/1.2 system-ui,sans-serif;text-align:left;cursor:pointer;
+}
+.px-hub-nav button:hover{background:#ffffff08;color:#fff}
+.px-hub-nav button[aria-pressed="true"]{
+  background:#378ef01a;border-color:#378ef044;color:#fff;
+  box-shadow:inset 2px 0 var(--px-accent);
+}
+.px-hub-nav .px-navico{width:17px;text-align:center;font-size:14px;color:#7db9ff}
+.px-hub-main{flex:1;min-width:0;overflow:auto;padding:18px 20px 26px;scrollbar-gutter:stable}
+.px-hub-panel{display:none;max-width:900px}
+.px-hub-panel.px-on{display:block;animation:pxFade .16s ease-out}
+@keyframes pxFade{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+.px-hub-panel > h3{font-size:16px;color:#fff;margin:0 0 4px;font-weight:800;letter-spacing:.01em}
+.px-hub-panel > .px-lead{color:#9aa4af;font-size:12px;line-height:1.55;margin:0 0 16px;max-width:760px}
+.px-hub-panel h4{font-size:12px;color:#e9eef4;margin:18px 0 8px;text-transform:uppercase;letter-spacing:.08em;font-weight:800}
+.px-hub-panel h4:first-child{margin-top:0}
+.px-hub-panel p{margin:0 0 8px}
+
+.px-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:9px}
+.px-grid.px-grid-2{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.px-card{
+  position:relative;display:flex;flex-direction:column;gap:5px;min-height:86px;
+  padding:11px 12px;border-radius:9px;border:1px solid #ffffff14;
+  background:linear-gradient(180deg,#ffffff08,#ffffff03);color:#e9eef4;cursor:pointer;
+  text-align:left;font:inherit;
+}
+.px-card:hover{border-color:#378ef077;background:#378ef00d;transform:translateY(-1px)}
+.px-card.px-selected{border-color:var(--px-accent);background:#378ef018;box-shadow:0 0 0 1px #378ef044 inset}
+.px-card b{font-size:12.5px;color:#fff;display:flex;align-items:center;gap:6px}
+.px-card span{font-size:11px;line-height:1.45;color:#98a2ad}
+.px-card em{font-style:normal;font-size:10px;color:#7db9ff;margin-top:auto;padding-top:5px}
+.px-card .px-card-badge{
+  position:absolute;top:8px;right:8px;font-size:9px;font-weight:800;letter-spacing:.05em;
+  color:#0e241d;background:var(--px-ok);border-radius:999px;padding:2px 6px;
+}
+.px-card .px-card-badge.px-b{bad:1}
+.px-badge{
+  display:inline-flex;align-items:center;gap:4px;padding:1px 7px;border-radius:999px;
+  font-size:9.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;
+  border:1px solid #ffffff1c;background:#ffffff0d;color:#b7c0ca;white-space:nowrap;
+}
+.px-badge.px-ok{background:#37c78f18;border-color:#37c78f55;color:#8affd7}
+.px-badge.px-warn{background:#ffb02014;border-color:#ffb02055;color:#ffd37a}
+.px-badge.px-bad{background:#ff5d6c14;border-color:#ff5d6c55;color:#ffadb6}
+.px-badge.px-info{background:#378ef018;border-color:#378ef055;color:#9dccff}
+
+.px-panelbox{
+  padding:13px 14px;border:1px solid #ffffff12;border-radius:9px;background:#1f2329;
+}
+.px-panelbox + .px-panelbox{margin-top:10px}
+.px-panelbox > b{color:#fff;font-size:12px}
+.px-panelbox .px-row{margin-top:8px}
+.px-split{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:760px){.px-split{grid-template-columns:1fr}}
+
+.px-table{width:100%;border-collapse:collapse;font-size:11.5px}
+.px-table th,.px-table td{padding:7px 8px;border-bottom:1px solid #ffffff0d;text-align:left;vertical-align:top}
+.px-table th{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:#8e98a4;font-weight:800}
+.px-table td{color:#d6dde5}
+.px-table tr:last-child td{border-bottom:0}
+.px-table .px-mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:10.5px;color:#aeb7c2}
+
+.px-note{
+  border-left:3px solid var(--px-accent);background:#378ef010;border-radius:0 7px 7px 0;
+  padding:9px 12px;color:#bcd5f5;font-size:11.5px;line-height:1.55;margin:10px 0;
+}
+.px-note.px-warn{border-color:var(--px-warn);background:#ffb0200e;color:#ffe0aa}
+.px-note.px-good{border-color:var(--px-ok);background:#37c78f0e;color:#b9ffe6}
+.px-note b{color:#fff}
+
+.px-meter{height:7px;border-radius:999px;background:#ffffff10;overflow:hidden;border:1px solid #ffffff0d}
+.px-meter > i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--px-ok),var(--px-warn) 70%,var(--px-danger));transition:width .25s ease}
+.px-statgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+.px-stat{padding:9px 10px;border-radius:8px;background:#ffffff06;border:1px solid #ffffff0f}
+.px-stat b{display:block;font-size:15px;color:#fff;font-variant-numeric:tabular-nums}
+.px-stat span{font-size:10px;color:#8f99a4;text-transform:uppercase;letter-spacing:.06em}
+
+/* ---------- Audio censor markers ---------- */
+.px-censor-mark{
+  position:absolute;top:2px;bottom:2px;z-index:3;pointer-events:none;
+  border-left:1px solid #ff5d6c;border-right:1px solid #ff5d6c;border-radius:2px;
+  background:repeating-linear-gradient(45deg,rgba(255,93,108,.42) 0 4px,rgba(255,93,108,.12) 4px 8px);
+  box-shadow:inset 0 0 0 1px rgba(255,93,108,.18);
+}
+.px-censor-mark::after{
+  content:"";position:absolute;left:50%;top:50%;width:6px;height:6px;border-radius:50%;
+  background:#ff5d6c;transform:translate(-50%,-50%);box-shadow:0 0 0 2px rgba(0,0,0,.45);
+}
+.px-censor-mark.px-censor-mute{
+  border-color:#ffb450;
+  background:repeating-linear-gradient(45deg,rgba(255,180,80,.36) 0 4px,rgba(255,180,80,.10) 4px 8px);
+}
+.px-censor-mark.px-censor-mute::after{background:#ffb450}
+.px-censor-row{
+  display:flex;align-items:center;gap:8px;padding:5px 8px;margin-top:5px;
+  border:1px solid #ffffff12;border-radius:6px;background:#ffffff06;font-size:11.5px;color:#aeb7c2;
+}
+.px-censor-row b{color:#fff;font-variant-numeric:tabular-nums;font-size:11.5px}
+.px-censor-row button{margin-left:auto}
+.px-censor-dot{width:8px;height:8px;border-radius:50%;background:#ff5d6c;box-shadow:0 0 0 3px #ff5d6c22;flex:none}
+.px-censor-dot.mute{background:#ffb450;box-shadow:0 0 0 3px #ffb45022}
+
+.px-code{
+  display:block;white-space:pre-wrap;word-break:break-word;padding:10px 12px;border-radius:7px;
+  background:#111418;border:1px solid #ffffff10;color:#c8d3df;
+  font:11px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;max-height:180px;overflow:auto;
+}
+.px-copyrow{display:flex;gap:6px;align-items:center;margin-top:7px}
+
+.px-tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:13px}
+.px-tab{
+  padding:5px 10px;border-radius:999px;border:1px solid #ffffff14;background:#ffffff06;
+  color:#aeb7c2;font:600 11px/1.2 system-ui,sans-serif;cursor:pointer;
+}
+.px-tab[aria-pressed="true"]{background:#378ef01c;border-color:#378ef066;color:#fff}
+
+.px-empty{padding:22px;border:1px dashed #ffffff1c;border-radius:9px;text-align:center;color:#8d96a2;font-size:12px}
+
+/* ---------- Caption cue table ---------- */
+.px-cues{max-height:220px;overflow:auto;border:1px solid #ffffff10;border-radius:8px}
+.px-cues .px-table th{position:sticky;top:0;background:#1f2329;z-index:1}
+.px-cues .px-table td{font-size:11px}
+.px-cues .px-table td:nth-child(1),.px-cues .px-table td:nth-child(2){white-space:nowrap;color:#9fb0c3;font-family:ui-monospace,monospace;font-size:10px}
+
+/* ---------- Thumbnail studio ---------- */
+#pxThumb{
+  width:min(1100px,97vw);height:min(760px,92vh);max-width:none;max-height:none;padding:0;
+  border:1px solid #ffffff1c;border-radius:12px;background:#1b1d21;color:#e9eef4;
+  box-shadow:var(--px-shadow);overflow:hidden;
+}
+.px-thumb{display:flex;flex-direction:column;height:100%;min-height:0}
+.px-thumb-body{display:flex;flex:1;min-height:0}
+.px-thumb-stage{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;padding:18px;background:
+  radial-gradient(circle at 50% 35%,#2a3038,#15181c 70%)}
+#pxThumbCanvas{max-width:100%;max-height:100%;border-radius:5px;box-shadow:0 10px 40px #000b;background:#000}
+.px-thumb-side{width:310px;flex:none;border-left:1px solid #ffffff10;padding:14px;overflow:auto;background:#1e2126;display:grid;gap:10px;align-content:start}
+.px-thumb-foot{display:flex;align-items:center;gap:8px;padding:10px 14px;border-top:1px solid #ffffff10;background:#20242a;flex-wrap:wrap}
+.px-thumb-foot .px-muted{margin-right:auto}
+@media(max-width:800px){
+  .px-thumb-body{flex-direction:column}
+  .px-thumb-side{width:auto;border-left:0;border-top:1px solid #ffffff10;max-height:45%}
+}
+
+/* ---------- Teleprompter ---------- */
+#pxPrompter{
+  position:fixed;inset:0;z-index:12000;background:#050607;color:#fff;display:none;
+  flex-direction:column;touch-action:none;
+}
+#pxPrompter.px-on{display:flex}
+.px-prompter-top{
+  display:flex;align-items:center;gap:8px;padding:10px 14px;padding-top:calc(10px + var(--px-safe-top));
+  background:linear-gradient(180deg,#0b0d10f2,transparent);position:relative;z-index:2;flex-wrap:wrap;flex:none;
+}
+.px-prompter-top .px-muted{color:#7d8792}
+.px-prompter-top .px-row{margin-left:auto}
+.px-prompter-view{flex:1;overflow:hidden;position:relative;padding:0 6vw}
+.px-prompter-text{
+  font:700 clamp(28px,6.2vw,86px)/1.32 system-ui,-apple-system,"Segoe UI",sans-serif;
+  color:#fff;text-shadow:0 2px 20px #000;white-space:pre-wrap;word-break:break-word;
+  padding:18vh 0 70vh;transform:translateY(0);will-change:transform;
+}
+.px-prompter-text.px-mirror{transform:scaleX(-1)}
+.px-prompter-fade{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,#050607 0%,transparent 16%,transparent 72%,#050607 100%)}
+.px-prompter-foot{
+  flex:none;display:flex;align-items:center;gap:10px;padding:10px 14px;
+  padding-bottom:calc(10px + var(--px-safe-bottom));background:#0b0d10e6;border-top:1px solid #ffffff10;flex-wrap:wrap;
+}
+.px-prompter-foot input[type=range]{max-width:180px}
+.px-prompter-guide{position:absolute;left:6vw;right:6vw;top:32%;height:2px;background:#ff5d6c66;pointer-events:none}
+.px-prompter-guide::after{content:"";position:absolute;left:0;right:0;top:36px;height:2px;background:#ff5d6c33}
+
+/* ---------- Safe zones ---------- */
+.px-safe{position:absolute;pointer-events:none;z-index:8;display:none;left:0;top:0;width:100%;height:100%}
+body.px-safezones .px-safe{display:block}
+.px-safe canvas{width:100%;height:100%;display:block}
+.px-safe.px-safe-ui{opacity:.95}
+
+/* ---------- Recovery banner ---------- */
+#pxRecoveryBar{
+  position:fixed;left:14px;bottom:14px;z-index:9000;display:none;align-items:center;gap:10px;
+  max-width:min(560px,calc(100vw - 28px));padding:10px 12px;border-radius:9px;
+  border:1px solid #378ef055;background:#1d2733f2;color:#dce9f8;box-shadow:0 10px 34px #000a;
+  font-size:12px;backdrop-filter:blur(8px);
+}
+#pxRecoveryBar.px-on{display:flex}
+#pxRecoveryBar b{color:#fff}
+#pxRecoveryBar .px-row{margin-left:auto;flex:none}
+body.px-touch #pxRecoveryBar{bottom:calc(64px + var(--px-safe-bottom))}
+
+/* ---------- Embed bar ---------- */
+#pxEmbedBar{
+  display:none;align-items:center;gap:8px;padding:4px 10px;background:#0e141c;
+  border-bottom:1px solid #ffffff10;color:#9fb0c3;font:600 10.5px/1.3 system-ui,sans-serif;flex:none;
+}
+body.px-embed #pxEmbedBar{display:flex}
+#pxEmbedBar .px-row{margin-left:auto}
+#pxEmbedBar .px-btn{min-height:21px;padding:1px 8px;font-size:10.5px}
+
+/* ---------- Mobile action bar and drawers ---------- */
+#pxMbar{display:none}
+#pxDrawerBg{display:none;position:fixed;inset:0;z-index:74;background:#000a;backdrop-filter:blur(1px)}
+
+.px-drawerbtn{display:none}
+
+body.px-touch #pxMbar{
+  display:flex;position:fixed;left:0;right:0;bottom:0;z-index:75;
+  height:calc(56px + var(--px-safe-bottom));padding:4px 6px calc(4px + var(--px-safe-bottom));
+  background:#14171bf5;border-top:1px solid #ffffff14;box-shadow:0 -8px 24px #0008;
+  backdrop-filter:blur(10px);
+}
+/* The bottom bar is fixed at every width once touch mode is on, so the
+   workspace needs the same bottom padding even on a wide forced-mobile setup. */
+body.px-touch section.on{padding-bottom:calc(58px + var(--px-safe-bottom))}
+/* Tabs live in the bottom bar on touch; the top bar keeps the project actions. */
+body.px-touch .top .tab{display:none}
+body.px-touch #pxMemChip{display:none}
+.px-mbtn{
+  flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  padding:3px 2px;border:1px solid transparent;border-radius:8px;background:none;
+  color:#8f99a4;font:600 9.5px/1.1 system-ui,sans-serif;cursor:pointer;
+}
+.px-mbtn .px-mico{font-size:17px;line-height:1;color:#b9c3ce}
+.px-mbtn[aria-pressed="true"]{background:#378ef01a;border-color:#378ef044;color:#fff}
+.px-mbtn[aria-pressed="true"] .px-mico{color:#7db9ff}
+.px-mbtn:active{background:#ffffff10}
+
+@media(max-width:900px){
+  body.px-touch section.on{padding-bottom:calc(58px + var(--px-safe-bottom))}
+  body.px-touch .top{
+    height:auto;min-height:42px;padding:4px 6px;gap:3px;flex-wrap:nowrap;overflow-x:auto;
+    scrollbar-width:none;-ms-overflow-style:none;
+  }
+  body.px-touch .top::-webkit-scrollbar{display:none}
+  body.px-touch .top .tab{height:34px;padding:0 10px;font-size:12px;flex:none}
+  body.px-touch .top select{height:26px;font-size:11px}
+  body.px-touch .top button{padding:3px 8px;font-size:11px}
+  body.px-touch .px-brand{margin-right:4px}
+  body.px-touch .px-brand-name{display:none}
+  body.px-touch .px-ver{display:none}
+  body.px-touch .px-hide-touch{display:none!important}
+  body.px-touch .px-topbtn{padding:0 7px}
+  body.px-touch .px-topbtn .px-txt{display:none}
+  body.px-touch .px-chip{padding:0 7px}
+  body.px-touch .px-chip .px-chiptxt{display:none}
+  body.px-touch .opt{padding:5px 7px;gap:8px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  body.px-touch .opt::-webkit-scrollbar{display:none}
+  body.px-touch .opt label{flex:none}
+  body.px-touch .opt input[type=range]{width:92px}
+  body.px-touch .mb{overflow-x:auto;scrollbar-width:none}
+  body.px-touch .mb::-webkit-scrollbar{display:none}
+  body.px-touch .mb > *{flex:none}
+  body.px-touch .btn,body.px-touch button{min-height:30px}
+  body.px-touch .mc{gap:5px;padding:5px}
+  body.px-touch .mc button{min-height:34px;padding:4px 9px}
+  body.px-touch .tl{height:44vh;min-height:220px}
+  body.px-touch .tlg{overflow:auto}
+  body.px-touch .tp{width:132px;padding:5px}
+  body.px-touch .tk{height:210px}
+  body.px-touch .abody .tk{height:116px}
+  body.px-touch .lab{width:52px}
+  body.px-touch .lab div{padding:4px;font-size:10px}
+  body.px-touch .st{font-size:10.5px;gap:10px;overflow-x:auto;white-space:nowrap}
+  body.px-touch dialog{max-width:96vw;max-height:92vh;overflow:auto}
+  body.px-touch .fg{grid-template-columns:minmax(90px,120px) 1fr}
+  body.px-touch .px-drawerbtn{display:inline-flex}
+  body.px-touch .st{padding-bottom:2px}
+  body.px-touch .pn > h4{padding:5px 8px}
+  body.px-touch .pb{padding:7px}
+  body.px-touch .px-hub-body{flex-direction:column}
+  body.px-touch .px-hub-nav{
+    width:auto;display:flex;overflow-x:auto;padding:7px;gap:4px;border-right:0;border-bottom:1px solid #ffffff10;flex:none;
+  }
+  body.px-touch .px-hub-nav button{width:auto;white-space:nowrap;margin:0;padding:7px 10px;box-shadow:none}
+  body.px-touch .px-hub-nav button[aria-pressed="true"]{box-shadow:inset 0 -2px var(--px-accent)}
+  body.px-touch .px-hub-main{padding:12px 13px 22px}
+  body.px-touch #pxHub,body.px-touch #pxThumb{width:100vw;height:100dvh;max-width:100vw;max-height:100dvh;border-radius:0;border:0}
+  body.px-touch .px-grid{grid-template-columns:repeat(auto-fill,minmax(142px,1fr))}
+  body.px-touch .px-hub-head{padding:9px 11px;padding-top:calc(9px + var(--px-safe-top))}
+  body.px-touch .px-hub-sub{display:none}
+  body.px-touch #pxThumb .px-thumb-stage{padding:9px}
+}
+
+/* Side panels become drawers in touch mode. The class is added by JS. */
+body.px-touch .px-side{
+    position:fixed;top:0;bottom:calc(56px + var(--px-safe-bottom));right:0;z-index:76;
+    width:min(88vw,380px)!important;max-width:380px;transform:translateX(104%);
+    transition:transform .2s ease;box-shadow:-14px 0 40px #000b;
+    padding-top:calc(4px + var(--px-safe-top));background:var(--p);
+    height:auto!important;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+  }
+  body.px-touch .px-side.px-side-left{
+    right:auto;left:0;transform:translateX(-104%);box-shadow:14px 0 40px #000b;
+  }
+  body.px-touch.px-drawer-right .px-side.px-side-right,
+  body.px-touch.px-drawer-left .px-side.px-side-left{transform:none}
+  body.px-touch.px-drawer-right #pxDrawerBg,
+  body.px-touch.px-drawer-left #pxDrawerBg{display:block}
+  body.px-touch .px-side > h4{position:sticky;top:0;z-index:2}
+  body.px-touch .px-side .px-drawerfloat{
+    display:grid;place-items:center;position:absolute;z-index:3;
+    top:calc(4px + var(--px-safe-top));right:8px;
+    width:30px;height:30px;padding:0;border-radius:8px;
+    border:1px solid #ffffff26;background:#00000080;color:#fff;
+    font:400 20px/1 system-ui,sans-serif;cursor:pointer;
+  }
+  body.px-touch .px-side .px-drawerfloat:hover{background:#000000aa;color:#fff}
+  body.px-touch .px-side .pb{padding-bottom:18px}
+  body.px-touch .vtop > .pn.px-side{height:100%}
+  body.px-touch #photo .body > .rp.px-side{height:100%;flex:none!important}
+  body.px-touch #model .body > .rp.px-side{height:100%;flex:none!important}
+  body.px-touch .px-drawerbtn{display:inline-flex}
+
+/* Touch menus: hover is unreliable, so JS toggles .px-open. */
+@media(max-width:900px){
+  body.px-touch .m:hover .dd,body.px-touch .m:focus-within .dd{display:none}
+  body.px-touch .m.px-open .dd{display:flex}
+  body.px-touch .dd{max-height:60vh;overflow:auto;min-width:200px}
+  body.px-touch .dd > *{padding:9px 12px;font-size:12px}
+}
+
+/* ---------- Embed mode ---------- */
+body.px-embed{--px-embed:1}
+body.px-embed .top{height:auto;min-height:34px;padding:3px 7px;overflow-x:auto;scrollbar-width:none}
+body.px-embed .top::-webkit-scrollbar{display:none}
+body.px-embed .px-brand{margin-right:6px}
+body.px-embed .px-brand-name{font-size:12px}
+body.px-embed .px-hide-embed{display:none!important}
+body.px-embed #about,body.px-embed #fsbtn{display:none}
+body.px-embed .st{font-size:10.5px}
+body.px-embed dialog{max-width:min(96vw,1000px)}
+body.px-embed .tl{height:38vh;min-height:180px}
+
+/* ---------- PWA standalone ---------- */
+@media(display-mode:standalone){
+  body{padding-top:var(--px-safe-top)}
+  .top{padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right))}
+  #pxMbar{padding-bottom:calc(4px + var(--px-safe-bottom))}
+}
+body.px-standalone .px-install{display:none!important}
+
+/* ---------- Compatibility mode ---------- */
+body.px-compat *,
+body.px-compat *::before,
+body.px-compat *::after{
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  animation-duration:.001s!important;
+  transition-duration:.001s!important;
+}
+body.px-compat .cv,body.px-compat .mon,body.px-compat .cv3{contain:layout paint}
+body.px-compat .px-card:hover{transform:none}
+body.px-compat #pxPrompter .px-prompter-text{text-shadow:none}
+body.px-compat .px-hub-panel.px-on{animation:none}
+
+/* Reduced motion */
+@media(prefers-reduced-motion:reduce){
+  .px-hub-panel.px-on{animation:none}
+  *{scroll-behavior:auto!important}
+}
+
+/* Small phones */
+@media(max-width:520px){
+  .px-brand-mark{width:17px;height:17px}
+  .px-topbtn{padding:0 6px}
+  .px-chip{padding:0 6px}
+  body.px-touch .px-grid{grid-template-columns:1fr 1fr;gap:7px}
+  .px-card{min-height:78px;padding:9px 10px}
+  .px-card b{font-size:11.5px}
+  .px-card span{font-size:10px}
+  .px-statgrid{grid-template-columns:1fr 1fr}
+  #pxRecoveryBar{left:8px;right:8px;bottom:calc(62px + var(--px-safe-bottom));max-width:none}
+  .px-thumb-side{padding:10px}
+}
+
+/* Print: never */
+@media print{.px-safe,#pxMbar,#pxPrompter,.px-install{display:none!important}}
+
+/* Scrollbars in new panels */
+.px-hub-main::-webkit-scrollbar,.px-thumb-side::-webkit-scrollbar{width:9px;height:9px}
+.px-hub-main::-webkit-scrollbar-thumb,.px-thumb-side::-webkit-scrollbar-thumb{background:#ffffff1c;border-radius:9px}
+.px-hub-main::-webkit-scrollbar-track,.px-thumb-side::-webkit-scrollbar-track{background:transparent}
+
+/* Keep the original compact top bar from crushing new controls.
+   The bar keeps its 32px height and only scrolls if a very narrow window
+   still cannot fit everything (scrollbar hidden, wheel/touch scroll works). */
+.top{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none}
+.top::-webkit-scrollbar{display:none}
+.top > button,.top > select,.top > b,.top > input,.px-topbtn,.px-chip,.px-top-sep{flex:none}
+
+@media(max-width:1320px){
+  .px-topbtn .px-txt{display:none}
+  .px-topbtn{padding:0 7px}
+  /* The Creator Hub is the headline v1.0 feature: never reduce it to a bare icon. */
+  .px-topbtn.px-creator{padding:0 9px}
+  .px-topbtn.px-creator .px-txt{display:inline}
+}
+@media(max-width:1180px){
+  #helpbtn{display:none}
+}
+@media(max-width:1060px){
+  #fsbtn{display:none}
+}
+@media(max-width:1100px){
+  .px-brand-name{display:none}
+  .px-ver{display:none}
+  /* The RAM chip is a shortcut to the Memory panel; the panel is one click
+     away in the Creator Hub, so prefer the About button on small desktops. */
+  #pxMemChip{display:none}
+}
+@media(max-width:760px){
+  .px-topbtn.px-creator .px-txt{display:none}
+  .px-topbtn.px-creator{padding:0 7px}
+}
+
+/* A tiny "PRO" ribbon on the About dialog */
+.px-about-version{
+  display:inline-flex;align-items:center;gap:6px;margin:0 0 10px;
+  padding:3px 9px;border-radius:999px;background:#378ef01a;border:1px solid #378ef055;
+  color:#b9d9ff;font:700 10px/1.5 ui-monospace,monospace;letter-spacing:.05em;
+}
+.px-about-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;margin:10px 0 0;font-size:11.5px}
+.px-about-grid b{color:#fff;font-weight:600}
+.px-about-grid span{color:#9ba3ad}

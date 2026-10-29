@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Studio Editor PRO X - embed example</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body { background: #0f1216; color: #e7edf4; font: 13px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; display: flex; flex-direction: column; }
+  header { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid #ffffff12; background: #171a1f; flex-wrap: wrap; }
+  .mark { width: 28px; height: 28px; border-radius: 7px; display: grid; place-items: center; background: linear-gradient(135deg,#1b6fe0,#6f5bff 55%,#21c9a5); color: #fff; font-weight: 800; }
+  h1 { margin: 0; font-size: 14px; letter-spacing: .01em; }
+  h1 em { font-style: normal; color: #34d3b1; font-size: 10px; letter-spacing: .14em; }
+  header .sp { flex: 1; }
+  button {
+    background: #262b32; color: #dfe6ee; border: 1px solid #ffffff1a; border-radius: 6px;
+    padding: 6px 11px; font: inherit; cursor: pointer;
+  }
+  button:hover { background: #30363e; color: #fff; }
+  button.pri { background: linear-gradient(180deg,#4297f7,#2f7bd6); border-color: #5ba7ff; color: #fff; font-weight: 600; }
+  main { flex: 1; display: grid; grid-template-columns: 1fr 300px; min-height: 0; }
+  .stage { padding: 12px; min-width: 0; }
+  iframe { width: 100%; height: 100%; border: 0; border-radius: 10px; background: #1c1c1c; box-shadow: 0 16px 50px #000a; }
+  aside { border-left: 1px solid #ffffff12; background: #14171b; padding: 12px; display: flex; flex-direction: column; min-height: 0; }
+  aside h2 { margin: 0 0 8px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #8e98a4; }
+  #log { flex: 1; overflow: auto; font: 11px/1.45 ui-monospace, Consolas, monospace; color: #9fb0c3; background: #0e1114; border: 1px solid #ffffff10; border-radius: 8px; padding: 8px; white-space: pre-wrap; }
+  #shot { margin-top: 10px; }
+  #shot img { width: 100%; border-radius: 6px; display: block; border: 1px solid #ffffff14; }
+  .hint { color: #7d8792; font-size: 11px; margin-top: 8px; }
+  @media (max-width: 860px) {
+    main { grid-template-columns: 1fr; }
+    aside { border-left: 0; border-top: 1px solid #ffffff12; max-height: 230px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <span class="mark">P</span>
+  <h1>Studio Editor <em>PRO X</em></h1>
+  <span class="sp"></span>
+  <button class="pri" id="btnVideo">Video workspace</button>
+  <button id="btnCreator">Creator Hub</button>
+  <button id="btnCaptions">Captions</button>
+  <button id="btnTheme">Theme</button>
+  <button id="btnFrame">Grab frame</button>
+  <button id="btnState">State</button>
+</header>
+<main>
+  <div class="stage">
+    <iframe id="editor" src="studio-editor.html?embed=1" title="Studio Editor PRO X"
+      allow="fullscreen; clipboard-write; microphone; camera"></iframe>
+  </div>
+  <aside>
+    <h2>Host messages</h2>
+    <div id="log">Waiting for the editor...</div>
+    <div id="shot"></div>
+    <p class="hint">This page is only an example. Copy the iframe tag into a WIX HTML embed and post the same messages from your page code.</p>
+  </aside>
+</main>
+<script>
+  var frame = document.getElementById("editor");
+  var logBox = document.getElementById("log");
+  var shot = document.getElementById("shot");
+  var reqId = 0;
+  var waiting = new Map();
+
+  function log(text) {
+    logBox.textContent += "\n" + text;
+    logBox.scrollTop = logBox.scrollHeight;
+  }
+
+  function send(type, payload) {
+    var id = "req-" + (++reqId);
+    var message = Object.assign({ type: "prox:" + type, requestId: id }, payload || {});
+    frame.contentWindow.postMessage(message, "*");
+    return new Promise(function (resolve) {
+      waiting.set(id, resolve);
+      setTimeout(function () {
+        if (waiting.has(id)) { waiting.delete(id); resolve(null); }
+      }, 6000);
+    });
+  }
+
+  window.addEventListener("message", function (event) {
+    if (event.source !== frame.contentWindow) return;
+    var data = event.data;
+    if (!data || data.source !== "studio-pro-x") return;
+    if (data.requestId && waiting.has(data.requestId)) {
+      var done = waiting.get(data.requestId);
+      waiting.delete(data.requestId);
+      done(data);
+    }
+    if (data.type === "prox:ready") {
+      log("Editor ready. Version " + data.version + ".");
+      return;
+    }
+    if (data.type === "prox:frame" && data.buffer) {
+      var blob = new Blob([data.buffer], { type: data.mime || "image/png" });
+      shot.innerHTML = "";
+      var img = document.createElement("img");
+      img.src = URL.createObjectURL(blob);
+      shot.append(img);
+      log("Frame received (" + Math.round(blob.size / 1024) + " KB).");
+      return;
+    }
+    if (data.type && data.type.indexOf("prox:") === 0 && data.type !== "prox:height") {
+      log(data.type + " " + JSON.stringify(Object.assign({}, data, { buffer: data.buffer ? "<bytes>" : undefined })).slice(0, 260));
+    }
+  });
+
+  document.getElementById("btnVideo").onclick = function () { send("openWorkspace", { workspace: "video" }); };
+  document.getElementById("btnCreator").onclick = function () { send("openCreator", { panel: "publish" }); };
+  document.getElementById("btnCaptions").onclick = function () { send("openCreator", { panel: "captions" }); };
+  document.getElementById("btnTheme").onclick = function () { send("setTheme", { accent: "#ff6b35" }); };
+  document.getElementById("btnState").onclick = function () { send("state"); };
+  document.getElementById("btnFrame").onclick = function () { send("frame", { time: 0, format: "png" }); };
+
+  send("ping");
+</script>
+</body>
+</html>
