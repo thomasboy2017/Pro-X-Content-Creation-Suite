@@ -1,4 +1,4 @@
-# Studio Editor PRO X 1.1
+# Studio Editor PRO X 1.16
 
 A local-first creative studio for photos, video, audio and 3D - delivered as one HTML file, with optional files for install, offline use and embedding.
 
