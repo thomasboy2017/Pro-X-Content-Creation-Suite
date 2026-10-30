@@ -10976,7 +10976,7 @@ const afac = (e, t) => "fade" === e || "black" === e || "white" === e ? t : 1,
 function render(e) {
   const t = clips.filter(t => e >= t.start && e < t.start + t.dur).sort((e, t) => e.track - t.track || e.start - t.start);
   clips.forEach(e => {
-    e.g && !t.includes(e) && (e._pl = !1, e.el.paused || e.el.pause())
+    e.g && !t.includes(e) && (e._pl = !1, t.some(x => x.el === e.el) || e.el.paused || e.el.pause())
   }), t.forEach(t => {
     const a = e - t.start,
       o = t.el,
@@ -11137,7 +11137,10 @@ lanes.onpointerdown = e => {
       kf: e.kf && JSON.parse(JSON.stringify(e.kf)),
       start: T,
       in: e.in + t * (e.fx.speed / 100),
-      dur: e.dur - t
+      dur: e.dur - t,
+      _pl: !1,
+      _pt: 0,
+      _ls: 0
     };
   e.dur = t, e.fx.tout = "none", a.fx.tin = "none", clips.push(a), cs = a, tl(), fxUI(), render(T)
 }, $("vdel").onclick = () => {
@@ -11394,7 +11397,7 @@ async function mixAudio(e, t) {
     let n = abCache.get(t);
     if (!n) try {
       n = await AC.decodeAudioData(await (await fetch(t)).arrayBuffer()), abCache.set(t, n);
-      while (abCache.size > 1) {
+      while (abCache.size > 64) {
         const k = abCache.keys().next().value;
         if (k === t) break;
         abCache.delete(k)
@@ -22126,8 +22129,9 @@ fn fs(@builtin(position) pos: vec4<f32>) -> @location(0) vec4<f32> {
     }
   }
 
-  /** Glue: one decoder per video clip while an export runs. */
-  const seqMap = new Map();
+  /** Glue: clips cut from the same file share one decoder, so a cut never costs a re-seek or a second decoder.
+      A clip only gets its own decoder when it needs a different part of the file at the same moment. */
+  const seqMap = new Map(), seqGroups = new Map(), seqOwn = new Set();
   async function seqSourceBlob(c) {
     const el = c.el;
     if (!el || el.tagName !== "VIDEO") return null;
@@ -22140,31 +22144,41 @@ fn fs(@builtin(position) pos: vec4<f32>) -> @location(0) vec4<f32> {
     if (typeof VideoDecoder === "undefined" || typeof EncodedVideoChunk === "undefined" || typeof MP4Box === "undefined") return 0;
     let n = 0;
     for (const c of clips) {
-      if (!c.g || seqMap.has(c)) continue;
-      try {
-        const blob = await seqSourceBlob(c);
-        if (!blob) continue;
-        const sd = await new SeqDecoder(blob).open();
-        const cv = document.createElement("canvas");
-        cv.width = sd.width; cv.height = sd.height;
-        seqMap.set(c, { sd, cv, cx: cv.getContext("2d"), last: null, bad: false });
-        n++;
-      } catch (e) { console.info("PRO X: sequential decode not used for", c.name, "-", e && e.message || e); }
+      if (!c.g || seqMap.has(c) || !c.el || c.el.tagName !== "VIDEO") continue;
+      const src = c.el.currentSrc || c.el.src;
+      let g = seqGroups.get(src);
+      if (g === undefined) {
+        g = null;
+        try {
+          const blob = await seqSourceBlob(c);
+          if (blob) g = { blob, sd: await new SeqDecoder(blob).open() };
+        } catch (e) { console.info("PRO X: sequential decode not used for", c.name, "-", e && e.message || e); }
+        seqGroups.set(src, g);
+      }
+      if (!g) continue;
+      const cv = document.createElement("canvas");
+      cv.width = g.sd.width; cv.height = g.sd.height;
+      seqMap.set(c, { g, cv, cx: cv.getContext("2d"), last: null, bad: false, own: null, useOwn: false });
+      n++;
     }
     return n;
   };
   /** Decode the frames every active clip needs at timeline time t. */
   window.__seqPrepare = async function (t) {
     if (!seqMap.size) return;
-    const jobs = [];
+    const jobs = [], claimed = new Set();
     for (const c of clips) {
       const s = seqMap.get(c);
       if (!s || s.bad || t < c.start || t >= c.start + c.dur) continue;
+      let sd = s.useOwn ? s.own : s.g.sd;
+      if (!s.useOwn && claimed.has(sd)) { s.useOwn = true; sd = s.own; }
+      if (sd) claimed.add(sd);
       jobs.push((async () => {
         try {
           const a = t - c.start, sp = fxAt(c, a).speed / 100;
           if (!(sp > 0)) throw new Error("Unsupported speed.");
-          const fr = await s.sd.frameAt(c.in + a * sp);
+          if (!sd) { sd = s.own = await new SeqDecoder(s.g.blob).open(); seqOwn.add(sd); }
+          const fr = await sd.frameAt(c.in + a * sp);
           if (fr !== s.last) {
             if (s.cv.width !== fr.displayWidth || s.cv.height !== fr.displayHeight) { s.cv.width = fr.displayWidth; s.cv.height = fr.displayHeight; }
             s.cx.drawImage(fr, 0, 0);
@@ -22175,7 +22189,7 @@ fn fs(@builtin(position) pos: vec4<f32>) -> @location(0) vec4<f32> {
           c._sf = s.cv;
         } catch (e) {
           console.info("PRO X: sequential decode stopped for", c.name, "-", e && e.message || e);
-          s.bad = true; c._sf = null; try { s.sd.close(); } catch {}
+          s.bad = true; c._sf = null;
         }
       })());
     }
@@ -22184,8 +22198,10 @@ fn fs(@builtin(position) pos: vec4<f32>) -> @location(0) vec4<f32> {
   /** Used by render(): true when the clip already has its frame, so the player must not seek. */
   window.__seqOn = function (c) { const s = seqMap.get(c); return !!(s && !s.bad && c._sf); };
   window.__seqStop = function () {
-    for (const [c, s] of seqMap) { try { s.sd.close(); } catch {} c._sf = null; }
-    seqMap.clear();
+    for (const c of seqMap.keys()) c._sf = null;
+    for (const g of seqGroups.values()) { try { g && g.sd.close(); } catch {} }
+    for (const sd of seqOwn) { try { sd.close(); } catch {} }
+    seqMap.clear(); seqGroups.clear(); seqOwn.clear();
   };
   window.px115.SeqDecoder = SeqDecoder;
 
