@@ -11454,7 +11454,17 @@ async function probeSeek(e) {
   }
   return o / 7
 }
-async function wcExport(e, t, a, o, n, s) {
+async function wcExport(...args) {
+  window.__pxEnc = { safe: !1, n: 0, last: -Infinity, reorder: !1, fps: args[1], retry: !1 };
+  let r = await wcExport0(...args);
+  if (window.__pxEnc.retry) {
+    window.__pxEnc = { safe: !0, n: 0, last: -Infinity, reorder: !1, fps: args[1], retry: !1 };
+    r = await wcExport0(...args)
+  }
+  return r
+}
+
+async function wcExport0(e, t, a, o, n, s) {
   if ("h264" !== e && "h265" !== e && !window.__wcTest || "420" !== n || 8 !== s || !window.VideoEncoder || !window.VideoFrame || !window.Mp4Muxer) return !1;
   const r = W - W % 2,
     i = H - H % 2,
@@ -11467,8 +11477,8 @@ async function wcExport(e, t, a, o, n, s) {
       height: i,
       bitrate: 1e6 * a,
       framerate: t,
-      latencyMode: "quality",
-      bitrateMode: (document.getElementById("xbm") || {}).value === "variable" ? "variable" : "constant",
+      latencyMode: (window.__pxEnc || {}).safe ? "realtime" : "quality",
+      bitrateMode: (window.__pxEnc || {}).safe || (document.getElementById("xbm") || {}).value === "variable" ? "variable" : "constant",
       ...o.extra
     };
     let sup = (await VideoEncoder.isConfigSupported(e)).supported;
@@ -11521,7 +11531,7 @@ async function wcExport(e, t, a, o, n, s) {
       firstTimestampBehavior: "offset"
     }),
     g = new VideoEncoder({
-      output: (e, t) => m.addVideoChunk(e, t),
+      output: (e, t) => m.addVideoChunk(window.__pxEncOut ? window.__pxEncOut(e) : e, t),
       error: e => h = e
     });
   g.configure(c.cfg);
@@ -11567,7 +11577,7 @@ async function wcExport(e, t, a, o, n, s) {
           progSet(Math.round((e + 1) / f * 92), `Frame ${e+1} of ${f} · ${a.toFixed(1)} fps · about ${Math.max(0,Math.round((f-e)/a))} s left`), await nap(0)
         }
       }
-    if (!xCancel && !h && (await g.flush(), d)) {
+    if (!xCancel && !h && (await g.flush(), h = window.__pxEncCheck ? window.__pxEncCheck(f) || h : h, !h && d)) {
       progSet(93, "Mixing audio…");
       const e = await mixAudio(u, p);
       if (e) {
@@ -11600,7 +11610,7 @@ async function wcExport(e, t, a, o, n, s) {
     h = e
   }
   if (window.__seqStop(), SEEKTOL = v, T = b, "closed" !== g.state && g.close(), xCancel) return dk && await dk.abort(), progClose(), toast("Export cancelled."), vui(), !0;
-  if (h) return dk && await dk.abort(), progClose(), toast("Hardware encoding failed: " + (h.message || h) + " Trying another method…"), vui(), !1;
+  if (h) return dk && await dk.abort(), progClose(), toast(h && h.__retry ? "This encoder skipped or reordered frames at a constant bit rate. Exporting again with safer settings…" : "Hardware encoding failed: " + (h.message || h) + " Trying another method…"), vui(), !1;
   progSet(98, "Finishing the file…"), m.finalize();
   const y = dk ? await dk.finish() : new Blob([m.target.buffer], {
     type: "video/mp4"
@@ -22330,6 +22340,30 @@ fn fs(@builtin(position) pos: vec4<f32>) -> @location(0) vec4<f32> {
       $$("px3Go").disabled = false; $$("px3Cancel").textContent = "Close";
     };
   }
+
+  /* Export safety: some H.264 / H.265 encoders skip or reorder frames in constant bit rate mode, which gives a file
+     with the wrong frame rate. Count what the encoder returns; if it is wrong, export again with safer settings and
+     write constant frame-rate timestamps. */
+  window.__pxEncOut = function (c) {
+    const X = window.__pxEnc;
+    if (!X) return c;
+    X.n++;
+    if (c.timestamp <= X.last) X.reorder = true;
+    X.last = c.timestamp;
+    if (X.safe && typeof EncodedVideoChunk !== "undefined" && c.copyTo) {
+      const b = new Uint8Array(c.byteLength); c.copyTo(b);
+      return new EncodedVideoChunk({ type: c.type, timestamp: Math.round((X.n - 1) * 1e6 / X.fps), duration: Math.round(1e6 / X.fps), data: b });
+    }
+    return c;
+  };
+  window.__pxEncCheck = function (frames) {
+    const X = window.__pxEnc;
+    if (!X || (X.n === frames && !X.reorder)) return null;
+    console.warn("PRO X: encoder returned " + X.n + " chunks for " + frames + " frames" + (X.reorder ? " (out of order)" : ""));
+    if (!X.safe) { X.retry = true; return Object.assign(new Error("retry"), { __retry: true }); }
+    say(`The encoder returned ${X.n} frames for ${frames}. The file uses constant frame-rate timing.`);
+    return null;
+  };
   build3DDialog();
   window.px115.render3DVideo = render3DVideo;
 
