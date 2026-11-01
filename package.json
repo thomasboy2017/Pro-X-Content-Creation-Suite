@@ -1,9 +1,12 @@
+
 {
   "name": "studio-editor-analytics",
   "version": "1.0.0",
   "private": true,
-  "description": "Studio Editor usage analytics server",
   "scripts": {
     "start": "node analytics-server.js"
+  },
+  "dependencies": {
+    "pg": "^8.16.3"
   }
 }
