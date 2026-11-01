@@ -70,10 +70,8 @@ http.createServer((req, res) => {
 <h2>Studio Editor usage</h2>${tbl("Visitors", [["Unique users (all time)", s.users], ["Sessions", s.sessions], ["Users, last 24 h", s.last24h.users], ["Users, last 7 days", s.last7d.users], ["Users, last 30 days", s.last30d.users], ["Average active minutes per session", s.avgActiveMinutes], ["Median active minutes", s.medianActiveMinutes], ["Total active hours", s.totalActiveHours], ["Share used inside an embed", s.embedShare]])}
 ${Object.entries(s.hardware).map(([k, v]) => tbl(k, v)).join("")}`);
   }
-  res.writeHead(404); res.end();
-
-http.createServer((req, res) => {
-  // Keep your existing server request handler here.
+    res.writeHead(404);
+  res.end();
 }).listen(PORT, "0.0.0.0", () => {
   console.log("Studio Editor stats collector on port " + PORT);
 });
