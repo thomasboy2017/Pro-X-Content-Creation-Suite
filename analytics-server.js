@@ -71,4 +71,6 @@ http.createServer((req, res) => {
 ${Object.entries(s.hardware).map(([k, v]) => tbl(k, v)).join("")}`);
   }
   res.writeHead(404); res.end();
-}).listen(PORT, () => console.log("Studio Editor stats collector on port " + PORT));
+}).listen(PORT, () => console.log("Studio Edito}).listen(PORT, "0.0.0.0", () =>
+  console.log("Studio Editor stats collector on port " + PORT)
+);r stats collector on port " + PORT));
