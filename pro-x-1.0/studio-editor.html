@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#111418">
 <meta name="description" content="Studio Editor PRO X 1.15 - local-first photo, video, audio and 3D studio with perspective warping, RAW previews, video effects, 3D text, demos, captions, thumbnails, platform presets, watermarks and recovery snapshots.">
 <title>Studio Editor PRO X 1.15</title>
+<script>/* Usage statistics (optional, asks visitors first). Put your collector address here, for example "https://stats.example.com/collect". Leave it empty to keep the feature off. */window.PX_ANALYTICS_URL = "https://pro-x-content-creation-suite.onrender.com/";</script>
 <style>
 :root{--bg:#1c1c1c;--p:#282828;--p2:#333;--ln:#0d0d0d;--tx:#d6d6d6;--mut:#8c8c8c;--ac:#378ef0;--ac2:#e8505b;color-scheme:dark}
 *{box-sizing:border-box;margin:0}
@@ -10976,7 +10977,7 @@ const afac = (e, t) => "fade" === e || "black" === e || "white" === e ? t : 1,
 function render(e) {
   const t = clips.filter(t => e >= t.start && e < t.start + t.dur).sort((e, t) => e.track - t.track || e.start - t.start);
   clips.forEach(e => {
-    e.g && !t.includes(e) && (e._pl = !1, e.el.paused || e.el.pause())
+    e.g && !t.includes(e) && (e._pl = !1, t.some(x => x.el === e.el) || e.el.paused || e.el.pause())
   }), t.forEach(t => {
     const a = e - t.start,
       o = t.el,
@@ -11137,7 +11138,10 @@ lanes.onpointerdown = e => {
       kf: e.kf && JSON.parse(JSON.stringify(e.kf)),
       start: T,
       in: e.in + t * (e.fx.speed / 100),
-      dur: e.dur - t
+      dur: e.dur - t,
+      _pl: !1,
+      _pt: 0,
+      _ls: 0
     };
   e.dur = t, e.fx.tout = "none", a.fx.tin = "none", clips.push(a), cs = a, tl(), fxUI(), render(T)
 }, $("vdel").onclick = () => {
@@ -11394,7 +11398,7 @@ async function mixAudio(e, t) {
     let n = abCache.get(t);
     if (!n) try {
       n = await AC.decodeAudioData(await (await fetch(t)).arrayBuffer()), abCache.set(t, n);
-      while (abCache.size > 1) {
+      while (abCache.size > 64) {
         const k = abCache.keys().next().value;
         if (k === t) break;
         abCache.delete(k)
@@ -11451,7 +11455,17 @@ async function probeSeek(e) {
   }
   return o / 7
 }
-async function wcExport(e, t, a, o, n, s) {
+async function wcExport(...args) {
+  window.__pxEnc = { safe: !1, n: 0, last: -Infinity, reorder: !1, fps: args[1], retry: !1 };
+  let r = await wcExport0(...args);
+  if (window.__pxEnc.retry) {
+    window.__pxEnc = { safe: !0, n: 0, last: -Infinity, reorder: !1, fps: args[1], retry: !1 };
+    r = await wcExport0(...args)
+  }
+  return r
+}
+
+async function wcExport0(e, t, a, o, n, s) {
   if ("h264" !== e && "h265" !== e && !window.__wcTest || "420" !== n || 8 !== s || !window.VideoEncoder || !window.VideoFrame || !window.Mp4Muxer) return !1;
   const r = W - W % 2,
     i = H - H % 2,
@@ -11464,8 +11478,8 @@ async function wcExport(e, t, a, o, n, s) {
       height: i,
       bitrate: 1e6 * a,
       framerate: t,
-      latencyMode: "quality",
-      bitrateMode: (document.getElementById("xbm") || {}).value === "variable" ? "variable" : "constant",
+      latencyMode: (window.__pxEnc || {}).safe ? "realtime" : "quality",
+      bitrateMode: (window.__pxEnc || {}).safe || (document.getElementById("xbm") || {}).value === "variable" ? "variable" : "constant",
       ...o.extra
     };
     let sup = (await VideoEncoder.isConfigSupported(e)).supported;
@@ -11518,7 +11532,7 @@ async function wcExport(e, t, a, o, n, s) {
       firstTimestampBehavior: "offset"
     }),
     g = new VideoEncoder({
-      output: (e, t) => m.addVideoChunk(e, t),
+      output: (e, t) => m.addVideoChunk(window.__pxEncOut ? window.__pxEncOut(e) : e, t),
       error: e => h = e
     });
   g.configure(c.cfg);
@@ -11564,7 +11578,7 @@ async function wcExport(e, t, a, o, n, s) {
           progSet(Math.round((e + 1) / f * 92), `Frame ${e+1} of ${f} · ${a.toFixed(1)} fps · about ${Math.max(0,Math.round((f-e)/a))} s left`), await nap(0)
         }
       }
-    if (!xCancel && !h && (await g.flush(), d)) {
+    if (!xCancel && !h && (await g.flush(), h = window.__pxEncCheck ? window.__pxEncCheck(f) || h : h, !h && d)) {
       progSet(93, "Mixing audio…");
       const e = await mixAudio(u, p);
       if (e) {
@@ -11597,7 +11611,7 @@ async function wcExport(e, t, a, o, n, s) {
     h = e
   }
   if (window.__seqStop(), SEEKTOL = v, T = b, "closed" !== g.state && g.close(), xCancel) return dk && await dk.abort(), progClose(), toast("Export cancelled."), vui(), !0;
-  if (h) return dk && await dk.abort(), progClose(), toast("Hardware encoding failed: " + (h.message || h) + " Trying another method…"), vui(), !1;
+  if (h) return dk && await dk.abort(), progClose(), toast(h && h.__retry ? "This encoder skipped or reordered frames at a constant bit rate. Exporting again with safer settings…" : "Hardware encoding failed: " + (h.message || h) + " Trying another method…"), vui(), !1;
   progSet(98, "Finishing the file…"), m.finalize();
   const y = dk ? await dk.finish() : new Blob([m.target.buffer], {
     type: "video/mp4"
@@ -15734,6 +15748,7 @@ setLv(lv0), $("lvl").onchange = e => setLv(e.target.value), $("about").onclick =
           "Shortcuts: Premiere-style keys in Video, Photoshop-style keys in Photo and Blender-style G, R and S in 3D. Press ? for the list.",
           "Photo: the Transform tool now previews scale, rotation and position live. Drag on the canvas to move; Enter applies, Esc cancels.",
           "New projects start at 720p, and MP4 export uses a constant bit rate by default (Variable is in the export options).",
+          "Optional anonymous usage statistics (visitors, device type, time in use). Off unless the site owner sets a collector address, and only after the visitor allows it.",
           "Embeds (Wix): Save and Open… keep projects inside the browser, so no .studio file is needed, and downloads show a link you can right-click and Save as."
         ]]);
       }
@@ -22126,8 +22141,9 @@ fn fs(@builtin(position) pos: vec4<f32>) -> @location(0) vec4<f32> {
     }
   }
 
-  /** Glue: one decoder per video clip while an export runs. */
-  const seqMap = new Map();
+  /** Glue: clips cut from the same file share one decoder, so a cut never costs a re-seek or a second decoder.
+      A clip only gets its own decoder when it needs a different part of the file at the same moment. */
+  const seqMap = new Map(), seqGroups = new Map(), seqOwn = new Set();
   async function seqSourceBlob(c) {
     const el = c.el;
     if (!el || el.tagName !== "VIDEO") return null;
@@ -22140,31 +22156,41 @@ fn fs(@builtin(position) pos: vec4<f32>) -> @location(0) vec4<f32> {
     if (typeof VideoDecoder === "undefined" || typeof EncodedVideoChunk === "undefined" || typeof MP4Box === "undefined") return 0;
     let n = 0;
     for (const c of clips) {
-      if (!c.g || seqMap.has(c)) continue;
-      try {
-        const blob = await seqSourceBlob(c);
-        if (!blob) continue;
-        const sd = await new SeqDecoder(blob).open();
-        const cv = document.createElement("canvas");
-        cv.width = sd.width; cv.height = sd.height;
-        seqMap.set(c, { sd, cv, cx: cv.getContext("2d"), last: null, bad: false });
-        n++;
-      } catch (e) { console.info("PRO X: sequential decode not used for", c.name, "-", e && e.message || e); }
+      if (!c.g || seqMap.has(c) || !c.el || c.el.tagName !== "VIDEO") continue;
+      const src = c.el.currentSrc || c.el.src;
+      let g = seqGroups.get(src);
+      if (g === undefined) {
+        g = null;
+        try {
+          const blob = await seqSourceBlob(c);
+          if (blob) g = { blob, sd: await new SeqDecoder(blob).open() };
+        } catch (e) { console.info("PRO X: sequential decode not used for", c.name, "-", e && e.message || e); }
+        seqGroups.set(src, g);
+      }
+      if (!g) continue;
+      const cv = document.createElement("canvas");
+      cv.width = g.sd.width; cv.height = g.sd.height;
+      seqMap.set(c, { g, cv, cx: cv.getContext("2d"), last: null, bad: false, own: null, useOwn: false });
+      n++;
     }
     return n;
   };
   /** Decode the frames every active clip needs at timeline time t. */
   window.__seqPrepare = async function (t) {
     if (!seqMap.size) return;
-    const jobs = [];
+    const jobs = [], claimed = new Set();
     for (const c of clips) {
       const s = seqMap.get(c);
       if (!s || s.bad || t < c.start || t >= c.start + c.dur) continue;
+      let sd = s.useOwn ? s.own : s.g.sd;
+      if (!s.useOwn && claimed.has(sd)) { s.useOwn = true; sd = s.own; }
+      if (sd) claimed.add(sd);
       jobs.push((async () => {
         try {
           const a = t - c.start, sp = fxAt(c, a).speed / 100;
           if (!(sp > 0)) throw new Error("Unsupported speed.");
-          const fr = await s.sd.frameAt(c.in + a * sp);
+          if (!sd) { sd = s.own = await new SeqDecoder(s.g.blob).open(); seqOwn.add(sd); }
+          const fr = await sd.frameAt(c.in + a * sp);
           if (fr !== s.last) {
             if (s.cv.width !== fr.displayWidth || s.cv.height !== fr.displayHeight) { s.cv.width = fr.displayWidth; s.cv.height = fr.displayHeight; }
             s.cx.drawImage(fr, 0, 0);
@@ -22175,7 +22201,7 @@ fn fs(@builtin(position) pos: vec4<f32>) -> @location(0) vec4<f32> {
           c._sf = s.cv;
         } catch (e) {
           console.info("PRO X: sequential decode stopped for", c.name, "-", e && e.message || e);
-          s.bad = true; c._sf = null; try { s.sd.close(); } catch {}
+          s.bad = true; c._sf = null;
         }
       })());
     }
@@ -22184,8 +22210,10 @@ fn fs(@builtin(position) pos: vec4<f32>) -> @location(0) vec4<f32> {
   /** Used by render(): true when the clip already has its frame, so the player must not seek. */
   window.__seqOn = function (c) { const s = seqMap.get(c); return !!(s && !s.bad && c._sf); };
   window.__seqStop = function () {
-    for (const [c, s] of seqMap) { try { s.sd.close(); } catch {} c._sf = null; }
-    seqMap.clear();
+    for (const c of seqMap.keys()) c._sf = null;
+    for (const g of seqGroups.values()) { try { g && g.sd.close(); } catch {} }
+    for (const sd of seqOwn) { try { sd.close(); } catch {} }
+    seqMap.clear(); seqGroups.clear(); seqOwn.clear();
   };
   window.px115.SeqDecoder = SeqDecoder;
 
@@ -22314,6 +22342,30 @@ fn fs(@builtin(position) pos: vec4<f32>) -> @location(0) vec4<f32> {
       $$("px3Go").disabled = false; $$("px3Cancel").textContent = "Close";
     };
   }
+
+  /* Export safety: some H.264 / H.265 encoders skip or reorder frames in constant bit rate mode, which gives a file
+     with the wrong frame rate. Count what the encoder returns; if it is wrong, export again with safer settings and
+     write constant frame-rate timestamps. */
+  window.__pxEncOut = function (c) {
+    const X = window.__pxEnc;
+    if (!X) return c;
+    X.n++;
+    if (c.timestamp <= X.last) X.reorder = true;
+    X.last = c.timestamp;
+    if (X.safe && typeof EncodedVideoChunk !== "undefined" && c.copyTo) {
+      const b = new Uint8Array(c.byteLength); c.copyTo(b);
+      return new EncodedVideoChunk({ type: c.type, timestamp: Math.round((X.n - 1) * 1e6 / X.fps), duration: Math.round(1e6 / X.fps), data: b });
+    }
+    return c;
+  };
+  window.__pxEncCheck = function (frames) {
+    const X = window.__pxEnc;
+    if (!X || (X.n === frames && !X.reorder)) return null;
+    console.warn("PRO X: encoder returned " + X.n + " chunks for " + frames + " frames" + (X.reorder ? " (out of order)" : ""));
+    if (!X.safe) { X.retry = true; return Object.assign(new Error("retry"), { __retry: true }); }
+    say(`The encoder returned ${X.n} frames for ${frames}. The file uses constant frame-rate timing.`);
+    return null;
+  };
   build3DDialog();
   window.px115.render3DVideo = render3DVideo;
 
@@ -22628,6 +22680,109 @@ fn fs(@builtin(position) pos: vec4<f32>) -> @location(0) vec4<f32> {
   addHeaderButtons();
 
   /* ------------------------------------------------------------------ *
+   * 9. Optional anonymous usage statistics
+   *    Counts users, summarises the hardware and measures how long the editor is actively used.
+   *    Nothing is sent until the visitor allows it, and never any file names or content.
+   *    Set ANALYTICS_URL (or window.PX_ANALYTICS_URL before this file loads) to your collector's /collect address.
+   *    Left empty, the feature is completely off and no banner is shown.
+   * ------------------------------------------------------------------ */
+  const ANALYTICS_URL = (typeof window.PX_ANALYTICS_URL === "string" && window.PX_ANALYTICS_URL) || "";
+  const STAT_KEY = "prox.analytics", UID_KEY = "prox.uid";
+  const stat = { on: false, sid: "", t0: 0, active: 0, last: 0, seen: 0, timer: 0, started: false };
+
+  const statStore = (k, v) => { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch {} return null; };
+  const rnd = () => { const a = new Uint8Array(16); (crypto && crypto.getRandomValues ? crypto.getRandomValues(a) : a.forEach((_, i) => { a[i] = Math.random() * 256; })); return [...a].map((b) => b.toString(16).padStart(2, "0")).join(""); };
+  const privacyOff = () => navigator.doNotTrack === "1" || window.doNotTrack === "1" || navigator.globalPrivacyControl === true;
+
+  function browserInfo() {
+    const ua = navigator.userAgent, d = navigator.userAgentData;
+    const m = ua.match(/(Firefox|Edg|OPR|Chrome|Safari)\/(\d+)/) || [];
+    let name = m[1] === "Edg" ? "Edge" : m[1] === "OPR" ? "Opera" : m[1] || "Other";
+    if (name === "Safari" && !/Version\//.test(ua)) name = "Other";
+    const os = (d && d.platform) || (/Windows/.test(ua) ? "Windows" : /Android/.test(ua) ? "Android" : /iPhone|iPad/.test(ua) ? "iOS" : /Mac OS X/.test(ua) ? "macOS" : /Linux|CrOS/.test(ua) ? "Linux" : "Other");
+    return { browser: name + " " + (m[2] || ""), os };
+  }
+  async function hardwareInfo() {
+    const b = browserInfo(), h = { ...b, cores: navigator.hardwareConcurrency || 0, ram: navigator.deviceMemory || 0, screen: `${screen.width}x${screen.height}`, dpr: Math.round((window.devicePixelRatio || 1) * 100) / 100, touch: navigator.maxTouchPoints > 0 };
+    try {
+      const c = document.createElement("canvas"), gl = c.getContext("webgl2") || c.getContext("webgl");
+      const x = gl && gl.getExtension("WEBGL_debug_renderer_info");
+      h.gpu = String(x ? gl.getParameter(x.UNMASKED_RENDERER_WEBGL) : gl ? gl.getParameter(gl.RENDERER) : "none").slice(0, 120);
+    } catch { h.gpu = "unknown"; }
+    h.webgpu = !!navigator.gpu;
+    try { if (navigator.gpu) { const a = await navigator.gpu.requestAdapter(); const i = a && (a.info || (a.requestAdapterInfo && await a.requestAdapterInfo())); if (i) h.gpuInfo = [i.vendor, i.architecture, i.description].filter(Boolean).join(" ").slice(0, 120); } } catch {}
+    h.webcodecs = typeof VideoEncoder !== "undefined";
+    try { const g = window.px115 && window.px115.gpu && window.px115.gpu.active(); h.renderer = g ? g.name : "CPU"; } catch { h.renderer = "?"; }
+    return h;
+  }
+
+  function send(type, extra) {
+    if (!ANALYTICS_URL || !stat.on) return;
+    const body = JSON.stringify(Object.assign({ v: 1, type, uid: statStore(UID_KEY), sid: stat.sid, app: "1.15", embed: embedded(), t: Date.now() }, extra));
+    try { if (navigator.sendBeacon && navigator.sendBeacon(ANALYTICS_URL, new Blob([body], { type: "text/plain" }))) return; } catch {}
+    try { fetch(ANALYTICS_URL, { method: "POST", body, keepalive: true, mode: "no-cors", headers: { "Content-Type": "text/plain" } }).catch(() => {}); } catch {}
+  }
+  const secs = () => Math.round(stat.active);
+  function tick() {
+    const now = Date.now();
+    if (document.visibilityState === "visible" && now - stat.seen < 60000) stat.active += Math.min(5, (now - stat.last) / 1000);
+    stat.last = now;
+  }
+  const noteActivity = () => { stat.seen = Date.now(); };
+
+  async function statStart() {
+    if (stat.started || !ANALYTICS_URL) return;
+    stat.started = true; stat.on = true;
+    if (!statStore(UID_KEY)) statStore(UID_KEY, rnd());
+    stat.sid = rnd(); stat.t0 = stat.last = stat.seen = Date.now();
+    ["pointerdown", "keydown", "wheel", "touchstart"].forEach((e) => addEventListener(e, noteActivity, { passive: true, capture: true }));
+    send("start", { hw: await hardwareInfo() });
+    let beat = 0;
+    stat.timer = setInterval(() => { tick(); if (++beat % 6 === 0) send("beat", { active: secs(), wall: Math.round((Date.now() - stat.t0) / 1000) }); }, 5000);
+    const end = () => { tick(); send("end", { active: secs(), wall: Math.round((Date.now() - stat.t0) / 1000) }); };
+    addEventListener("pagehide", end);
+    document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") end(); });
+  }
+  function statStop() {
+    stat.on = false; stat.started = false; clearInterval(stat.timer);
+  }
+  function statSet(yes) {
+    statStore(STAT_KEY, yes ? "yes" : "no");
+    if (yes) statStart(); else { try { localStorage.removeItem(UID_KEY); } catch {} statStop(); }
+    const b = $$("pxStatToggle"); if (b) b.textContent = yes ? "Usage statistics: On" : "Usage statistics: Off";
+  }
+  window.pxStats = { enabled: () => statStore(STAT_KEY) === "yes" && !privacyOff(), set: statSet, configured: !!ANALYTICS_URL };
+
+  function statBanner() {
+    const b = document.createElement("div");
+    b.id = "pxStatBanner";
+    b.style.cssText = "position:fixed;left:12px;bottom:12px;z-index:9997;background:#1b1b1b;border:1px solid var(--ln);border-radius:8px;padding:10px 12px;max-width:420px;font-size:12px";
+    b.innerHTML = `<div><b>Help improve Studio Editor?</b></div><div style="color:var(--mut);margin:4px 0 8px">Share anonymous usage statistics: a random ID to count visitors, your device type (CPU cores, memory, graphics card, screen, browser) and how long you use the editor. No files, names or project content are ever sent. You can turn this off at any time from the ? menu.</div><div style="display:flex;gap:8px"><button id="pxStatYes">Allow</button><button id="pxStatNo">No thanks</button></div>`;
+    document.body.append(b);
+    b.querySelector("#pxStatYes").onclick = () => { b.remove(); statSet(true); };
+    b.querySelector("#pxStatNo").onclick = () => { b.remove(); statSet(false); };
+  }
+  function statInit() {
+    if (!ANALYTICS_URL || privacyOff()) return;
+    const c = statStore(STAT_KEY);
+    if (c === "yes") statStart(); else if (c !== "no") setTimeout(statBanner, 4000);
+  }
+  // toggle inside the shortcut dialog
+  const keysOpen = window.pxLib && window.pxLib.keys;
+  if (keysOpen && ANALYTICS_URL) {
+    window.pxLib.keys = function () {
+      keysOpen.apply(this, arguments);
+      const d = $$("pxKeysDlg"), row = d && d.querySelector("#pxKeysClose");
+      if (!row || $$("pxStatToggle")) return;
+      const b = document.createElement("button"); b.id = "pxStatToggle"; b.style.marginRight = "8px";
+      b.textContent = window.pxStats.enabled() ? "Usage statistics: On" : "Usage statistics: Off";
+      b.onclick = () => statSet(!window.pxStats.enabled());
+      row.parentNode.insertBefore(b, row);
+    };
+  }
+  statInit();
+
+  /* ------------------------------------------------------------------ *
    * 4. Styles and start-up
    * ------------------------------------------------------------------ */
   const style = document.createElement("style");
@@ -22644,116 +22799,6 @@ fn fs(@builtin(position) pos: vec4<f32>) -> @location(0) vec4<f32> {
   wire3D();
   window.px115 = Object.assign(window.px115 || {}, { measureBuffer, KMeter, buildRoot, setClip, applyPose, setSkeleton, rigOf, install3D });
   console.info("Studio Editor PRO X 1.15 layer ready.");
-})();
-<script id="pxFixSplitPlayback">
-/* Split-on-playback fix — replaces the Split handler and heals render().
-   Two things were going wrong:
-   1. The split copied { ...clip }, so the new half inherited _pl = true
-      from the first half. render() then thought it was already playing
-      and never called play() on the shared <video> element.
-   2. Any other path that leaves _pl === true while the element is paused
-      (undo across a cut, some transitions) hits the same short-circuit.
-   Fix 1: rebuild the second half without the runtime flags.
-   Fix 2: before every render, if a clip claims to be playing while its
-          element is paused, clear _pl so the normal play branch runs. */
-(function () {
-  "use strict";
-  var log = function (m, e) { (e ? console.warn : console.info).call(console, "[SplitFix]", m, e || ""); };
-
-  /* ---- 1. Heal render(): clear stale _pl on active clips ---- */
-  var rawRender = window.render;
-  if (typeof rawRender === "function") {
-    window.render = function (time) {
-      try {
-        for (var i = 0; i < clips.length; i++) {
-          var c = clips[i];
-          if (c && c.g && c._pl && c.el && c.el.paused && !c.el.seeking &&
-              time >= c.start && time < c.start + c.dur) {
-            c._pl = false;
-          }
-        }
-      } catch (e) { /* never break render */ }
-      return rawRender.call(this, time);
-    };
-  } else {
-    log("render() not found yet — installing split handler anyway");
-  }
-
-  /* ---- 2. Replace the Split button handler ---- */
-  function installSplit() {
-    var btn = document.getElementById("vsplit");
-    if (!btn) return false;
-
-    btn.onclick = function () {
-      var e = cs;
-      if (!e || T <= e.start + 0.1 || T >= e.start + e.dur - 0.1) return;
-      if (typeof vpush === "function") vpush();
-
-      var t = T - e.start;
-      var censorBefore = (e.fx && Array.isArray(e.fx.censor)) ? e.fx.censor.slice() : [];
-      var spd = (e.fx && e.fx.speed) ? e.fx.speed / 100 : 1;
-
-      /* Build the second half explicitly — never spread the clip, so
-         _pl / _pt / _ls / _sf do not carry over. */
-      var a = {
-        name: e.name,
-        el: e.el,
-        track: e.track,
-        start: T,
-        in: e.in + t * spd,
-        dur: e.dur - t,
-        src: e.src,
-        fx: Object.assign({}, e.fx || {}, { tin: "none" }),
-        g: e.g,
-        audio: e.audio,
-        it: e.it,
-        title: e.title ? JSON.parse(JSON.stringify(e.title)) : null,
-        caption: e.caption,
-        cue: e.cue ? { start: e.cue.start, end: e.cue.end } : null,
-        kf: e.kf ? JSON.parse(JSON.stringify(e.kf)) : null,
-        ease: e.ease,
-        _pl: false, _pt: 0, _ls: 0, _sf: null
-      };
-
-      e.dur = t;
-      e.fx = e.fx || {};
-      e.fx.tout = "none";
-      e._pl = false; e._pt = 0; e._ls = 0;
-
-      /* Censors that PRO X stores on the clip: split them across halves. */
-      if (censorBefore.length) {
-        var first = [], second = [];
-        censorBefore.forEach(function (m) {
-          var s = m.at, en = m.at + m.dur;
-          if (en <= t + 1e-4) first.push(Object.assign({}, m));
-          else if (s >= t - 1e-4) second.push(Object.assign({}, m, { at: Math.max(0, s - t) }));
-          else {
-            if (t - s > 0.01) first.push(Object.assign({}, m, { dur: t - s }));
-            if (en - t > 0.01) second.push(Object.assign({}, m, { at: 0, dur: en - t }));
-          }
-        });
-        e.fx.censor = first;
-        a.fx.censor = second;
-      }
-
-      clips.push(a);
-      cs = a;
-
-      try { tl();    } catch (err) { log("tl()", err); }
-      try { fxUI();  } catch (err) { log("fxUI()", err); }
-      try { render(T); } catch (err) { log("render()", err); }
-    };
-    log("split handler installed");
-    return true;
-  }
-
-  if (!installSplit()) {
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", installSplit, { once: true });
-    } else {
-      setTimeout(installSplit, 0);
-    }
-  }
 })();
 </script>
 </body>
