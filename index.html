@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#111418">
-<meta name="description" content="Studio Editor PRO X 1.15 - local-first photo, video, audio and 3D studio with perspective warping, RAW previews, video effects, 3D text, demos, captions, thumbnails, platform presets, watermarks and recovery snapshots.">
-<title>Studio Editor PRO X 1.15</title>
-<script>/* Usage statistics (optional, asks visitors first). Put your collector address here, for example "https://stats.example.com/collect". Leave it empty to keep the feature off. */window.PX_ANALYTICS_URL = "https://pro-x-content-creation-suite.onrender.com/dashboard?key=377164a56ac9123779167f64f98b61e6";</script>
+<meta name="description" content="Studio Editor PRO X 1.17 - local-first photo, video, audio and 3D studio with perspective warping, RAW previews, video effects, 3D text, demos, captions, thumbnails, platform presets, watermarks and recovery snapshots.">
+<title>Studio Editor PRO X 1.17</title>
+<script>/* Usage statistics (optional, asks visitors first). Put your collector address here, for example "https://stats.example.com/collect". Leave it empty to keep the feature off. */window.PX_ANALYTICS_URL = "";</script>
 <style>
 :root{--bg:#1c1c1c;--p:#282828;--p2:#333;--ln:#0d0d0d;--tx:#d6d6d6;--mut:#8c8c8c;--ac:#378ef0;--ac2:#e8505b;color-scheme:dark}
 *{box-sizing:border-box;margin:0}
@@ -143,7 +143,7 @@ progress{accent-color:var(--ac)}
 </style>
 <style id="pxV1Style">
 /* ==========================================================================
-   Studio Editor PRO X 1.1 — upgrade layer
+   Studio Editor PRO X 1.17 — upgrade layer
    Desktop, touch, embed, PWA standalone and compatibility-mode styling.
    Every class is prefixed with px- so the original editor stays untouched.
    ========================================================================== */
@@ -711,6 +711,23 @@ body.px-compat .px-hub-panel.px-on{animation:none}
 .px-about-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;margin:10px 0 0;font-size:11.5px}
 .px-about-grid b{color:#fff;font-weight:600}
 .px-about-grid span{color:#9ba3ad}
+
+/* Phone auto-fit: text and controls scale with the screen width, and touch targets stay easy to hit. */
+@media (max-width:900px),(pointer:coarse){
+  :root{--px-fs:clamp(12px,3.4vw,15px);--px-tap:clamp(34px,9.5vw,44px)}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  html body button,html body .bt,html body select,html body .tab{font-size:var(--px-fs);min-height:var(--px-tap)}
+  html body input:not([type=range]):not([type=checkbox]):not([type=radio]):not([type=color]):not([type=file]),html body textarea{font-size:max(16px,var(--px-fs));min-height:var(--px-tap)}
+  html body input[type=range]{min-height:var(--px-tap)}
+  html body input[type=checkbox],html body input[type=radio]{width:calc(var(--px-tap)*.5);height:calc(var(--px-tap)*.5)}
+  html body label.s,html body .opt label,html body .pb,html body .st{font-size:var(--px-fs)}
+  html body .tp .tn{font-size:var(--px-fs)}
+  html body .px-mbtn{font-size:clamp(9.5px,2.7vw,12px);min-height:var(--px-tap)}
+  html body dialog{max-width:96vw}
+}
+@media (max-width:900px) and (orientation:landscape){
+  :root{--px-fs:clamp(11px,2vw,13px);--px-tap:clamp(30px,7vh,38px)}
+}
 </style>
 </head>
 <body>
@@ -794,7 +811,7 @@ body.px-compat .px-hub-panel.px-on{animation:none}
 <section id="whatsnew" class="doc"><div id="wnbox"></div></section>
 <section id="audio">
 <div class="mb">
-<div class="m"><button>File</button><div class="dd"><button id="anew">New project…</button><label class="bt" for="af">Open audio (adds tracks)…</label><input id="af" type="file" accept="audio/*" multiple><button id="aexp">Export mixdown as WAV</button><button id="asendv">Send to Video library</button></div></div>
+<div class="m"><button>File</button><div class="dd"><button id="anew">New project…</button><label class="bt" for="af">Open audio (adds tracks)…</label><input id="af" type="file" accept="audio/*" multiple><button id="aexp">Export mixdown as WAV</button><button id="asendv">Send to Video library</button><button id="asendc" title="Put this track on the video timeline and mute the clip it came from">Send back to video clip</button></div></div>
 <div class="m"><button>Edit</button><div class="dd"><button id="aun">Undo</button><button id="atrim">Trim audio outside selection</button><button id="acut">Cut</button><button id="asil">Silence selection</button><button id="asall">Select all</button><button id="acopy">Copy</button><button id="apaste">Paste</button></div></div>
 <div class="m"><button>Tracks</button><div class="dd"><button id="aaddt">Add empty track</button><label class="bt" for="af">Import audio as new track…</label><button id="arec2">Record new track</button><button id="ashift">Shift track start…</button></div></div><div class="m"><button>Effect</button><div class="dd" id="afxm"><button id="afi">Fade in</button><button id="afo">Fade out</button><button id="anorm">Normalize</button><button id="arev">Reverse</button><button id="aspd">Change speed…</button><button id="aecho">Echo</button></div></div>
 </div>
@@ -11073,6 +11090,60 @@ function applyEffectPreset(e) {
   t && (EFX_KEYS.forEach(e => cs.fx[e] = DEF[e]), Object.assign(cs.fx, t))
 }
 
+async function clipAudioBuffer(c) {
+  const url = c.el.currentSrc || c.el.src;
+  let b = abCache.get(url);
+  if (!b) {
+    const blob = await (await fetch(url)).blob();
+    if (blob.size > 512 * 1024 * 1024) throw new Error("the file is too large to decode in the browser");
+    b = await AC.decodeAudioData(await blob.arrayBuffer()), abCache.set(url, b)
+  }
+  const sp = c.fx.speed / 100,
+    sr = b.sampleRate,
+    from = Math.min(b.length - 1, Math.max(0, Math.floor(c.in * sr))),
+    len = Math.max(1, Math.min(b.length - from, Math.ceil(c.dur * sp * sr))),
+    out = AC.createBuffer(b.numberOfChannels, len, sr);
+  for (let ch = 0; ch < b.numberOfChannels; ch++) out.getChannelData(ch).set(b.getChannelData(ch).subarray(from, from + len));
+  return out
+}
+
+function audioSendUI(e) {
+  const a = document.createElement("button");
+  a.textContent = "Send audio to Audio editor", a.title = "Copy this clip's sound into the Audio workspace as a new track so you can edit it there", a.onclick = async () => {
+    const c = cs;
+    a.disabled = !0, toast("Reading audio…");
+    try {
+      const b = await clipAudioBuffer(c);
+      addTrack(b, (c.name || "Clip").replace(/\.\w+$/, "") + " (audio)"), tracks[tracks.length - 1].fromClip = c, goTab("audio"), toast("Audio sent. Edit it, then use File > Send back to video clip.")
+    } catch (err) {
+      toast("Could not read the audio of this clip: " + (err && err.message || err))
+    }
+    a.disabled = !1
+  }, e.append(a)
+}
+
+function sendTrackToVideo() {
+  if (!tracks.length) return void toast("Open audio first.");
+  syncTrack();
+  const t = tracks[ati],
+    src = t.fromClip && clips.includes(t.fromClip) ? t.fromClip : null,
+    item = {
+      name: t.name + ".wav",
+      url: URL.createObjectURL(wavBlob(t.buf)),
+      type: "audio"
+    },
+    place = (c) => {
+      src && (c.start = src.start, src.fx.vol = 0), tl(), fxUI(), render(T)
+    };
+  items.push(item), bin(), addClip(item, t.buf.duration), src && (t.fromClip = null);
+  let tries = 0;
+  const wait = setInterval(() => {
+    const c = clips.find(x => x.it === item);
+    (c || ++tries > 60) && (clearInterval(wait), c && place(c))
+  }, 100);
+  goTab("video"), toast(src ? "Edited audio added at the original clip's start, and that clip is muted." : "Audio added to the video timeline.")
+}
+
 function fxUI() {
   const e = $("fxp");
   if (e.innerHTML = "", kfRows = [], !cs) return void(e.textContent = "Select a clip on the timeline to edit its effects.");
@@ -11098,7 +11169,7 @@ function fxUI() {
   };
   const eh = document.createElement("div");
   eh.style.cssText = "color:var(--mut);font-size:11px;margin:-2px 0 2px", eh.textContent = "One-click looks. Fine-tune them under VHS tape, CRT screen, Motion blur and Extra looks.";
-  e.append(a, ef, eh), motionUI(e), lutUI(e), curvesUI(e), deintUI(e), cs.title && titleUI(e), SPEC.forEach(([a, ...o]) => {
+  e.append(a, ef, eh), cs.g && !cs.title && audioSendUI(e), motionUI(e), lutUI(e), curvesUI(e), deintUI(e), cs.title && titleUI(e), SPEC.forEach(([a, ...o]) => {
     const n = document.createElement("b");
     n.textContent = a, n.dataset.min = LVG[a], e.append(n), o.forEach(([o, n, s, r]) => {
       const i = document.createElement("label");
@@ -11147,7 +11218,7 @@ lanes.onpointerdown = e => {
 }, $("vdel").onclick = () => {
   cs && (vpush(), cs.g && cs.el.pause(), clips = clips.filter(e => e !== cs), cs = null, tl(), fxUI(), render(T))
 }, addEventListener("keydown", e => {
-  $("video").classList.contains("on") && !/INPUT|SELECT/.test(e.target.tagName) && (" " === e.key ? (e.preventDefault(), $("vpl").click()) : "s" === e.key ? $("vsplit").click() : "Delete" === e.key && $("vdel").click())
+  $("video").classList.contains("on") && !/INPUT|SELECT|TEXTAREA/.test(e.target.tagName) && !e.target.isContentEditable && (" " === e.key ? (e.preventDefault(), $("vpl").click()) : "s" === e.key ? $("vsplit").click() : "Delete" === e.key && $("vdel").click())
 });
 const FONTS = ["system-ui, sans-serif", "Georgia, serif", "Impact, sans-serif", '"Courier New", monospace', '"Trebuchet MS", sans-serif', '"Brush Script MT", cursive'],
   TT = {
@@ -11242,8 +11313,24 @@ function titleUI(e) {
     }, e.append(r)
   };
   n("Font", "select", "", e => t.font = e.value, e => {
-    e.innerHTML = FONTS.map(e => `<option value='${e}'>${e.split(",")[0].replace(/"/g,"")}</option>`).join(""), e.value = t.font
-  }), [
+    const all = FONTS.concat(CFONTS.map(f => fontFamilyFor(f.family)));
+    if (t.font && !all.includes(t.font)) all.push(t.font);
+    e.innerHTML = all.map(f => `<option value='${f}'>${(CFONTS.find(c => fontFamilyFor(c.family) === f) || {}).name || f.split(",")[0].replace(/"/g,"")}</option>`).join(""), e.value = t.font, e.id = "vtfont"
+  }), (() => {
+    const r = document.createElement("label");
+    r.className = "bt", r.style.cssText = "display:block;text-align:center;cursor:pointer", r.textContent = "Load font file (TTF, OTF, WOFF)…";
+    const f = document.createElement("input");
+    f.type = "file", f.accept = ".ttf,.otf,.woff,.woff2", f.style.display = "none", f.onchange = async () => {
+      const file = f.files && f.files[0];
+      if (f.value = "", !file) return;
+      try {
+        const rec = await importFontFile(file);
+        t.font = fontFamilyFor(rec.family), fxUI(), titleCanvas(cs), playing || vui(), toast("Font “" + rec.name + "” is ready.")
+      } catch (err) {
+        toast("Could not load that font: " + err.message)
+      }
+    }, r.append(f), e.append(r)
+  })(), [
     ["Size", "size", 2, 30],
     ["Vertical %", "y", 5, 95],
     ["Box opacity", "bg", 0, 100]
@@ -12495,7 +12582,7 @@ $("acopy").onclick = () => {
   fx((t, a, o) => {
     for (let n = a + e; n < o; n++) t[n] += .4 * t[n - e]
   })
-}, $("asendv").onclick = () => {
+}, $("asendc").onclick = sendTrackToVideo, $("asendv").onclick = () => {
   tracks.length ? (window._toVideo = 1, $("aexp").click()) : toast("Open audio first.")
 };
 function aResample(data, ratio) {
@@ -14719,7 +14806,7 @@ async function demoPhoto(silent) {
     rot: -4,
     ls: 2
   }), addText("Kicker", {
-    t: "STUDIO EDITOR PRO X 1.1",
+    t: "STUDIO EDITOR PRO X 1.17",
     x: 600,
     y: 205,
     fs: 30,
@@ -15433,7 +15520,7 @@ setLv(lv0), $("lvl").onchange = e => setLv(e.target.value), $("about").onclick =
 
 <script id="pxV1Script">
 /* ==========================================================================
-   Studio Editor PRO X 1.1 — upgrade layer
+   Studio Editor PRO X 1.17 — upgrade layer
    A self-contained script that runs after the original editor and adds:
    creator tools, safer exports, PWA install, WIX embedding, touch mode,
    memory management, recovery snapshots and a live codec matrix.
@@ -15623,7 +15710,7 @@ setLv(lv0), $("lvl").onchange = e => setLv(e.target.value), $("about").onclick =
    * 1. Branding, version, About and What's new
    * ------------------------------------------------------------------ */
   function buildBrandBar() {
-    document.title = "Studio Editor PRO X 1.15";
+    document.title = "Studio Editor PRO X 1.17";
     const top = qs(".top");
     if (!top) return;
     const old = top.querySelector(":scope > b");
@@ -20293,7 +20380,7 @@ setLv(lv0), $("lvl").onchange = e => setLv(e.target.value), $("about").onclick =
 </script>
 <script id="pxV115Script">
 /* ==========================================================================
-   Studio Editor PRO X 1.15 — upgrade layer
+   Studio Editor PRO X 1.17 — upgrade layer
    Adds: EBU R128 loudness metering (live meter + "Measure mix" + normalised
    exports), and 3D asset import (GLB / glTF, Draco) with rig, skeleton and
    animation controls. The waveform pyramid cache and OPFS snapshot storage
@@ -22798,7 +22885,7 @@ fn fs(@builtin(position) pos: vec4<f32>) -> @location(0) vec4<f32> {
   hookMixdown();
   wire3D();
   window.px115 = Object.assign(window.px115 || {}, { measureBuffer, KMeter, buildRoot, setClip, applyPose, setSkeleton, rigOf, install3D });
-  console.info("Studio Editor PRO X 1.15 layer ready.");
+  console.info("Studio Editor PRO X 1.17 layer ready.");
 })();
 </script>
 </body>
