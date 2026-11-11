@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#111418">
-<meta name="description" content="Studio Editor PRO X 1.17 - local-first photo, video, audio and 3D studio with perspective warping, RAW previews, video effects, 3D text, demos, captions, thumbnails, platform presets, watermarks and recovery snapshots.">
-<title>Studio Editor PRO X 1.17</title>
+<meta name="description" content="Studio Editor PRO X 1.18 - local-first photo, video, audio and 3D studio with perspective warping, RAW previews, video effects, 3D text, demos, captions, thumbnails, platform presets, watermarks and recovery snapshots.">
+<title>Studio Editor PRO X 1.18</title>
 <script>/* Usage statistics (optional, asks visitors first). Put your collector address here, for example "https://stats.example.com/collect". Leave it empty to keep the feature off. */window.PX_ANALYTICS_URL = "";</script>
 <style>
 :root{--bg:#1c1c1c;--p:#282828;--p2:#333;--ln:#0d0d0d;--tx:#d6d6d6;--mut:#8c8c8c;--ac:#378ef0;--ac2:#e8505b;color-scheme:dark}
@@ -143,7 +143,7 @@ progress{accent-color:var(--ac)}
 </style>
 <style id="pxV1Style">
 /* ==========================================================================
-   Studio Editor PRO X 1.17 — upgrade layer
+   Studio Editor PRO X 1.1 — upgrade layer
    Desktop, touch, embed, PWA standalone and compatibility-mode styling.
    Every class is prefixed with px- so the original editor stays untouched.
    ========================================================================== */
@@ -797,7 +797,7 @@ body.px-compat .px-hub-panel.px-on{animation:none}
 <div class="m"><button>File</button><div class="dd"><button id="vnew">New project…</button><button id="vyad" title="When importing interlaced camcorder video, convert it to progressive with the yadif filter">Import: deinterlace with yadif (slower): off</button><label class="bt" for="vf">Import media…</label><input id="vlutf" type="file" accept=".cube,.CUBE" multiple><input id="vf" type="file" accept="video/*,image/*,audio/*,.mov,.mp4,.m4v,.mkv,.mxf,.hevc,.h264,.mts,.m2ts,.m2t,.ts,.mpg,.mpeg,.vob,.mod,.tod,.avi,.wmv,.flv,.3gp" multiple><button id="vproj">Project settings…</button><button id="vexp">Export sequence</button><button id="vcap">Codec support</button><button id="vtophoto">Send current frame to Photo</button></div></div><div class="m"><button>Timeline</button><div class="dd"><button id="vtall">Add a transition at every cut…</button><button id="vclose">Close gaps between clips</button></div></div>
 </div>
 <div class="vtop">
-<div class="pn" style="width:200px;flex:none"><h4>Project</h4><div class="pb" id="tbtn" style="flex-direction:row;flex-wrap:wrap;padding:6px"><button id="vtit">+ Title</button><button id="vlow">+ Lower third</button><button id="vsub">+ Subtitle</button><button id="vmat">+ Matte</button></div><div style="overflow:auto" id="bin"><div class="pb" style="color:var(--mut)">Import video or images from File, then click an item to add it at the playhead.</div></div></div>
+<div class="pn" style="width:200px;flex:none"><h4>Project</h4><div class="pb" id="tbtn" style="flex-direction:row;flex-wrap:wrap;padding:6px"><button id="vtit">+ Title</button><button id="vlow">+ Lower third</button><button id="vtita" title="Title that pops in">+ Animated title</button><button id="vlowa" title="Lower third with an accent bar that wipes in and out">+ Animated lower third</button><button id="vsub">+ Subtitle</button><button id="vmat">+ Matte</button></div><div style="overflow:auto" id="bin"><div class="pb" style="color:var(--mut)">Import video or images from File, then click an item to add it at the playhead.</div></div></div>
 <div class="pn" style="flex:1"><h4>Program monitor</h4><div class="mon"><canvas id="pm" width="854" height="480"></canvas></div>
 <div class="mc"><button id="vb" title="Back one frame">◀|</button><button id="vpl" class="p">Play / pause</button><button id="vf1" title="Forward one frame">|▶</button><span id="tc">0:00.00 / 0:00.00</span><button id="vfsb" title="Full screen preview">⛶</button></div></div>
 <div class="pn" style="width:290px;flex:none"><h4>Effect controls</h4><div class="pb" id="fxp" style="color:var(--mut)"></div></div>
@@ -10935,6 +10935,7 @@ function postFx(e, t, a) {
 }
 
 function draw(e, t) {
+  e.title && titleAnimFrame(e, t);
   const a = fxAt(e, t),
     o = e._sf || e.el,
     n = o.videoWidth || o.naturalWidth || o.width,
@@ -11169,7 +11170,7 @@ function fxUI() {
   };
   const eh = document.createElement("div");
   eh.style.cssText = "color:var(--mut);font-size:11px;margin:-2px 0 2px", eh.textContent = "One-click looks. Fine-tune them under VHS tape, CRT screen, Motion blur and Extra looks.";
-  e.append(a, ef, eh), cs.g && !cs.title && audioSendUI(e), motionUI(e), lutUI(e), curvesUI(e), deintUI(e), cs.title && titleUI(e), SPEC.forEach(([a, ...o]) => {
+  e.append(a, ef, eh), cs.g && !cs.title && audioSendUI(e), motionUI(e), lutUI(e), curvesUI(e), deintUI(e), cs.title && (titleUI(e), titleMotionUI(e)), SPEC.forEach(([a, ...o]) => {
     const n = document.createElement("b");
     n.textContent = a, n.dataset.min = LVG[a], e.append(n), o.forEach(([o, n, s, r]) => {
       const i = document.createElement("label");
@@ -11222,6 +11223,28 @@ lanes.onpointerdown = e => {
 });
 const FONTS = ["system-ui, sans-serif", "Georgia, serif", "Impact, sans-serif", '"Courier New", monospace', '"Trebuchet MS", sans-serif', '"Brush Script MT", cursive'],
   TT = {
+    tita: {
+      text: "Your title",
+      size: 9,
+      y: 50,
+      bg: 0,
+      ain: "pop",
+      aout: "none",
+      adur: .7
+    },
+    lowa: {
+      text: "Name\nSubtitle",
+      size: 5,
+      y: 82,
+      bg: 60,
+      align: "left",
+      x: 7,
+      ain: "wipe",
+      aout: "wipe",
+      adur: .7,
+      bar: 1,
+      barc: "#ffcc00"
+    },
     title: {
       text: "Your title",
       size: 9,
@@ -11265,6 +11288,141 @@ function titleCanvas(e) {
   })
 }
 
+const ANIMS = {
+  none: "None",
+  slideup: "Slide up",
+  slideleft: "Slide from left",
+  pop: "Pop",
+  wipe: "Wipe",
+  type: "Typewriter",
+  words: "Word by word"
+};
+
+function titleAnimFrame(e, lt) {
+  const t = e.title;
+  if (t.full) return;
+  const ain = t.ain || "none",
+    aout = t.aout || "none";
+  if ("none" === ain && "none" === aout && !t.bar) return;
+  const D = Math.max(.1, t.adur || .8),
+    pin = "none" === ain ? 1 : Math.min(1, Math.max(0, lt / D)),
+    pout = "none" === aout ? 1 : Math.min(1, Math.max(0, (e.dur - lt) / D));
+  let kind = "none",
+    p = 1;
+  pout < 1 && pout <= pin ? (kind = aout, p = pout) : pin < 1 && (kind = ain, p = pin);
+  const sig = JSON.stringify([t, W, H]),
+    key = kind + ":" + Math.round(200 * p);
+  if (e._ak === key && e._sig === sig && e.el.width === W && e.el.height === H) return;
+  if (e._sig !== sig || !e._ct) {
+    const mk = part => {
+      const cv = document.createElement("canvas"),
+        tmp = {
+          title: {
+            ...t,
+            __part: part
+          },
+          el: cv
+        };
+      return titleCanvas(tmp), [cv, tmp._lay]
+    };
+    const [cb] = mk("box"), [ct, lay] = mk("text");
+    if (!lay) return;
+    e._cb = cb, e._ct = ct, e._lay = lay, e._sig = sig
+  }
+  e._ak = key;
+  const a = e.el,
+    o = a.getContext("2d"),
+    L = e._lay,
+    size = L.size,
+    lh = L.lh;
+  a.width = W, a.height = H;
+  const rest = "none" === kind,
+    q = rest ? 1 : 1 - Math.pow(1 - p, 3),
+    n = L.lines.length,
+    cyMid = L.firstY + (n - 1) * lh / 2,
+    boxL = L.bx - L.padX,
+    boxW = L.widest + 2 * L.padX,
+    boxT = L.firstY - lh / 2 - L.padY,
+    boxH = n * lh + 2 * L.padY;
+  let alpha = 1;
+  if (o.save(), "slideup" === kind) o.translate(0, (1 - q) * size * 1.2), alpha = q;
+  else if ("slideleft" === kind) o.translate(-(1 - q) * W * .12, 0), alpha = q;
+  else if ("pop" === kind) {
+    const c1 = 1.70158,
+      k = .55 + .45 * (1 + (c1 + 1) * Math.pow(p - 1, 3) + c1 * Math.pow(p - 1, 2));
+    o.translate(L.cx, cyMid), o.scale(k, k), o.translate(-L.cx, -cyMid), alpha = Math.min(1, 2 * p)
+  } else if ("wipe" === kind) {
+    const l = boxL - size,
+      r = boxL + boxW + size;
+    o.beginPath(), o.rect(0, 0, l + (r - l) * q, H), o.clip()
+  }
+  o.globalAlpha = alpha, o.drawImage(e._cb, 0, 0);
+  if (t.bar) {
+    const bw = .22 * size,
+      bp = rest ? 1 : 1 - Math.pow(1 - Math.min(1, 1.6 * p), 3),
+      hh = boxH * bp;
+    o.globalAlpha = alpha * (rest ? 1 : Math.min(1, 3 * p)), o.fillStyle = t.barc || "#ffcc00", o.fillRect(boxL - 1.3 * bw, boxT + (boxH - hh) / 2, bw, hh)
+  }
+  const ct = e._ct,
+    meas = s => (o.font = L.font, o.measureText(s).width),
+    lx = w => "left" === L.align ? L.cx : "right" === L.align ? L.cx - w : L.cx - w / 2,
+    crop = (x, y, w, h, dy, al) => {
+      x = Math.max(0, x), y = Math.max(0, y), w = Math.min(W - x, w), h = Math.min(H - y, h), w > 0 && h > 0 && (o.globalAlpha = al, o.drawImage(ct, x, y, w, h, x, y + dy, w, h))
+    };
+  if ("type" === kind) {
+    let left = Math.round(p * L.lines.reduce((s, l) => s + l.length, 0));
+    L.lines.forEach((ln, i) => {
+      const k = Math.min(ln.length, Math.max(0, left));
+      if (left -= ln.length, !k) return;
+      const x = lx(meas(ln)),
+        y = L.firstY + i * lh - lh / 2 - .3 * size;
+      crop(x - .5 * size, y, meas(ln.slice(0, k)) + .5 * size + size * (k === ln.length ? .5 : .12), lh + .6 * size, 0, 1)
+    })
+  } else if ("words" === kind) {
+    const total = L.lines.reduce((s, l) => s + l.split(" ").length, 0);
+    let idx = 0;
+    L.lines.forEach((ln, i) => {
+      const x = lx(meas(ln)),
+        y = L.firstY + i * lh - lh / 2 - .3 * size,
+        ws = ln.split(" ");
+      ws.forEach((w, k) => {
+        const al = Math.min(1, Math.max(0, p * total - idx++));
+        if (!w || al <= 0) return;
+        const x0 = x + meas(ws.slice(0, k).join(" ") + (k ? " " : ""));
+        crop(x0 - .12 * size, y, meas(w) + .24 * size, lh + .6 * size, (1 - al) * size * .35, al)
+      })
+    })
+  } else o.globalAlpha = alpha, o.drawImage(ct, 0, 0);
+  o.restore()
+}
+
+function titleMotionUI(e) {
+  const t = cs.title;
+  if (t.full) return;
+  const h = document.createElement("b");
+  h.textContent = "Motion graphics", e.append(h);
+  const opts = k => Object.entries(ANIMS).map(([v, n]) => `<option value="${v}"${(t[k] || "none") === v ? " selected" : ""}>${n}</option>`).join(""),
+    row = (label, html, init) => {
+      const r = document.createElement("label");
+      r.className = "s", r.style.gridTemplateColumns = "96px 1fr", r.innerHTML = label + html, init(r.lastElementChild), e.append(r)
+    };
+  row("Animate in", `<select>${opts("ain")}</select>`, s => s.oninput = () => {
+    t.ain = s.value, vui()
+  }), row("Animate out", `<select>${opts("aout")}</select>`, s => s.oninput = () => {
+    t.aout = s.value, vui()
+  }), row("Anim time (s)", `<input type="range" min="0.2" max="3" step="0.1" value="${t.adur||.8}">`, s => s.oninput = () => {
+    t.adur = +s.value, vui()
+  }), row("Accent bar", `<input type="checkbox"${t.bar?" checked":""}>`, s => s.oninput = () => {
+    t.bar = +s.checked, vui()
+  }), row("Bar color", `<input type="color" value="${t.barc||"#ffcc00"}">`, s => s.oninput = () => {
+    t.barc = s.value, vui()
+  });
+  const b = document.createElement("button");
+  b.textContent = "Preview animation", b.onclick = () => {
+    pause(), T = Math.max(0, cs.start), play()
+  }, e.append(b)
+}
+
 function addTitle(e) {
   vpush();
   const t = TT[e],
@@ -11293,7 +11451,7 @@ function addTitle(e) {
         ...t
       }
     };
-  "mat" === e && (a.fx.tin = a.fx.tout = "none"), titleCanvas(a), clips.push(a), cs = a, tl(), fxUI(), render(T)
+  ("mat" === e || t.ain) && (a.fx.tin = a.fx.tout = "none"), titleCanvas(a), clips.push(a), cs = a, tl(), fxUI(), render(T)
 }
 
 function titleUI(e) {
@@ -11349,7 +11507,7 @@ function applyRes() {
     t = 0 | +$("xh").value;
   e >= 64 && t >= 64 && (e !== W || t !== H) && (PS.w = e, PS.h = t, PS.ar = "custom", applyPS())
 }
-$("vtit").onclick = () => addTitle("title"), $("vlow").onclick = () => addTitle("low"), $("vsub").onclick = () => addTitle("sub"), $("vmat").onclick = () => addTitle("mat"), $("vexp").onclick = () => {
+$("vtita").onclick = () => addTitle("tita"), $("vlowa").onclick = () => addTitle("lowa"), $("vtit").onclick = () => addTitle("title"), $("vlow").onclick = () => addTitle("low"), $("vsub").onclick = () => addTitle("sub"), $("vmat").onclick = () => addTitle("mat"), $("vexp").onclick = () => {
   const e = `${W}x${H}`;
   $("xr").value = [...$("xr").options].some(t => t.value === e) ? e : "c", $("xw").value = W, $("xh").value = H, [...$("xfps").options].some(e => e.value == PS.fps) && ($("xfps").value = PS.fps), $("xcs").value = PS.cs, $("vdlg").showModal()
 }, $("xr").onchange = e => {
@@ -14806,7 +14964,7 @@ async function demoPhoto(silent) {
     rot: -4,
     ls: 2
   }), addText("Kicker", {
-    t: "STUDIO EDITOR PRO X 1.17",
+    t: "STUDIO EDITOR PRO X 1.1",
     x: 600,
     y: 205,
     fs: 30,
@@ -15520,7 +15678,7 @@ setLv(lv0), $("lvl").onchange = e => setLv(e.target.value), $("about").onclick =
 
 <script id="pxV1Script">
 /* ==========================================================================
-   Studio Editor PRO X 1.17 — upgrade layer
+   Studio Editor PRO X 1.1 — upgrade layer
    A self-contained script that runs after the original editor and adds:
    creator tools, safer exports, PWA install, WIX embedding, touch mode,
    memory management, recovery snapshots and a live codec matrix.
@@ -15531,8 +15689,8 @@ setLv(lv0), $("lvl").onchange = e => setLv(e.target.value), $("about").onclick =
   /* ------------------------------------------------------------------ *
    * 0. Version, state and small helpers
    * ------------------------------------------------------------------ */
-  const VERSION = "1.15.0";
-  const BUILD = "2026-10-25";
+  const VERSION = "1.18.0";
+  const BUILD = "2026-11-11";
   const APP_NAME = "Studio Editor PRO X";
   const qp = new URLSearchParams(location.search);
   const isHttp = /^https?:$/.test(location.protocol);
@@ -15710,7 +15868,7 @@ setLv(lv0), $("lvl").onchange = e => setLv(e.target.value), $("about").onclick =
    * 1. Branding, version, About and What's new
    * ------------------------------------------------------------------ */
   function buildBrandBar() {
-    document.title = "Studio Editor PRO X 1.17";
+    document.title = "Studio Editor PRO X 1.18";
     const top = qs(".top");
     if (!top) return;
     const old = top.querySelector(":scope > b");
@@ -15719,7 +15877,7 @@ setLv(lv0), $("lvl").onchange = e => setLv(e.target.value), $("about").onclick =
         <span class="px-brand-mark">◆</span>
         <span class="px-brand-name">Studio Editor</span>
         <em class="px-brand-pro">PRO X</em>
-        <span class="px-ver">1.15</span>
+        <span class="px-ver">1.18</span>
       </div>`;
     }
     const spacer = [...top.children].find((el) => el.tagName === "SPAN" && /flex:\s*1/.test(el.getAttribute("style") || ""));
@@ -15771,7 +15929,7 @@ setLv(lv0), $("lvl").onchange = e => setLv(e.target.value), $("about").onclick =
       <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
         <span class="px-brand-mark" style="width:24px;height:24px">◆</span>
         Studio Editor <span style="color:#34d3b1;font-size:12px;letter-spacing:.12em">PRO X</span>
-        <span class="px-badge px-info">1.15</span>
+        <span class="px-badge px-info">1.18</span>
       </h3>
       <div class="px-about-version">VERSION ${VERSION} · BUILD ${BUILD}</div>
       <p style="margin-bottom:6px">Created by ${created}</p>
@@ -15839,11 +15997,23 @@ setLv(lv0), $("lvl").onchange = e => setLv(e.target.value), $("about").onclick =
           "Embeds (Wix): Save and Open… keep projects inside the browser, so no .studio file is needed, and downloads show a link you can right-click and Save as."
         ]]);
       }
+      if (typeof WN !== "undefined" && Array.isArray(WN) && !WN.some(([t]) => String(t).includes("Version 1.18"))) {
+        WN.unshift(["Version 1.18 — motion graphics, fonts and audio round trip", [
+          "Video: <b>animated titles and lower thirds</b>. New <b>+ Animated title</b> and <b>+ Animated lower third</b> buttons, and a <b>Motion graphics</b> section in every title panel.",
+          "Video: animate in and out with Slide up, Slide from left, Pop, Wipe, Typewriter or Word by word. Set the animation time, add an accent bar in any color, and use <b>Preview animation</b> to play it. Animations appear in the preview and in exports.",
+          "Video: <b>custom fonts</b> in the title panel. Use <b>Load font file</b> for TTF, OTF, WOFF or WOFF2. Fonts you loaded in the Photo tab are listed too.",
+          "Video: <b>spaces now work</b> when typing a title. The space bar no longer plays or pauses, and the S and Delete keys no longer split or delete a clip, while you are typing in a text box.",
+          "Video and Audio: <b>Send audio to Audio editor</b> copies the part of a clip's sound that you use into the Audio workspace as a new track. After editing, <b>File > Send back to video clip</b> adds it to the timeline at the clip's start and mutes the original. Very large source files (over 512 MB) cannot be sent.",
+          "Phones: text and buttons now scale with the screen width, controls keep an easy-to-tap height, and text boxes no longer trigger zoom on iPhone. Landscape phones get slightly smaller controls.",
+          "Offline: the new <code>sw.js</code> file lets the editor work offline once it has been opened. Put it in the same folder as the editor, over https.",
+          "Note: Adobe Premiere <code>.mogrt</code> templates cannot be imported, because they need Adobe's own engine to render."
+        ]]);
+      }
       const box = byId("wnbox");
       if (box && typeof WN !== "undefined") {
         box.innerHTML = `<h2>What's new</h2>
           <p>Everything added in this version. The latest release is at the top.</p>
-          <div class="px-note px-good"><b>PRO X 1.15 is here.</b> The editor is still a single file. This release adds an EBU R128 loudness meter with normalised exports, a faster waveform display, disk-backed recovery snapshots with no 384 MB limit, and GLB/glTF 3D import with rigs and animation.</div>` +
+          <div class="px-note px-good"><b>PRO X 1.18 is here.</b> The editor is still a single file. This release adds animated titles and lower thirds, custom fonts in the video tab, a way to send a clip\'s audio to the Audio editor and back, and automatic text and button sizing on phones.</div>` +
           WN.map(([title, items]) => `<div class="wn"><h4>${esc(title)}</h4><ul>${items.map((i) => `<li>${i}</li>`).join("")}</ul></div>`).join("");
       }
     } catch (e) { console.warn("PRO X: could not update What's new", e); }
@@ -16640,6 +16810,7 @@ setLv(lv0), $("lvl").onchange = e => setLv(e.target.value), $("about").onclick =
     const t = clip && clip.title;
     const canvas = clip && clip.el;
     if (!t || !canvas) return;
+    clip._ak = null;
     const ctx = canvas.getContext("2d");
     canvas.width = W; canvas.height = H;
     ctx.clearRect(0, 0, W, H);
@@ -16673,10 +16844,12 @@ setLv(lv0), $("lvl").onchange = e => setLv(e.target.value), $("about").onclick =
     const padX = (t.padx ?? 0.6) * size;
     const padY = (t.pady ?? 0.3) * size;
     const bx = align === "left" ? cx : align === "right" ? cx - widest : cx - widest / 2;
+    clip._lay = { lines, cx, firstY, lh, align, size, widest, bx, padX, padY, font: ctx.font };
     ctx.save();
     ctx.globalAlpha = clamp((t.bg ?? 0) / 100, 0, 1);
     ctx.fillStyle = t.bgc || "#000000";
-    if (t.full) {
+    if (t.__part === "text") {
+    } else if (t.full) {
       ctx.fillRect(0, 0, W, H);
     } else if ((t.bg ?? 0) > 0 && t.text) {
       const r = Math.min(lh * 0.4, (t.radius ?? 0.18) * size);
@@ -16701,7 +16874,7 @@ setLv(lv0), $("lvl").onchange = e => setLv(e.target.value), $("about").onclick =
       ctx.shadowBlur = 0.22 * size;
       ctx.shadowOffsetY = 0.05 * size;
     }
-    lines.forEach((line, i) => {
+    (t.__part === "box" ? [] : lines).forEach((line, i) => {
       const y = firstY + i * lh;
       if (t.stroke || t.size > 0) {
         ctx.lineWidth = Math.max(1, (t.strokeW ?? 0.08) * size);
@@ -18890,7 +19063,7 @@ setLv(lv0), $("lvl").onchange = e => setLv(e.target.value), $("about").onclick =
     return `
     <div class="px-hub">
       <div class="px-hub-head">
-        <div class="px-hub-title"><span class="px-brand-mark">P</span> Creator Hub <span class="px-badge px-info">1.15</span></div>
+        <div class="px-hub-title"><span class="px-brand-mark">P</span> Creator Hub <span class="px-badge px-info">1.18</span></div>
         <div class="px-hub-sub" id="pxHubSub">Publishing, captions, thumbnails and audio</div>
         <div class="px-row">
           <button class="px-btn px-sm" id="pxHubHelpBtn">Help</button>
@@ -19300,7 +19473,7 @@ setLv(lv0), $("lvl").onchange = e => setLv(e.target.value), $("about").onclick =
             <h4>This build</h4>
             <div class="px-row">
               <button class="px-btn" id="pxHelpAbout">About Studio Editor PRO X</button>
-              <button class="px-btn px-ghost" id="pxHelpNew">What's new in 1.15</button>
+              <button class="px-btn px-ghost" id="pxHelpNew">What's new in 1.18</button>
             </div>
             <p class="px-hint" style="margin-top:8px">Version ${VERSION} · build ${BUILD}. Everything runs locally in this tab.</p>
           </section>
@@ -20366,7 +20539,7 @@ setLv(lv0), $("lvl").onchange = e => setLv(e.target.value), $("about").onclick =
     setTimeout(() => {
       if (!localStorage.getItem("prox.greeted")) {
         LS.set("greeted", true);
-        say("PRO X 1.15 is ready. Try the loudness meter, GLB/glTF 3D import and disk-backed recovery snapshots.");
+        say("PRO X 1.18 is ready. Try animated titles and lower thirds, custom fonts in the video tab, and sending a clip's audio to the Audio editor.");
       }
     }, 900);
   }
@@ -20380,7 +20553,7 @@ setLv(lv0), $("lvl").onchange = e => setLv(e.target.value), $("about").onclick =
 </script>
 <script id="pxV115Script">
 /* ==========================================================================
-   Studio Editor PRO X 1.17 — upgrade layer
+   Studio Editor PRO X 1.18 — upgrade layer
    Adds: EBU R128 loudness metering (live meter + "Measure mix" + normalised
    exports), and 3D asset import (GLB / glTF, Draco) with rig, skeleton and
    animation controls. The waveform pyramid cache and OPFS snapshot storage
@@ -22805,7 +22978,7 @@ fn fs(@builtin(position) pos: vec4<f32>) -> @location(0) vec4<f32> {
 
   function send(type, extra) {
     if (!ANALYTICS_URL || !stat.on) return;
-    const body = JSON.stringify(Object.assign({ v: 1, type, uid: statStore(UID_KEY), sid: stat.sid, app: "1.15", embed: embedded(), t: Date.now() }, extra));
+    const body = JSON.stringify(Object.assign({ v: 1, type, uid: statStore(UID_KEY), sid: stat.sid, app: "1.18", embed: embedded(), t: Date.now() }, extra));
     try { if (navigator.sendBeacon && navigator.sendBeacon(ANALYTICS_URL, new Blob([body], { type: "text/plain" }))) return; } catch {}
     try { fetch(ANALYTICS_URL, { method: "POST", body, keepalive: true, mode: "no-cors", headers: { "Content-Type": "text/plain" } }).catch(() => {}); } catch {}
   }
@@ -22885,7 +23058,7 @@ fn fs(@builtin(position) pos: vec4<f32>) -> @location(0) vec4<f32> {
   hookMixdown();
   wire3D();
   window.px115 = Object.assign(window.px115 || {}, { measureBuffer, KMeter, buildRoot, setClip, applyPose, setSkeleton, rigOf, install3D });
-  console.info("Studio Editor PRO X 1.17 layer ready.");
+  console.info("Studio Editor PRO X 1.18 layer ready.");
 })();
 </script>
 </body>
