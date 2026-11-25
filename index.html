@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#111418">
-<meta name="description" content="Studio Editor PRO X 1.18 - local-first photo, video, audio and 3D studio with perspective warping, RAW previews, video effects, 3D text, demos, captions, thumbnails, platform presets, watermarks and recovery snapshots.">
-<title>Studio Editor PRO X 1.18</title>
-<script>/* Usage statistics (optional, asks visitors first). Put your collector address here, for example "https://stats.example.com/collect". Leave it empty to keep the feature off. */window.PX_ANALYTICS_URL = "https://pro-x-content-creation-suite.onrender.com";</script>
+<meta name="description" content="Studio Editor PRO X 1.21 - local-first photo, video, audio and 3D studio with perspective warping, RAW previews, video effects, 3D text, demos, captions, thumbnails, platform presets, watermarks and recovery snapshots.">
+<title>Studio Editor PRO X 1.21</title>
+<script>/* Usage statistics (optional, asks visitors first). Put your collector address here, for example "https://stats.example.com/collect". Leave it empty to keep the feature off. */window.PX_ANALYTICS_URL = "";</script>
 <style>
 :root{--bg:#1c1c1c;--p:#282828;--p2:#333;--ln:#0d0d0d;--tx:#d6d6d6;--mut:#8c8c8c;--ac:#378ef0;--ac2:#e8505b;color-scheme:dark}
 *{box-sizing:border-box;margin:0}
@@ -736,7 +736,7 @@ body.px-compat .px-hub-panel.px-on{animation:none}
 <button class="tab" role="tab" aria-selected="false" data-t="video">Video</button>
 <button class="tab" role="tab" aria-selected="false" data-t="audio">Audio</button><button class="tab" role="tab" aria-selected="false" data-t="model">3D</button><button class="tab" role="tab" aria-selected="false" data-t="resources">Resources</button><button class="tab" role="tab" aria-selected="false" data-t="whatsnew">What's new</button><span style="flex:1"></span><select id="pxDemos" title="Load ready-made demo content or download the full demo project"><option value="">Demos…</option><option value="photo">Photo demo</option><option value="video">Video demo</option><option value="audio">Audio demo</option><option value="model">3D demo</option><option value="all">Load all four demos</option><option value="download">Download full .studio demo</option></select><select id="lvl" title="Workspace level: Simple, Advanced or Pro"><option value="1">Simple</option><option value="2">Advanced</option><option value="3">Pro</option></select><button id="projOpen" style="margin-left:8px" title="Open a saved project">Open project</button><button id="projSave" title="Save everything so you can keep editing later">Save project</button><input id="projFile" type="file" accept=".studio"><button id="helpbtn" style="margin-left:8px" title="How to use this editor">? Help</button><button id="fsbtn" style="margin-left:8px" title="Full screen">⛶ Full screen</button><button id="savebtn" class="p" style="margin-left:8px" title="Save or export the current work">Save file</button><button id="about" style="margin-left:8px">About</button></div>
 
-<section id="photo" class="on"><div class="mb"><div class="m"><button>File</button><div class="dd"><button id="pnewfile">New file…</button><label class="bt" for="pf" title="Images, Photoshop PSD/PSB composites, PDF-compatible AI and RAW camera previews">Open image, PSD, AI or RAW…</label><input id="pf" type="file" accept="image/*,.psd,.psb,.ai,.pdf,.dng,.cr2,.cr3,.nef,.arw,.raf,.rw2,.orf,.pef,.srw,.x3f,.raw"><label class="bt" for="pf2" title="Place an image, PSD composite, AI artboard or RAW preview as a new layer">Place image, PSD, AI or RAW as layer…</label><input id="pf2" type="file" accept="image/*,.psd,.psb,.ai,.pdf,.dng,.cr2,.cr3,.nef,.arw,.raf,.rw2,.orf,.pef,.srw,.x3f,.raw"><button id="pexp">Export PNG</button><button id="pjpg">Export JPG</button><button id="psendv">Send to Video library</button></div></div><div class="m"><button>Edit</button><div class="dd"><button data-a="undo">Undo (Ctrl+Z)</button><button data-a="redo">Redo (Ctrl+Y)</button><button data-a="fillfg">Fill with foreground</button><button data-a="fillbg">Fill with background</button><button data-a="copy">Copy (Ctrl+C)</button><button data-a="cut">Cut (Ctrl+X)</button><button data-a="paste">Paste (Ctrl+V)</button><button data-a="caf">Content-aware fill…</button><button data-a="clear">Clear (Delete)</button></div></div><div class="m"><button>Image</button><div class="dd"><button data-a="rcw">Rotate 90° clockwise</button><button data-a="rccw">Rotate 90° counter-clockwise</button><button data-a="r180">Rotate 180°</button><button data-a="fh">Flip horizontal</button><button data-a="fv">Flip vertical</button><button data-a="size">Image size…</button><button data-a="crop">Crop to selection</button><button data-a="auto">Auto levels</button><button data-a="cas">Content-aware scale…</button><button data-a="crar">Crop to aspect ratio…</button><button data-a="csz">Canvas size…</button><button data-a="rany">Rotate any angle…</button></div></div><div class="m"><button>Layer</button><div class="dd"><button data-a="lnew">New layer</button><button data-a="ldup">Duplicate layer</button><button data-a="ldel">Delete layer</button><button data-a="lmerge">Merge down</button><button data-a="lup">Move up</button><button data-a="ldn">Move down</button><button data-a="lshadow">Drop shadow on/off</button><button data-a="lcopy">New layer via copy</button><button data-a="lcut">New layer via cut</button><button data-a="lscale">Scale layer…</button></div></div><div class="m"><button>Select</button><div class="dd"><button data-a="all">All</button><button data-a="none">None</button><button data-a="inv">Invert</button><button data-a="feather">Feather</button></div></div><div class="m"><button>Filter</button><div class="dd"><button data-a="fblur">Gaussian blur</button><button data-a="fmotion">Motion blur…</button><button data-a="fglow">Glow</button><button data-a="fdenoise">Denoise</button><button data-a="fsharp">Sharpen</button><button data-a="fnoise">Add noise</button><button data-a="fpix">Pixelate</button><button data-a="femb">Emboss</button><button data-a="fedge">Edge detect</button><button data-a="fvig">Vignette</button><button data-a="fpost">Posterize</button><button data-a="finv">Invert colors</button><button data-a="fdes">Desaturate</button><button data-a="fsepia">Sepia</button><button data-a="fvintage">Vintage film</button><button data-a="fthresh">Threshold</button><button data-a="fsketch">Pencil sketch</button><button data-a="fduo">Duotone (FG and BG)</button><button data-a="fgmap">Gradient map</button><button data-a="fswirl">Swirl</button><button data-a="fwave">Wave</button><label class="bt" for="plutf">Load LUT (.cube)…</label><button data-a="flut">Apply LUT</button></div></div></div>
+<section id="photo" class="on"><div class="mb"><div class="m"><button>File</button><div class="dd"><button id="pnewfile">New file…</button><label class="bt" for="pf" title="Images, Photoshop PSD/PSB composites, PDF-compatible AI and RAW camera previews">Open image, PSD, AI or RAW…</label><input id="pf" type="file" accept="image/*,.psd,.psb,.ai,.pdf,.dng,.cr2,.cr3,.nef,.arw,.raf,.rw2,.orf,.pef,.srw,.x3f,.raw"><label class="bt" for="pf2" title="Place an image, PSD composite, AI artboard or RAW preview as a new layer">Place image, PSD, AI or RAW as layer…</label><input id="pf2" type="file" accept="image/*,.psd,.psb,.ai,.pdf,.dng,.cr2,.cr3,.nef,.arw,.raf,.rw2,.orf,.pef,.srw,.x3f,.raw"><button id="pexp">Export PNG</button><button id="pjpg">Export JPG</button><button id="psendv">Send to Video library</button></div></div><div class="m"><button>Edit</button><div class="dd"><button data-a="undo">Undo (Ctrl+Z)</button><button data-a="redo">Redo (Ctrl+Y)</button><button data-a="fillfg">Fill with foreground</button><button data-a="fillbg">Fill with background</button><button data-a="copy">Copy (Ctrl+C)</button><button data-a="cut">Cut (Ctrl+X)</button><button data-a="paste">Paste (Ctrl+V)</button><button data-a="caf">Content-aware fill…</button><button data-a="clear">Clear (Delete)</button></div></div><div class="m"><button>Image</button><div class="dd"><button data-a="rcw">Rotate 90° clockwise</button><button data-a="rccw">Rotate 90° counter-clockwise</button><button data-a="r180">Rotate 180°</button><button data-a="fh">Flip horizontal</button><button data-a="fv">Flip vertical</button><button data-a="size">Image size…</button><button data-a="crop">Crop to selection</button><button data-a="auto">Auto levels</button><button data-a="cas">Content-aware scale…</button><button data-a="crar">Crop to aspect ratio…</button><button data-a="csz">Canvas size…</button><button data-a="rany">Rotate any angle…</button></div></div><div class="m"><button>Layer</button><div class="dd"><button data-a="lnew">New layer</button><button data-a="ldup">Duplicate layer</button><button data-a="ldel">Delete layer</button><button data-a="lmerge">Merge down</button><button data-a="lup">Move up</button><button data-a="ldn">Move down</button><button data-a="lshadow">Drop shadow on/off</button><button data-a="lcopy">New layer via copy</button><button data-a="lcut">New layer via cut</button><button data-a="lscale">Scale layer…</button></div></div><div class="m"><button>Select</button><div class="dd"><button data-a="all">All</button><button data-a="none">None</button><button data-a="inv">Invert</button><button data-a="feather">Feather</button></div></div><div class="m"><button>Filter</button><div class="dd"><button data-a="fblur">Gaussian blur</button><button data-a="fmotion">Motion blur…</button><button data-a="fglow">Glow</button><button data-a="fdenoise">Denoise</button><button data-a="fsharp">Sharpen</button><button data-a="fnoise">Add noise</button><button data-a="fpix">Pixelate</button><button data-a="femb">Emboss</button><button data-a="fedge">Edge detect</button><button data-a="fvig">Vignette</button><button data-a="fpost">Posterize</button><button data-a="finv">Invert colors</button><button data-a="fdes">Desaturate</button><button data-a="fsepia">Sepia</button><button data-a="fvintage">Vintage film</button><button data-a="fthresh">Threshold</button><button data-a="fsketch">Pencil sketch</button><button data-a="fduo">Duotone (FG and BG)</button><button data-a="fgmap">Gradient map</button><button data-a="fswirl">Swirl</button><button data-a="fwave">Wave</button><label class="bt" for="plutf">Load LUT (.cube)…</label><button data-a="flut">Apply LUT</button></div></div><div class="m"><button>Develop</button><div class="dd"><button id="pdev" title="Exposure, highlights, shadows, clarity, dehaze, color mixer, grading, local adjustments">Develop panel…</button><button data-a="fredeye">Red-eye removal (select the eyes first)</button></div></div></div>
 <div class="opt"><b id="tname">Brush</b><label>Size <input type="range" id="psz" min="1" max="200" value="16"><output id="pszo">16</output></label><label>Brush <select id="bty"><option value="round">Round</option><option value="soft">Soft</option><option value="airbrush">Airbrush</option><option value="pencil">Pencil</option><option value="marker">Marker</option><option value="calligraphy">Calligraphy</option><option value="chalk">Chalk</option><option value="spray">Spray</option><option value="watercolor">Watercolor</option><option value="bristle">Bristle</option></select></label><label>Hardness <input type="range" id="bhard" min="0" max="100" value="80"></label><label>Gradient <select id="gty"><option value="linear">Linear</option><option value="radial">Radial</option><option value="angle">Angle</option><option value="reflected">Reflected</option><option value="diamond">Diamond</option></select><select id="gpr"></select></label><label>Flow <input type="range" id="flow" min="5" max="100" value="100"></label><label>Ratio <select id="pratio"><option value="0">Free</option><option value="1:1">1:1</option><option value="4:3">4:3</option><option value="3:2">3:2</option><option value="16:9">16:9</option><option value="9:16">9:16</option><option value="4:5">4:5</option></select></label><label>Tolerance <input type="range" id="tol" min="0" max="100" value="30"></label><label>Filter amount <input type="range" id="famt" min="1" max="100" value="30"></label></div>
 <div class="opt" id="ptoolopts" style="display:none">
 <span id="pcrophint" style="display:none;color:var(--mut);font-size:11px">Drag a rectangle on the picture to crop. The Ratio menu controls the aspect ratio.</span>
@@ -753,7 +753,7 @@ body.px-compat .px-hub-panel.px-on{animation:none}
 <b style="font-size:11px;color:#fff;margin-top:4px">LUT (color look)</b><select id="plutsel"><option value="">Choose a LUT…</option></select><div class="row"><label class="bt" for="plutf" style="text-align:center">Load .cube…</label><button data-a="flut" class="p">Apply LUT</button></div><input id="plutf" type="file" accept=".cube,.CUBE" multiple><div style="color:var(--mut);font-size:11px">Strength follows the Filter amount slider.</div></div></div>
 <div class="pn" style="flex:none"><h4>Text</h4><div class="pb"><div style="color:var(--mut);font-size:11px">Pick the Text tool (T), click the picture and type. Drag text to move it. Click it again to edit.</div>
 <div class="row" style="gap:4px"><select id="tfont" title="Typeface" style="flex:1;min-width:0"></select><label class="bt" for="tfontfile" style="flex:none;padding:0 7px" title="Load a font file (TTF, OTF, WOFF or WOFF2)">Font file…</label></div>
-<input id="tfontfile" type="file" accept=".ttf,.otf,.woff,.woff2,font/ttf,font/otf,font/woff,font/woff2" style="display:none">
+<input id="tfontfile" type="file" multiple accept=".ttf,.otf,.woff,.woff2,font/ttf,font/otf,font/woff,font/woff2" style="display:none"><button id="tfontmgr" title="Your fonts and installed fonts" style="width:100%">Manage fonts…</button>
 <div class="row" style="gap:4px"><select id="tpreset" title="Text style preset" style="flex:1;min-width:0"><option value="">Style preset…</option><option value="Poster">Poster</option><option value="Title">Title</option><option value="Subtitle">Subtitle</option><option value="Caption">Caption</option><option value="Label">Label</option><option value="Quote">Quote</option><option value="Neon">Neon</option><option value="Elegant">Elegant</option><option value="Retro">Retro</option></select><button data-tq="Title" title="Add a centered title">+ Title</button><button data-tq="Caption" title="Add a caption">+ Cap</button></div>
 <div id="tprev" title="Typeface preview">Aa Bb Cc 123</div>
 <div class="talign" role="group" aria-label="Text alignment">
@@ -797,7 +797,7 @@ body.px-compat .px-hub-panel.px-on{animation:none}
 <div class="m"><button>File</button><div class="dd"><button id="vnew">New project…</button><button id="vyad" title="When importing interlaced camcorder video, convert it to progressive with the yadif filter">Import: deinterlace with yadif (slower): off</button><label class="bt" for="vf">Import media…</label><input id="vlutf" type="file" accept=".cube,.CUBE" multiple><input id="vf" type="file" accept="video/*,image/*,audio/*,.mov,.mp4,.m4v,.mkv,.mxf,.hevc,.h264,.mts,.m2ts,.m2t,.ts,.mpg,.mpeg,.vob,.mod,.tod,.avi,.wmv,.flv,.3gp" multiple><button id="vproj">Project settings…</button><button id="vexp">Export sequence</button><button id="vcap">Codec support</button><button id="vtophoto">Send current frame to Photo</button></div></div><div class="m"><button>Timeline</button><div class="dd"><button id="vtall">Add a transition at every cut…</button><button id="vclose">Close gaps between clips</button></div></div>
 </div>
 <div class="vtop">
-<div class="pn" style="width:200px;flex:none"><h4>Project</h4><div class="pb" id="tbtn" style="flex-direction:row;flex-wrap:wrap;padding:6px"><button id="vtit">+ Title</button><button id="vlow">+ Lower third</button><button id="vtita" title="Title that pops in">+ Animated title</button><button id="vlowa" title="Lower third with an accent bar that wipes in and out">+ Animated lower third</button><button id="vsub">+ Subtitle</button><button id="vmat">+ Matte</button></div><div style="overflow:auto" id="bin"><div class="pb" style="color:var(--mut)">Import video or images from File, then click an item to add it at the playhead.</div></div></div>
+<div class="pn" style="width:200px;flex:none"><h4>Project</h4><div class="pb" id="tbtn" style="flex-direction:row;flex-wrap:wrap;padding:6px"><button id="vtit">+ Title</button><button id="vlow">+ Lower third</button><button id="vinst" title="Play a piano, drums and other instruments and record them onto the timeline">+ Instruments</button><button id="vtita" title="Title that pops in">+ Animated title</button><button id="vlowa" title="Lower third with an accent bar that wipes in and out">+ Animated lower third</button><select id="vmgsel" title="Build your own motion graphic from shapes and text, with animation. Every shape stays editable."><option value="">+ Motion graphic…</option><option value="blank">Blank (one shape)</option><option value="callout">Callout box</option><option value="cta">Subscribe bar</option><option value="progress">Progress bar</option><option value="burst">Spinning burst</option><option value="lower">Lower third from shapes</option></select><label class="bt" for="vmgf" title="Load a saved motion graphic template (.json)">Load graphic…</label><input id="vmgf" type="file" accept=".json,application/json" style="display:none"><button id="vsub">+ Subtitle</button><button id="vmat">+ Matte</button></div><div style="overflow:auto" id="bin"><div class="pb" style="color:var(--mut)">Import video or images from File, then click an item to add it at the playhead.</div></div></div>
 <div class="pn" style="flex:1"><h4>Program monitor</h4><div class="mon"><canvas id="pm" width="854" height="480"></canvas></div>
 <div class="mc"><button id="vb" title="Back one frame">◀|</button><button id="vpl" class="p">Play / pause</button><button id="vf1" title="Forward one frame">|▶</button><span id="tc">0:00.00 / 0:00.00</span><button id="vfsb" title="Full screen preview">⛶</button></div></div>
 <div class="pn" style="width:290px;flex:none"><h4>Effect controls</h4><div class="pb" id="fxp" style="color:var(--mut)"></div></div>
@@ -7838,6 +7838,13 @@ $("gpr").innerHTML = Object.keys(GPR).map(e => `<option>${e}</option>`).join("")
 const TFONTS = ["system-ui, sans-serif", "Arial, sans-serif", '"Arial Black", sans-serif', '"Bahnschrift", "Arial Narrow", sans-serif', "Calibri, sans-serif", "Cambria, serif", "Candara, sans-serif", "Consolas, monospace", "Constantia, serif", "Corbel, sans-serif", '"Courier New", monospace', '"Franklin Gothic Medium", sans-serif', "Garamond, serif", "Georgia, serif", "Impact, sans-serif", '"Lucida Console", monospace', '"Palatino Linotype", serif', '"Segoe UI", sans-serif', "Tahoma, sans-serif", '"Times New Roman", serif', '"Trebuchet MS", sans-serif', "Verdana, sans-serif", '"Brush Script MT", cursive'];
 const GFONTS = ["Inter", "Montserrat", "Poppins", "Raleway", "Oswald", "Bebas Neue", "Anton", "Archivo Black", "Barlow Condensed", "Teko", "Playfair Display", "Merriweather", "Lora", "Libre Baskerville", "Cormorant Garamond", "DM Serif Display", "Abril Fatface", "Cinzel", "Pacifico", "Lobster", "Caveat", "Dancing Script", "Great Vibes", "Satisfy", "Permanent Marker", "Bangers", "Press Start 2P", "Orbitron", "Righteous", "Space Grotesk", "Manrope", "Nunito", "Work Sans", "Rubik", "Josefin Sans", "Michroma", "Monoton", "Audiowide", "Syncopate"];
 const CFONTS = [];
+const LFONTS = (() => {
+  try {
+    return JSON.parse(localStorage.getItem("prox.lfonts") || "[]")
+  } catch (e) {
+    return []
+  }
+})();
 const GF_CACHE = new Map();
 const GF_FAIL = new Set();
 
@@ -7863,6 +7870,7 @@ function refreshFontSelect() {
   addGroup("System fonts", TFONTS.map(v => [v.split(",")[0].replace(/"/g, ""), v, ""]));
   addGroup("Google fonts · load on demand", GFONTS.map(n => [n, fontFamilyFor(n), n]));
   addGroup("Your fonts", CFONTS.map(f => [f.name, fontFamilyFor(f.family), ""]));
+  addGroup("Installed on this device", LFONTS.map(n => [n, fontFamilyFor(n), ""]));
   if (keep && [...s.options].some(o => o.value === keep)) s.value = keep;
   else s.value = TFONTS[0];
   textPreview()
@@ -7907,7 +7915,7 @@ function b64ToBuf(b64) {
   return u.buffer
 }
 
-async function addCustomFont(rec, data) {
+async function addCustomFont(rec, data, fromStore) {
   if (!rec || !rec.family) throw new Error("That font has no family name.");
   if (!document.fonts.check('16px "' + rec.family + '"')) {
     const face = new FontFace(rec.family, data);
@@ -7915,6 +7923,7 @@ async function addCustomFont(rec, data) {
     document.fonts.add(face)
   }
   if (!CFONTS.some(f => f.family === rec.family)) CFONTS.push(rec);
+  fromStore || fontSave(rec);
   refreshFontSelect();
   return rec
 }
@@ -7923,7 +7932,9 @@ async function importFontFile(file) {
   if (!file) return null;
   const buf = await file.arrayBuffer();
   const base = file.name.replace(/\.[^.]+$/, "").replace(/[^\w -]+/g, " ").trim() || "Font";
-  const family = "Custom " + base.slice(0, 28) + " " + Date.now().toString(36);
+  const family = "Custom " + base.slice(0, 28) + " " + fontHash(new Uint8Array(buf));
+  const known = CFONTS.find(f => f.family === family);
+  if (known) return known;
   const rec = {
     name: base.slice(0, 40),
     family,
@@ -7933,6 +7944,143 @@ async function importFontFile(file) {
   await addCustomFont(rec, buf);
   return rec
 }
+
+function fontHash(u) {
+  let h = 2166136261 ^ u.length;
+  const step = Math.max(1, u.length >> 10);
+  for (let i = 0; i < u.length; i += step) h = Math.imul(h ^ u[i], 16777619);
+  return (h >>> 0).toString(36)
+}
+const FONT_DB = {
+  db: null
+};
+
+function fontDB() {
+  return new Promise((res, rej) => {
+    if (FONT_DB.db) return res(FONT_DB.db);
+    try {
+      const r = indexedDB.open("prox-fonts", 1);
+      r.onupgradeneeded = () => r.result.createObjectStore("fonts", {
+        keyPath: "family"
+      }), r.onsuccess = () => res(FONT_DB.db = r.result), r.onerror = () => rej(r.error)
+    } catch (e) {
+      rej(e)
+    }
+  })
+}
+async function fontSave(rec) {
+  try {
+    (await fontDB()).transaction("fonts", "readwrite").objectStore("fonts").put(rec)
+  } catch (e) {}
+}
+async function fontForget(family) {
+  try {
+    (await fontDB()).transaction("fonts", "readwrite").objectStore("fonts").delete(family)
+  } catch (e) {}
+}
+async function fontLoadSaved() {
+  try {
+    const db = await fontDB(),
+      all = await new Promise((res, rej) => {
+        const r = db.transaction("fonts").objectStore("fonts").getAll();
+        r.onsuccess = () => res(r.result), r.onerror = () => rej(r.error)
+      });
+    for (const rec of all) try {
+      await addCustomFont(rec, b64ToBuf(rec.b64), !0)
+    } catch (e) {}
+  } catch (e) {}
+}
+async function importFontFiles(files) {
+  const out = [];
+  let bad = 0;
+  for (const f of files) try {
+    const r = await importFontFile(f);
+    r && out.push(r)
+  } catch (e) {
+    bad++
+  }
+  out.length && toast(out.length > 1 ? out.length + " fonts added." : "Font “" + out[0].name + "” is ready."), bad && toast(bad + " file" + (bad > 1 ? "s" : "") + " could not be read as a font.");
+  return out
+}
+
+function videoFontOptions(sel, cur) {
+  sel.innerHTML = "";
+  const grp = (label, rows) => {
+    if (!rows.length) return;
+    const g = document.createElement("optgroup");
+    g.label = label, rows.forEach(([n, v, gf]) => {
+      const o = document.createElement("option");
+      o.value = v, o.textContent = n, gf && (o.dataset.g = gf), g.append(o)
+    }), sel.append(g)
+  };
+  grp("Fonts", FONTS.map(f => [f.split(",")[0].replace(/"/g, ""), f, ""])), grp("Your fonts", CFONTS.map(f => [f.name, fontFamilyFor(f.family), ""])), grp("Installed on this device", LFONTS.map(n => [n, fontFamilyFor(n), ""])), grp("Google fonts · load on demand", GFONTS.map(n => [n, fontFamilyFor(n), n]));
+  if (cur && ![...sel.options].some(o => o.value === cur)) {
+    const o = document.createElement("option");
+    o.value = cur, o.textContent = cur.split(",")[0].replace(/"/g, ""), sel.prepend(o)
+  }
+  sel.value = cur || FONTS[0]
+}
+
+function fontListsChanged() {
+  refreshFontSelect();
+  try {
+    const sel = document.getElementById("vtfont");
+    sel && window.cs && cs.title && videoFontOptions(sel, cs.title.font)
+  } catch (e) {}
+}
+
+function openFontManager() {
+  let d = document.getElementById("fmdlg");
+  d || (d = document.createElement("dialog"), d.id = "fmdlg", document.body.append(d));
+  const esc = x => String(x).replace(/[&<>"']/g, c => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    })[c]),
+    row = (name, fam, kind, key) => `<div class="row" style="gap:8px;align-items:center;padding:4px 0;border-bottom:1px solid var(--ln)"><div style="flex:1;min-width:0"><div style="font-size:11px;color:var(--mut)">${esc(name)}</div><div style="font:22px ${esc(fam)};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">The quick brown fox 123</div></div><button data-rm="${kind}" data-k="${esc(key)}">Remove</button></div>`,
+    draw = () => {
+      d.innerHTML = `<h3>Fonts</h3><p style="color:var(--mut);max-width:440px;margin-bottom:8px">Fonts you add are kept in this browser and saved inside your projects. You can also drop font files anywhere on the editor.</p><div class="row" style="margin-bottom:8px;flex-wrap:wrap"><label class="bt" style="cursor:pointer">Add font files…<input type="file" id="fmfile" accept=".ttf,.otf,.woff,.woff2" multiple style="display:none"></label><button id="fminst">Use installed fonts…</button></div><div id="fmpick" style="display:none;margin-bottom:8px"></div><div style="max-height:320px;overflow:auto;min-width:340px"><b style="font-size:11px">Your fonts</b>${CFONTS.length?CFONTS.map(f=>row(f.name,fontFamilyFor(f.family),"c",f.family)).join(""):'<div style="color:var(--mut);padding:6px 0">None yet.</div>'}<b style="font-size:11px;display:block;margin-top:8px">Installed on this device</b>${LFONTS.length?LFONTS.map(n=>row(n,fontFamilyFor(n),"l",n)).join(""):'<div style="color:var(--mut);padding:6px 0">None added.</div>'}</div><div class="row" style="margin-top:10px"><button id="fmclose" class="p">Close</button></div>`;
+      d.querySelector("#fmclose").onclick = () => d.close(), d.querySelector("#fmfile").onchange = async ev => {
+        const fs = [...ev.target.files];
+        ev.target.value = "", fs.length && (await importFontFiles(fs), fontListsChanged(), draw())
+      }, d.querySelectorAll("[data-rm]").forEach(b => b.onclick = () => {
+        if ("c" === b.dataset.rm) {
+          const i = CFONTS.findIndex(f => f.family === b.dataset.k);
+          i >= 0 && (CFONTS.splice(i, 1), [...document.fonts].filter(f => f.family.replace(/"/g, "") === b.dataset.k).forEach(f => document.fonts.delete(f)), fontForget(b.dataset.k))
+        } else {
+          const i = LFONTS.indexOf(b.dataset.k);
+          i >= 0 && (LFONTS.splice(i, 1), localStorage.setItem("prox.lfonts", JSON.stringify(LFONTS)))
+        }
+        fontListsChanged(), draw()
+      }), d.querySelector("#fminst").onclick = async () => {
+        const box = d.querySelector("#fmpick");
+        if (!window.queryLocalFonts) return void toast("This browser cannot list installed fonts. Chrome or Edge on a computer can. You can still add font files.");
+        try {
+          const all = await window.queryLocalFonts(), fams = [...new Set(all.map(f => f.family))].sort((a, b) => a.localeCompare(b));
+          box.style.display = "", box.innerHTML = `<input type="search" placeholder="Search ${fams.length} installed fonts" style="width:100%;margin-bottom:4px"><select multiple size="8" style="width:100%"></select><div class="row" style="margin-top:4px"><button class="p">Add selected</button></div>`;
+          const q = box.querySelector("input"),
+            sel = box.querySelector("select"),
+            fill = () => {
+              const t = q.value.toLowerCase();
+              sel.innerHTML = fams.filter(n => n.toLowerCase().includes(t)).slice(0, 400).map(n => `<option value="${esc(n)}" style="font-family:'${esc(n)}'">${esc(n)}</option>`).join("")
+            };
+          q.oninput = fill, fill(), box.querySelector("button").onclick = () => {
+            const add = [...sel.selectedOptions].map(o => o.value).filter(n => !LFONTS.includes(n));
+            LFONTS.push(...add), localStorage.setItem("prox.lfonts", JSON.stringify(LFONTS)), fontListsChanged(), draw(), add.length && toast(add.length + " installed font" + (add.length > 1 ? "s" : "") + " added. They only exist on this device.")
+          }
+        } catch (err) {
+          toast("Could not read installed fonts: " + (err && err.message || err))
+        }
+      }
+    };
+  draw(), d.showModal()
+}
+window.addEventListener("load", fontLoadSaved), window.addEventListener("drop", async ev => {
+  const fs = [...(ev.dataTransfer && ev.dataTransfer.files || [])];
+  fs.length && fs.every(f => /\.(ttf|otf|woff2?)$/i.test(f.name)) && (ev.preventDefault(), ev.stopPropagation(), await importFontFiles(fs), fontListsChanged())
+}, !0);
 
 function setFontValue(value, gf) {
   const s = $("tfont");
@@ -8222,19 +8370,14 @@ document.querySelectorAll(".talign button").forEach(b => b.onclick = () => {
   const t = A();
   t && t.txt && (t.txt.align = b.dataset.ta, renderText(t), posEdit()), textPreview()
 });
-$("tfontfile").addEventListener("change", async e => {
-  const f = e.target.files && e.target.files[0];
-  e.target.value = "";
-  if (!f) return;
-  try {
-    const rec = await importFontFile(f);
-    const t = A();
-    setFontValue(fontFamilyFor(rec.family));
-    if (t && t.txt) t.txt.font = fontFamilyFor(rec.family), t.txt.gf = "", renderText(t), posEdit();
-    textPreview(), toast("Font “" + rec.name + "” is ready.")
-  } catch (err) {
-    toast("Could not load that font: " + err.message)
-  }
+$("tfontmgr").onclick = openFontManager, $("tfontfile").addEventListener("change", async e => {
+  const fs = [...(e.target.files || [])];
+  if (e.target.value = "", !fs.length) return;
+  const recs = await importFontFiles(fs),
+    rec = recs[recs.length - 1];
+  if (!rec) return;
+  const t = A();
+  setFontValue(fontFamilyFor(rec.family)), t && t.txt && (t.txt.font = fontFamilyFor(rec.family), t.txt.gf = "", renderText(t), posEdit()), textPreview()
 });
 const TPRE = {
   Poster: {
@@ -8920,6 +9063,7 @@ const TL = [
     ["brush", "B", "Brush", "✎"],
     ["erase", "E", "Eraser", "⌫"],
     ["clone", "S", "Clone stamp (Alt-click sets source)", "⎘"],
+    ["heal", "J", "Healing brush (click a blemish, or Alt-click a source first)", "✚"],
     ["blur", "R", "Blur", "◔"],
     ["dodge", "O", "Dodge", "☀"],
     ["burn", "", "Burn", "☾"],
@@ -9378,14 +9522,34 @@ function dab(e) {
     c = Uint8ClampedArray.from(l),
     p = $("flow").value / 100;
   let d;
-  "clone" === tool && (d = a.getImageData(o + pd.ox, n + pd.oy, s, r).data);
+  ("clone" === tool || "heal" === tool) && (d = a.getImageData(o + pd.ox, n + pd.oy, s, r).data);
+  const HA = [0, 0, 0];
+  if ("heal" === tool) {
+    let dr = 0,
+      dg = 0,
+      db = 0,
+      sr = 0,
+      sg = 0,
+      sb = 0,
+      cn = 0;
+    for (let y2 = 0; y2 < r; y2++)
+      for (let x2 = 0; x2 < s; x2++) {
+        const u2 = Math.hypot(x2 + o - e[0], y2 + n - e[1]) / t;
+        if (u2 < .65 || u2 > 1) continue;
+        const k2 = 4 * (y2 * s + x2);
+        dr += c[k2], dg += c[k2 + 1], db += c[k2 + 2], sr += d[k2], sg += d[k2 + 1], sb += d[k2 + 2], cn++
+      }
+    cn && (HA[0] = (dr - sr) / cn, HA[1] = (dg - sg) / cn, HA[2] = (db - sb) / cn)
+  }
   for (let a = 0; a < r; a++)
     for (let i = 0; i < s; i++) {
       const u = Math.hypot(i + o - e[0], a + n - e[1]) / t;
       if (u > 1) continue;
       const f = p * (1 - u),
         h = 4 * (a * s + i);
-      if ("clone" === tool)
+      if ("heal" === tool)
+        for (let e = 0; e < 3; e++) l[h + e] = c[h + e] * (1 - f) + (d[h + e] + HA[e]) * f;
+      else if ("clone" === tool)
         for (let e = 0; e < 4; e++) l[h + e] = c[h + e] * (1 - f) + d[h + e] * f;
       else if ("blur" === tool)
         for (let e = 0; e < 4; e++) {
@@ -9405,11 +9569,12 @@ function dab(e) {
     }
   a.putImageData(i, o, n)
 }
-const DAB = ["clone", "blur", "dodge", "burn"],
+const DAB = ["clone", "heal", "blur", "dodge", "burn"],
   NAME = {
     brush: "Brush",
     erase: "Eraser",
     clone: "Clone stamp",
+    heal: "Healing brush",
     blur: "Blur",
     dodge: "Dodge",
     burn: "Burn",
@@ -9500,11 +9665,15 @@ stack.onpointerdown = e => {
         o = mk("Text");
       a.x = t[0], a.y = t[1] + .8 * a.fs, o.txt = a, L.splice(ai + 1, 0, o), ai++, sync(), layersUI(), renderText(o), startEdit(o, e), pd = null
     }
-  } else if ("clone" === tool && e.altKey) cloneSrc = t, $("pst").textContent = "Clone source set. Now paint.", pd = null;
+  } else if (("clone" === tool || "heal" === tool) && e.altKey) cloneSrc = t, $("pst").textContent = "Clone source set. Now paint.", pd = null;
   else if ("brush" === tool || "erase" === tool) beg(), stroke(t, t);
   else if (DAB.includes(tool)) {
     if ("clone" === tool && !cloneSrc) return $("pst").textContent = "Alt-click to set the clone source first.", void(pd = null);
-    beg(), cloneSrc && (pd.ox = Math.round(cloneSrc[0] - t[0]), pd.oy = Math.round(cloneSrc[1] - t[1])), dab(t)
+    if (beg(), "heal" === tool && !cloneSrc) {
+      const au = healAuto(t);
+      pd.ox = au.ox, pd.oy = au.oy
+    } else cloneSrc && (pd.ox = Math.round(cloneSrc[0] - t[0]), pd.oy = Math.round(cloneSrc[1] - t[1]));
+    dab(t)
   } else if ("move" === tool && A().txt) pd.tm = {
     l: A(),
     ox: A().txt.x,
@@ -10935,7 +11104,9 @@ function postFx(e, t, a) {
 }
 
 function draw(e, t) {
-  e.title && titleAnimFrame(e, t);
+  e.title && (e.title.gf && !GF_CACHE.has(e.title.gf) && loadGoogleFont(e.title.gf).then(() => {
+    e._ak = null, e._sig = null, titleCanvas(e), playing || render(T)
+  }), e.title.shapes ? gfxFrame(e, t) : titleAnimFrame(e, t));
   const a = fxAt(e, t),
     o = e._sf || e.el,
     n = o.videoWidth || o.naturalWidth || o.width,
@@ -11170,7 +11341,7 @@ function fxUI() {
   };
   const eh = document.createElement("div");
   eh.style.cssText = "color:var(--mut);font-size:11px;margin:-2px 0 2px", eh.textContent = "One-click looks. Fine-tune them under VHS tape, CRT screen, Motion blur and Extra looks.";
-  e.append(a, ef, eh), cs.g && !cs.title && audioSendUI(e), motionUI(e), lutUI(e), curvesUI(e), deintUI(e), cs.title && (titleUI(e), titleMotionUI(e)), SPEC.forEach(([a, ...o]) => {
+  e.append(a, ef, eh), cs.g && !cs.title && audioSendUI(e), motionUI(e), lutUI(e), curvesUI(e), deintUI(e), cs.title && (cs.title.shapes ? gfxUI(e) : (titleUI(e), titleMotionUI(e))), SPEC.forEach(([a, ...o]) => {
     const n = document.createElement("b");
     n.textContent = a, n.dataset.min = LVG[a], e.append(n), o.forEach(([o, n, s, r]) => {
       const i = document.createElement("label");
@@ -11287,6 +11458,1526 @@ function titleCanvas(e) {
     (t.stroke && "#000000" !== t.stroke || t.size > 0) && (o.lineWidth = .08 * s, o.strokeStyle = t.stroke, o.strokeText(e, W / 2, n)), o.fillStyle = t.color, o.fillText(e, W / 2, n)
   })
 }
+
+/* 1.21 instruments: a small WebAudio synth. Every voice takes any AudioContext (live or Offline), so a take can be rendered exactly as it was played. */
+const PXSYN = (() => {
+  const INST = {
+    piano: { name: "Piano", layers: [{ type: "triangle", g: .55 }, { type: "sine", mult: 2, g: .22 }, { type: "sine", mult: 3, g: .1 }, { type: "sine", mult: 4.01, g: .05 }], gain: 1.1, a: .004, d: 1.6, s: 0, r: .3, cut: 6000 },
+    epiano: { name: "Electric piano", layers: [{ fm: { ratio: 1, index: 1.8, dec: 1.2 }, g: .6 }, { type: "sine", g: .2 }], gain: 1.0, a: .004, d: 1.8, s: 0, r: .35, cut: 7000 },
+    organ: { name: "Organ", layers: [{ type: "sine", g: .5 }, { type: "sine", mult: 2, g: .35 }, { type: "sine", mult: 3, g: .2 }, { type: "sine", mult: 4, g: .18 }, { type: "sine", mult: 6, g: .1 }, { type: "sine", mult: 8, g: .08 }], gain: 0.7, a: .01, d: 0, s: 1, r: .08, cut: 9000 },
+    synth: { name: "Synth lead", layers: [{ type: "sawtooth", g: .4, det: -7 }, { type: "sawtooth", g: .4, det: 7 }, { type: "square", mult: .5, g: .25 }], gain: 0.85, a: .01, d: .2, s: .7, r: .2, cut: 2600, fenv: 3, fdec: .3, q: 3 },
+    bass: { name: "Synth bass", layers: [{ type: "sawtooth", g: .6 }, { type: "sine", mult: .5, g: .7 }], gain: 0.5, a: .005, d: .3, s: .5, r: .12, cut: 600, fenv: 3, fdec: .2, q: 4 },
+    pad: { name: "Warm pad", layers: [{ type: "sawtooth", g: .3, det: -12 }, { type: "sawtooth", g: .3 }, { type: "sawtooth", g: .3, det: 12 }, { type: "sine", mult: .5, g: .3 }], gain: 0.8, a: .7, d: .5, s: .8, r: 1.4, cut: 1500 },
+    strings: { name: "Strings", layers: [{ type: "sawtooth", g: .25, det: -9 }, { type: "sawtooth", g: .25, det: -3 }, { type: "sawtooth", g: .25, det: 4 }, { type: "sawtooth", g: .25, det: 10 }], gain: 1.0, a: .35, d: .3, s: .85, r: .6, cut: 3200 },
+    pluck: { name: "Guitar (pluck)", layers: [{ type: "sawtooth", g: .6 }, { type: "square", g: .25, det: 4 }], gain: 1.0, a: .002, d: .7, s: 0, r: .2, cut: 700, fenv: 6, fdec: .35, q: 1.5 },
+    marimba: { name: "Marimba", layers: [{ type: "sine", g: .8 }, { type: "sine", mult: 4, g: .25 }], gain: 0.9, a: .002, d: .55, s: 0, r: .12, cut: 9000 },
+    bells: { name: "Bells", layers: [{ fm: { ratio: 3.5, index: 3.5, dec: 2 }, g: .55 }], gain: 1.0, a: .002, d: 2.4, s: 0, r: .6, cut: 12000 },
+    brass: { name: "Brass", layers: [{ type: "sawtooth", g: .45, det: -5 }, { type: "sawtooth", g: .45, det: 5 }], gain: 0.9, a: .07, d: .15, s: .8, r: .12, cut: 1400, fenv: 2.8, fdec: .25, q: 1 }
+  };
+  const KITS = {
+    acoustic: { name: "Acoustic", kf0: 160, kf1: 55, kd: .32, kc: .5, sn: 190, sd: .18, sg: .9, hp: 7500, hd: .045, ho: .3, tb: 120, td: .38, cd: 1.2 },
+    rock: { name: "Rock", kf0: 140, kf1: 48, kd: .4, kc: .8, sn: 210, sd: .25, sg: 1, hp: 6500, hd: .06, ho: .4, tb: 100, td: .45, cd: 1.8 },
+    e808: { name: "808", kf0: 120, kf1: 38, kd: 1, kc: .1, sn: 180, sd: .22, sg: .7, hp: 8500, hd: .035, ho: .22, tb: 90, td: .6, cd: .9, metal: 1 },
+    e909: { name: "Electro", kf0: 200, kf1: 50, kd: .3, kc: .9, sn: 230, sd: .2, sg: 1, hp: 9000, hd: .03, ho: .25, tb: 140, td: .3, cd: 1.4, metal: 1 },
+    lofi: { name: "Lo-fi", kf0: 130, kf1: 50, kd: .28, kc: .3, sn: 170, sd: .14, sg: .8, hp: 4500, hd: .07, ho: .25, tb: 105, td: .3, cd: .8, lp: 5000 }
+  };
+  const PIECES = [["kick", "Kick"], ["snare", "Snare"], ["hatC", "Hi-hat"], ["hatO", "Open hat"], ["clap", "Clap"], ["rim", "Rim"], ["tomH", "Tom high"], ["tomM", "Tom mid"], ["tomL", "Tom low"], ["crash", "Crash"], ["ride", "Ride"]];
+  const mtof = n => 440 * Math.pow(2, (n - 69) / 12);
+  const NB = new WeakMap();
+  const noise = ctx => {
+    let b = NB.get(ctx);
+    if (!b) {
+      b = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * 2), ctx.sampleRate);
+      const d = b.getChannelData(0);
+      let x = 12345;
+      for (let i = 0; i < d.length; i++) x = (x * 1664525 + 1013904223) >>> 0, d[i] = x / 2147483648 - 1;
+      NB.set(ctx, b)
+    }
+    return b
+  };
+
+  function start(ctx, dest, t, inst, note, vel) {
+    const D = INST[inst] || INST.piano,
+      f = mtof(note),
+      v = Math.min(1, Math.max(.05, vel)),
+      peak = v * D.gain * .5,
+      out = ctx.createGain(),
+      flt = ctx.createBiquadFilter(),
+      stops = [];
+    out.gain.setValueAtTime(0, t), out.gain.linearRampToValueAtTime(peak, t + D.a);
+    const sus = Math.max(.0001, peak * D.s);
+    D.d > 0 && D.s < 1 && out.gain.exponentialRampToValueAtTime(sus, t + D.a + D.d);
+    flt.type = "lowpass", flt.Q.value = D.q || .7;
+    const base = D.cut * (.6 + .6 * v);
+    flt.frequency.setValueAtTime(Math.min(18000, base * (D.fenv || 1)), t), D.fenv && flt.frequency.exponentialRampToValueAtTime(Math.max(80, base), t + (D.fdec || .3));
+    D.layers.forEach(L => {
+      const g = ctx.createGain();
+      g.gain.value = L.g;
+      if (L.fm) {
+        const c = ctx.createOscillator(),
+          m = ctx.createOscillator(),
+          mg = ctx.createGain();
+        c.type = m.type = "sine", c.frequency.value = f, m.frequency.value = f * L.fm.ratio;
+        const idx = f * L.fm.index * (.5 + v);
+        mg.gain.setValueAtTime(idx, t), mg.gain.exponentialRampToValueAtTime(Math.max(.01, idx * .04), t + L.fm.dec), m.connect(mg), mg.connect(c.frequency), c.connect(g), c.start(t), m.start(t), stops.push(c, m)
+      } else {
+        const o = ctx.createOscillator();
+        o.type = L.type, o.frequency.value = f * (L.mult || 1), L.det && (o.detune.value = L.det), o.connect(g), o.start(t), stops.push(o)
+      }
+      g.connect(flt)
+    });
+    flt.connect(out), out.connect(dest);
+    let done = !1;
+    return {
+      release(when) {
+        if (done) return;
+        done = !0;
+        const w = Math.max(when, t + .01),
+          rel = w - t;
+        let cur;
+        if (rel < D.a) cur = peak * rel / D.a;
+        else if (D.d > 0 && D.s < 1) cur = peak * Math.pow(sus / peak, Math.min(1, (rel - D.a) / D.d));
+        else cur = peak;
+        out.gain.cancelScheduledValues(w), out.gain.setValueAtTime(Math.max(.0001, cur), w), out.gain.setTargetAtTime(0, w, D.r / 3);
+        const end = w + D.r + .15;
+        stops.forEach(o => o.stop(end))
+      }
+    }
+  }
+
+  function drum(ctx, dest, t, kit, piece, vel) {
+    const K = KITS[kit] || KITS.acoustic,
+      v = Math.min(1, Math.max(.1, vel)),
+      out = ctx.createGain();
+    out.gain.value = v;
+    if (K.lp) {
+      const lp = ctx.createBiquadFilter();
+      lp.type = "lowpass", lp.frequency.value = K.lp, out.connect(lp), lp.connect(dest)
+    } else out.connect(dest);
+    const env = (g, pk, dec, att) => {
+        att = att || .001, g.gain.setValueAtTime(0, t), g.gain.linearRampToValueAtTime(pk, t + att), g.gain.exponentialRampToValueAtTime(.0001, t + att + dec)
+      },
+      osc = (type, f0, f1, ramp, pk, dec) => {
+        const o = ctx.createOscillator(),
+          g = ctx.createGain();
+        o.type = type, o.frequency.setValueAtTime(f0, t), f1 !== f0 && o.frequency.exponentialRampToValueAtTime(f1, t + ramp), env(g, pk, dec), o.connect(g), g.connect(out), o.start(t), o.stop(t + dec + .05)
+      },
+      nz = (at, dec, pk, ftype, freq, q) => {
+        const s = ctx.createBufferSource(),
+          fl = ctx.createBiquadFilter(),
+          g = ctx.createGain();
+        s.buffer = noise(ctx), fl.type = ftype, fl.frequency.value = freq, q && (fl.Q.value = q), g.gain.setValueAtTime(0, at), g.gain.linearRampToValueAtTime(pk, at + .001), g.gain.exponentialRampToValueAtTime(.0001, at + .001 + dec), s.connect(fl), fl.connect(g), g.connect(out), s.start(at), s.stop(at + dec + .05)
+      },
+      metal = (dec, pk) => [205, 308, 415, 614, 819].forEach(fr => {
+        const o = ctx.createOscillator(),
+          g = ctx.createGain(),
+          hp = ctx.createBiquadFilter();
+        o.type = "square", o.frequency.value = fr * 3, hp.type = "highpass", hp.frequency.value = 6000, env(g, pk / 5, dec), o.connect(hp), hp.connect(g), g.connect(out), o.start(t), o.stop(t + dec + .05)
+      });
+    switch (piece) {
+      case "kick":
+        osc("sine", K.kf0, K.kf1, .07, .95, K.kd), nz(t, .012, K.kc * .5, "highpass", 2500);
+        break;
+      case "snare":
+        osc("triangle", K.sn, K.sn * .7, .08, .5, K.sd * .6), osc("triangle", K.sn * 1.8, K.sn * 1.3, .06, .25, K.sd * .4), nz(t, K.sd, .6 * K.sg, "highpass", 1200);
+        break;
+      case "hatC":
+        nz(t, K.hd, .45, "highpass", K.hp), K.metal && metal(K.hd, .4);
+        break;
+      case "hatO":
+        nz(t, K.ho, .4, "highpass", K.hp), K.metal && metal(K.ho, .35);
+        break;
+      case "tomH":
+      case "tomM":
+      case "tomL": {
+        const fr = K.tb * {
+          tomH: 2.2,
+          tomM: 1.6,
+          tomL: 1.15
+        } [piece];
+        osc("sine", fr * 1.5, fr, .06, .8, K.td), nz(t, .015, .25, "bandpass", 2500);
+        break
+      }
+      case "crash":
+        nz(t, K.cd, .5, "highpass", 3500), nz(t, K.cd * .6, .2, "bandpass", 8000, 1), K.metal && metal(K.cd * .5, .3);
+        break;
+      case "ride":
+        nz(t, .8, .22, "bandpass", 7500, 1.2), [700, 1100, 1530].forEach(fr => osc("square", fr * 3, fr * 3, 0, .05, .6));
+        break;
+      case "clap":
+        [0, .012, .024].forEach(dt => nz(t + dt, .01, .6, "bandpass", 1400, .9)), nz(t + .036, .16, .7, "bandpass", 1400, .9);
+        break;
+      case "rim":
+        osc("square", 1800, 1800, 0, .4, .03), nz(t, .02, .4, "highpass", 4000);
+        break
+    }
+  }
+  return {
+    INST,
+    KITS,
+    PIECES,
+    mtof,
+    start,
+    drum
+  }
+})();
+
+const PXI = {
+  inst: "piano",
+  kit: "acoustic",
+  mode: "keys",
+  oct: 0,
+  vol: .8,
+  held: new Map(),
+  ptr: new Map(),
+  rec: null,
+  open: !1,
+  master: null,
+  kmap: {
+    z: 0,
+    s: 1,
+    x: 2,
+    d: 3,
+    c: 4,
+    v: 5,
+    g: 6,
+    b: 7,
+    h: 8,
+    n: 9,
+    j: 10,
+    m: 11,
+    q: 12,
+    2: 13,
+    w: 14,
+    3: 15,
+    e: 16,
+    r: 17,
+    5: 18,
+    t: 19,
+    6: 20,
+    y: 21,
+    7: 22,
+    u: 23,
+    i: 24
+  },
+  dmap: {
+    a: "kick",
+    s: "snare",
+    d: "hatC",
+    f: "hatO",
+    g: "clap",
+    h: "rim",
+    j: "tomH",
+    k: "tomM",
+    l: "tomL",
+    q: "crash",
+    w: "ride"
+  },
+  gm: {
+    36: "kick",
+    38: "snare",
+    40: "snare",
+    42: "hatC",
+    44: "hatC",
+    46: "hatO",
+    39: "clap",
+    37: "rim",
+    50: "tomH",
+    48: "tomH",
+    47: "tomM",
+    45: "tomM",
+    43: "tomL",
+    41: "tomL",
+    49: "crash",
+    57: "crash",
+    51: "ride",
+    59: "ride"
+  },
+  base: () => 48 + 12 * PXI.oct
+};
+
+function pxiMaster() {
+  return PXI.master || (PXI.master = AC.createGain(), PXI.master.connect(AC.destination)), PXI.master.gain.value = PXI.vol, PXI.master
+}
+
+function pxiLight(id, on) {
+  const el = document.querySelector(`#pxipanel [data-id="${id}"]`);
+  el && el.classList.toggle("on", on)
+}
+
+function pxiCount() {
+  const s = document.getElementById("pxist");
+  s && PXI.rec && (s.textContent = "Recording… " + PXI.rec.ev.length + " hit" + (1 === PXI.rec.ev.length ? "" : "s"))
+}
+
+function pxiNoteOn(id, note, vel) {
+  if (PXI.held.has(id)) return;
+  "suspended" === AC.state && AC.resume();
+  const h = PXSYN.start(AC, pxiMaster(), AC.currentTime + .005, PXI.inst, note, vel);
+  if (PXI.rec) {
+    const ev = {
+      k: "n",
+      t: AC.currentTime - PXI.rec.t0a,
+      inst: PXI.inst,
+      note,
+      vel,
+      off: null
+    };
+    PXI.rec.ev.push(ev), h.ev = ev, h.rec = PXI.rec, pxiCount()
+  }
+  PXI.held.set(id, h), pxiLight(id, !0)
+}
+
+function pxiNoteOff(id) {
+  const h = PXI.held.get(id);
+  h && (PXI.held.delete(id), h.release(AC.currentTime), h.ev && (h.ev.off = AC.currentTime - h.rec.t0a), pxiLight(id, !1))
+}
+
+function pxiDrum(piece, vel, id) {
+  "suspended" === AC.state && AC.resume(), PXSYN.drum(AC, pxiMaster(), AC.currentTime + .005, PXI.kit, piece, vel), PXI.rec && (PXI.rec.ev.push({
+    k: "d",
+    t: AC.currentTime - PXI.rec.t0a,
+    kit: PXI.kit,
+    piece,
+    vel
+  }), pxiCount()), id && (pxiLight(id, !0), setTimeout(() => pxiLight(id, !1), 110))
+}
+
+function pxiReleaseAll() {
+  [...PXI.held.keys()].forEach(pxiNoteOff), PXI.ptr.clear()
+}
+
+function pxiKey(ev, down) {
+  if (!PXI.open || ev.ctrlKey || ev.metaKey || ev.altKey || /INPUT|SELECT|TEXTAREA/.test(ev.target.tagName)) return;
+  const k = ev.key.toLowerCase();
+  if ("keys" === PXI.mode) {
+    const n = PXI.kmap[k];
+    if (void 0 === n) return;
+    ev.preventDefault(), ev.stopImmediatePropagation();
+    const note = PXI.base() + n;
+    down ? ev.repeat || pxiNoteOn("k" + note, note, .8) : pxiNoteOff("k" + note)
+  } else {
+    const p = PXI.dmap[k];
+    if (!p) return;
+    ev.preventDefault(), ev.stopImmediatePropagation(), down && !ev.repeat && pxiDrum(p, .85, "d-" + p)
+  }
+}
+window.addEventListener("keydown", ev => pxiKey(ev, !0), !0), window.addEventListener("keyup", ev => pxiKey(ev, !1), !0), window.addEventListener("pointerup", ev => {
+  const id = PXI.ptr.get(ev.pointerId);
+  id && (PXI.ptr.delete(ev.pointerId), pxiNoteOff(id))
+}, !0);
+
+async function pxiMidi() {
+  if (!navigator.requestMIDIAccess) return void toast("This browser does not support MIDI. Chrome or Edge can.");
+  try {
+    const a = await navigator.requestMIDIAccess();
+    let n = 0;
+    a.inputs.forEach(i => {
+      n++, i.onmidimessage = m => {
+        const [st, x, y] = m.data, c = 240 & st;
+        144 === c && y > 0 ? "keys" === PXI.mode ? pxiNoteOn("m" + x, x, y / 127) : PXI.gm[x] && pxiDrum(PXI.gm[x], y / 127, "d-" + PXI.gm[x]) : (128 === c || 144 === c) && "keys" === PXI.mode && pxiNoteOff("m" + x)
+      }
+    }), toast(n ? n + " MIDI device" + (n > 1 ? "s" : "") + " connected." : "No MIDI device found.")
+  } catch (e) {
+    toast("MIDI access was not allowed.")
+  }
+}
+
+function pxiRecToggle() {
+  if (PXI.rec) return void pxiRecStop();
+  "suspended" === AC.state && AC.resume(), clips.length && !playing && play(), PXI.rec = {
+    ev: [],
+    t0a: AC.currentTime,
+    T0: T
+  }, pxiRender()
+}
+
+async function pxiRecStop() {
+  const r = PXI.rec;
+  PXI.rec = null, playing && pause(), [...PXI.held.keys()].forEach(pxiNoteOff), pxiRender();
+  if (!r || !r.ev.length) return void toast("Nothing was played, so nothing was added.");
+  const lead = Math.max(0, Math.min(...r.ev.map(e => e.t)) - .02),
+    sr = 44100,
+    end = Math.max(...r.ev.map(e => "n" === e.k ? null == e.off ? e.t + .3 : e.off : e.t)) - lead + 2.2,
+    oc = new OfflineAudioContext(2, Math.ceil(end * sr), sr),
+    m = oc.createGain();
+  m.gain.value = PXI.vol, m.connect(oc.destination), r.ev.forEach(e => {
+    const t = e.t - lead;
+    "n" === e.k ? PXSYN.start(oc, m, t, e.inst, e.note, e.vel).release(null == e.off ? t + .3 : e.off - lead) : PXSYN.drum(oc, m, t, e.kit, e.piece, e.vel)
+  }), toast("Rendering your take…");
+  const buf = await oc.startRendering(),
+    item = {
+      name: "Instrument take.wav",
+      url: URL.createObjectURL(wavBlob(buf)),
+      type: "audio"
+    },
+    t0 = r.T0 + lead;
+  items.push(item), bin(), addClip(item, buf.duration);
+  let tries = 0;
+  const wait = setInterval(() => {
+    const c = clips.find(x => x.it === item);
+    (c || ++tries > 60) && (clearInterval(wait), c && (c.start = t0, tl(), render(T), toast("Take added to the audio track at " + t0.toFixed(1) + " s.")))
+  }, 100)
+}
+
+function pxiRender() {
+  const p = document.getElementById("pxipanel");
+  if (!p) return;
+  const I = PXSYN.INST,
+    K = PXSYN.KITS,
+    keys = "keys" === PXI.mode,
+    opt = (o, cur) => Object.entries(o).map(([k, v]) => `<option value="${k}"${k===cur?" selected":""}>${v.name}</option>`).join("");
+  p.innerHTML = `<div class="row" style="justify-content:space-between;gap:8px;margin-bottom:6px"><b>Instruments</b><span style="color:var(--mut);font-size:11px;flex:1;text-align:center">Your computer keys play while this panel is open.</span><button id="pxix" title="Close">✕</button></div>
+<div class="row" style="flex-wrap:wrap;gap:6px;margin-bottom:6px;align-items:center"><button id="pxim1" class="${keys?"p":""}">Keyboard</button><button id="pxim2" class="${keys?"":"p"}">Drums</button>${keys?`<select id="pxiin">${opt(I,PXI.inst)}</select><button id="pxiodn">Octave −</button><button id="pxioup">Octave +</button>`:`<select id="pxikit">${opt(K,PXI.kit)}</select>`}<label class="s" style="grid-template-columns:auto 90px">Volume <input type="range" id="pxivol" min="0" max="100" value="${Math.round(100*PXI.vol)}"></label><button id="pximidi" title="Use a MIDI keyboard or drum pad">MIDI</button></div>
+<div id="pxisurf" style="touch-action:none"></div>
+<div class="row" style="margin-top:8px;gap:8px;align-items:center;flex-wrap:wrap"><button id="pxirec" class="${PXI.rec?"p":""}">${PXI.rec?"■ Stop and add to timeline":"● Record"}</button><span id="pxist" style="color:var(--mut)">${PXI.rec?"Recording…":"Record plays the timeline from the playhead and puts your take on the audio track."}</span></div>`;
+  const surf = p.querySelector("#pxisurf");
+  if (keys) {
+    const base = PXI.base(),
+      black = x => [1, 3, 6, 8, 10].includes(x % 12),
+      wn = [];
+    for (let i = 0; i < 25; i++) black(i) || wn.push(i);
+    const rev = {};
+    Object.entries(PXI.kmap).forEach(([k, n]) => rev[n] = k.toUpperCase());
+    let h = '<div style="position:relative;display:flex;height:130px;user-select:none">';
+    wn.forEach(off => h += `<div class="pxik w" data-id="k${base+off}" data-n="${base+off}"><i>${rev[off]||""}</i></div>`);
+    for (let off = 0; off < 25; off++) black(off) && (h += `<div class="pxik b" data-id="k${base+off}" data-n="${base+off}" style="left:calc(${wn.filter(x=>x<off).length*100/wn.length}% - ${.3*100/wn.length}%);width:${.6*100/wn.length}%"><i>${rev[off]||""}</i></div>`);
+    surf.innerHTML = h + "</div>"
+  } else {
+    const rev = {};
+    Object.entries(PXI.dmap).forEach(([k, pc]) => rev[pc] = k.toUpperCase()), surf.innerHTML = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:6px">' + PXSYN.PIECES.map(([pc, nm]) => `<button class="pxipad" data-id="d-${pc}" data-p="${pc}">${nm}<br><small>${rev[pc]||""}</small></button>`).join("") + "</div>"
+  }
+  const vel = (ev, el) => {
+    const r = el.getBoundingClientRect();
+    return .55 + .45 * Math.min(1, Math.max(0, (ev.clientY - r.top) / Math.max(1, r.height)))
+  };
+  surf.onpointerdown = ev => {
+    const el = ev.target.closest("[data-id]");
+    el && (ev.preventDefault(), el.dataset.n ? (pxiNoteOn(el.dataset.id, +el.dataset.n, vel(ev, el)), PXI.ptr.set(ev.pointerId, el.dataset.id)) : pxiDrum(el.dataset.p, vel(ev, el), el.dataset.id))
+  }, surf.onpointermove = ev => {
+    const cur = PXI.ptr.get(ev.pointerId);
+    if (!cur || !(1 & ev.buttons) && "mouse" === ev.pointerType) return;
+    const el = document.elementFromPoint(ev.clientX, ev.clientY),
+      k = el && el.closest && el.closest(".pxik");
+    k && k.dataset.id !== cur && (pxiNoteOff(cur), pxiNoteOn(k.dataset.id, +k.dataset.n, vel(ev, k)), PXI.ptr.set(ev.pointerId, k.dataset.id))
+  };
+  const $p = s => p.querySelector(s);
+  $p("#pxix").onclick = () => {
+    PXI.rec && pxiRecStop(), pxiReleaseAll(), PXI.open = !1, p.style.display = "none"
+  }, $p("#pxim1").onclick = () => {
+    pxiReleaseAll(), PXI.mode = "keys", pxiRender()
+  }, $p("#pxim2").onclick = () => {
+    pxiReleaseAll(), PXI.mode = "drums", pxiRender()
+  }, $p("#pxivol").oninput = ev => PXI.vol = ev.target.value / 100, $p("#pximidi").onclick = pxiMidi, $p("#pxirec").onclick = pxiRecToggle;
+  keys ? ($p("#pxiin").onchange = ev => PXI.inst = ev.target.value, $p("#pxiodn").onclick = () => {
+    pxiReleaseAll(), PXI.oct = Math.max(-2, PXI.oct - 1), pxiRender()
+  }, $p("#pxioup").onclick = () => {
+    pxiReleaseAll(), PXI.oct = Math.min(2, PXI.oct + 1), pxiRender()
+  }) : $p("#pxikit").onchange = ev => PXI.kit = ev.target.value
+}
+
+function openInstruments() {
+  if (!document.getElementById("pxistyle")) {
+    const s = document.createElement("style");
+    s.id = "pxistyle", s.textContent = ".pxik{position:relative;border:1px solid #000;border-radius:0 0 4px 4px;cursor:pointer;display:flex;align-items:flex-end;justify-content:center}.pxik i{font-style:normal;font-size:10px;opacity:.6;padding-bottom:4px;pointer-events:none}.pxik.w{flex:1;background:#f2f2f2;color:#222}.pxik.b{position:absolute;top:0;height:62%;background:#15171c;color:#ddd;z-index:2}.pxik.on.w{background:#9bd0ff}.pxik.on.b{background:#2f7fd0}.pxipad{height:64px;font-size:12px}.pxipad.on{background:var(--ac,#4f8cff);color:#fff}", document.head.append(s)
+  }
+  let p = document.getElementById("pxipanel");
+  p || (p = document.createElement("div"), p.id = "pxipanel", p.style.cssText = "position:fixed;right:8px;bottom:8px;z-index:60;width:min(96vw,760px);max-height:92vh;overflow:auto;background:var(--p);color:var(--tx);border:1px solid var(--ln);border-radius:8px;box-shadow:0 8px 30px #000a;padding:8px;font-size:12px", document.body.append(p)), p.style.display = "", PXI.open = !0, pxiRender()
+}
+
+
+/* 1.21 custom motion graphics: a title clip that holds a list of animated shapes and text. */
+const GFX = {
+  types: {
+    rect: "Rectangle",
+    ellipse: "Circle / ellipse",
+    line: "Rounded bar",
+    triangle: "Triangle",
+    star: "Star",
+    text: "Text"
+  },
+  anims: {
+    none: "None",
+    fade: "Fade",
+    slideleft: "Slide from left",
+    slideright: "Slide from right",
+    slideup: "Slide up",
+    slidedown: "Slide down",
+    scale: "Scale",
+    pop: "Pop",
+    grow: "Grow sideways",
+    spin: "Spin in",
+    wipe: "Wipe"
+  },
+  loops: {
+    none: "None",
+    pulse: "Pulse",
+    spin: "Spin",
+    float: "Float",
+    blink: "Blink",
+    shake: "Shake"
+  },
+  def: {
+    type: "rect",
+    x: 50,
+    y: 50,
+    w: 30,
+    h: 20,
+    color: "#ffffff",
+    c2: "#4f8cff",
+    grad: 0,
+    alpha: 100,
+    stroke: "#000000",
+    sw: 0,
+    rad: 0,
+    rot: 0,
+    ain: "none",
+    aout: "none",
+    delay: 0,
+    dur: .6,
+    loop: "none",
+    text: "Text",
+    bold: 1
+  },
+  range: {
+    x: [-50, 150],
+    y: [-50, 150],
+    w: [0, 400],
+    h: [0, 400],
+    alpha: [0, 100],
+    sw: [0, 20],
+    rad: [0, 50],
+    rot: [-360, 360],
+    delay: [0, 60],
+    dur: [.05, 10]
+  },
+  templates: {
+    blank: ["Blank (one shape)", [{
+      type: "rect",
+      x: 50,
+      y: 50,
+      w: 40,
+      h: 20,
+      color: "#4f8cff",
+      rad: 12,
+      ain: "pop",
+      aout: "fade"
+    }]],
+    callout: ["Callout box", [{
+      type: "rect",
+      x: 78,
+      y: 18,
+      w: 56,
+      h: 16,
+      color: "#1a1a1a",
+      alpha: 88,
+      rad: 18,
+      stroke: "#ffcc00",
+      sw: 2,
+      ain: "slideright",
+      aout: "slideright",
+      dur: .5
+    }, {
+      type: "text",
+      x: 78,
+      y: 18,
+      h: 6,
+      text: "Your callout",
+      ain: "fade",
+      aout: "fade",
+      delay: .3,
+      dur: .4
+    }]],
+    cta: ["Subscribe bar", [{
+      type: "rect",
+      x: 50,
+      y: 88,
+      w: 110,
+      h: 12,
+      color: "#e53935",
+      rad: 50,
+      ain: "slideup",
+      aout: "slidedown",
+      dur: .5
+    }, {
+      type: "ellipse",
+      x: 20,
+      y: 88,
+      w: 7,
+      h: 7,
+      color: "#ffffff",
+      ain: "pop",
+      delay: .4,
+      dur: .4,
+      loop: "pulse"
+    }, {
+      type: "text",
+      x: 55,
+      y: 88,
+      h: 5.5,
+      text: "Subscribe for more",
+      ain: "fade",
+      aout: "fade",
+      delay: .5,
+      dur: .4
+    }]],
+    progress: ["Progress bar", [{
+      type: "line",
+      x: 50,
+      y: 92,
+      w: 120,
+      h: 2.5,
+      color: "#ffffff",
+      alpha: 30
+    }, {
+      type: "line",
+      x: 50,
+      y: 92,
+      w: 120,
+      h: 2.5,
+      color: "#4f8cff",
+      ain: "wipe",
+      delay: .2,
+      dur: 4.5
+    }]],
+    burst: ["Spinning burst", [{
+      type: "star",
+      x: 50,
+      y: 50,
+      w: 46,
+      h: 46,
+      color: "#ffcc00",
+      ain: "spin",
+      aout: "scale",
+      dur: .8,
+      loop: "spin"
+    }, {
+      type: "star",
+      x: 50,
+      y: 50,
+      w: 28,
+      h: 28,
+      color: "#ff6a00",
+      ain: "spin",
+      aout: "scale",
+      delay: .15,
+      dur: .8,
+      loop: "spin"
+    }, {
+      type: "ellipse",
+      x: 50,
+      y: 50,
+      w: 10,
+      h: 10,
+      color: "#ffffff",
+      ain: "pop",
+      aout: "fade",
+      delay: .4,
+      dur: .4
+    }]],
+    lower: ["Lower third from shapes", [{
+      type: "rect",
+      x: 28.5,
+      y: 84,
+      w: 80,
+      h: 14,
+      color: "#101418",
+      alpha: 85,
+      ain: "wipe",
+      aout: "wipe",
+      dur: .5
+    }, {
+      type: "rect",
+      x: 6.5,
+      y: 84,
+      w: 1.4,
+      h: 14,
+      color: "#ffcc00",
+      ain: "slideleft",
+      aout: "slideleft",
+      dur: .4
+    }, {
+      type: "text",
+      x: 28.5,
+      y: 81.2,
+      h: 5.2,
+      text: "Name Surname",
+      ain: "fade",
+      aout: "fade",
+      delay: .3,
+      dur: .4
+    }, {
+      type: "text",
+      x: 28.5,
+      y: 87,
+      h: 3.4,
+      text: "Role or location",
+      color: "#ffcc00",
+      bold: 0,
+      ain: "fade",
+      aout: "fade",
+      delay: .45,
+      dur: .4
+    }]]
+  }
+};
+
+function gfxClean(o) {
+  const s = {
+      ...GFX.def
+    },
+    hex = /^#[0-9a-f]{6}$/i;
+  if (o && "object" == typeof o)
+    for (const k in GFX.def) {
+      if (!(k in o)) continue;
+      const d = GFX.def[k],
+        v = o[k];
+      if ("number" == typeof d) {
+        const n = +v;
+        if (Number.isFinite(n)) {
+          const r = GFX.range[k];
+          s[k] = r ? Math.min(r[1], Math.max(r[0], n)) : n
+        }
+      } else "string" == typeof d && (s[k] = String(v).slice(0, 300))
+    }
+  return GFX.types[s.type] || (s.type = "rect"), GFX.anims[s.ain] || (s.ain = "none"), GFX.anims[s.aout] || (s.aout = "none"), GFX.loops[s.loop] || (s.loop = "none"), hex.test(s.color) || (s.color = "#ffffff"), hex.test(s.c2) || (s.c2 = "#4f8cff"), hex.test(s.stroke) || (s.stroke = "#000000"), s.grad = +!!+s.grad, s.bold = +!!+s.bold, s
+}
+
+function gfxFrame(e, lt) {
+  const t = e.title,
+    S = t.shapes || [],
+    a = e.el;
+  let moving = !1;
+  const st = S.map(s => {
+      const din = Math.max(.05, s.dur || .6),
+        pin = "none" === s.ain ? 1 : Math.min(1, Math.max(0, (lt - (s.delay || 0)) / din)),
+        pout = "none" === s.aout ? 1 : Math.min(1, Math.max(0, (e.dur - lt) / din));
+      let kind = "none",
+        p = 1;
+      return pout < 1 && pout <= pin ? (kind = s.aout, p = pout) : pin < 1 && (kind = s.ain, p = pin), ("none" !== kind || "none" !== s.loop) && (moving = !0), {
+        kind,
+        p
+      }
+    }),
+    key = moving ? "t" + Math.round(60 * lt) : "rest";
+  if (e._ak === key && a.width === W && a.height === H) return;
+  e._ak = key, a.width = W, a.height = H;
+  const o = a.getContext("2d");
+  S.forEach((s, i) => {
+    const {
+      kind,
+      p
+    } = st[i], q = 1 - Math.pow(1 - p, 3);
+    let dx = 0,
+      dy = 0,
+      sx = 1,
+      sy = 1,
+      rot = s.rot || 0,
+      al = (s.alpha ?? 100) / 100,
+      cq = 1;
+    if ("none" !== kind && p <= 0) return;
+    switch (kind) {
+      case "fade":
+        al *= q;
+        break;
+      case "slideleft":
+        dx = -(1 - q) * W * .3, al *= Math.min(1, 2 * q);
+        break;
+      case "slideright":
+        dx = (1 - q) * W * .3, al *= Math.min(1, 2 * q);
+        break;
+      case "slideup":
+        dy = (1 - q) * H * .25, al *= Math.min(1, 2 * q);
+        break;
+      case "slidedown":
+        dy = -(1 - q) * H * .25, al *= Math.min(1, 2 * q);
+        break;
+      case "scale":
+        sx = sy = q;
+        break;
+      case "pop": {
+        const c1 = 1.70158,
+          k = .5 + .5 * (1 + (c1 + 1) * Math.pow(p - 1, 3) + c1 * Math.pow(p - 1, 2));
+        sx = sy = k, al *= Math.min(1, 2 * p);
+        break
+      }
+      case "grow":
+        sx = q;
+        break;
+      case "spin":
+        rot += -180 * (1 - q), sx = sy = q, al *= q;
+        break;
+      case "wipe":
+        cq = q
+    }
+    switch (s.loop) {
+      case "pulse": {
+        const k = 1 + .08 * Math.sin(7.5 * lt);
+        sx *= k, sy *= k;
+        break
+      }
+      case "spin":
+        rot += 60 * lt;
+        break;
+      case "float":
+        dy += Math.sin(3.8 * lt) * H * .02;
+        break;
+      case "blink":
+        al *= .55 + .45 * Math.sin(12 * lt);
+        break;
+      case "shake":
+        dx += Math.sin(60 * lt) * W * .004
+    }
+    const pw = s.w * H / 100,
+      ph = s.h * H / 100,
+      txt = "text" === s.type;
+    if (al <= 0 || !txt && pw <= 0 || txt && ph <= 0) return;
+    o.save(), o.translate(s.x / 100 * W + dx, s.y / 100 * H + dy), o.rotate(rot * Math.PI / 180), o.scale(sx, sy), o.globalAlpha = Math.min(1, Math.max(0, al));
+    let bw = pw,
+      bh = ph,
+      lines = [];
+    if (txt) {
+      lines = String(s.text).split("\n"), o.font = (s.bold ? "700 " : "400 ") + ph + "px " + t.font, bw = Math.max(1, ...lines.map(l => o.measureText(l).width)), bh = 1.2 * ph * lines.length
+    }
+    if (cq < 1) {
+      const pad = .3 * ph;
+      o.beginPath(), o.rect(-bw / 2 - pad, -bh / 2 - pad, (bw + 2 * pad) * cq, bh + 2 * pad), o.clip()
+    }
+    let fill = s.color;
+    if (s.grad) {
+      const g = o.createLinearGradient(-bw / 2, 0, bw / 2, 0);
+      g.addColorStop(0, s.color), g.addColorStop(1, s.c2), fill = g
+    }
+    if (o.fillStyle = fill, o.strokeStyle = s.stroke, o.lineWidth = s.sw * H / 400, o.lineJoin = "round", txt) {
+      o.textAlign = "center", o.textBaseline = "middle";
+      const lh = 1.2 * ph,
+        y0 = -(lines.length - 1) * lh / 2;
+      lines.forEach((l, n) => {
+        s.sw > 0 && o.strokeText(l, 0, y0 + n * lh), o.fillText(l, 0, y0 + n * lh)
+      })
+    } else {
+      o.beginPath();
+      if ("ellipse" === s.type) o.ellipse(0, 0, pw / 2, ph / 2, 0, 0, 2 * Math.PI);
+      else if ("triangle" === s.type) o.moveTo(0, -ph / 2), o.lineTo(pw / 2, ph / 2), o.lineTo(-pw / 2, ph / 2), o.closePath();
+      else if ("star" === s.type) {
+        for (let n = 0; n < 10; n++) {
+          const r = n % 2 ? .4 : 1,
+            ang = -Math.PI / 2 + n * Math.PI / 5,
+            x = Math.cos(ang) * r * pw / 2,
+            y = Math.sin(ang) * r * ph / 2;
+          n ? o.lineTo(x, y) : o.moveTo(x, y)
+        }
+        o.closePath()
+      } else {
+        const m = Math.min(pw, ph),
+          r = "line" === s.type ? m / 2 : Math.min(m / 2, m * (s.rad || 0) / 100);
+        o.moveTo(-pw / 2 + r, -ph / 2), o.arcTo(pw / 2, -ph / 2, pw / 2, ph / 2, r), o.arcTo(pw / 2, ph / 2, -pw / 2, ph / 2, r), o.arcTo(-pw / 2, ph / 2, -pw / 2, -ph / 2, r), o.arcTo(-pw / 2, -ph / 2, pw / 2, -ph / 2, r), o.closePath()
+      }
+      o.fill(), s.sw > 0 && o.stroke()
+    }
+    o.restore()
+  })
+}
+
+function addGfxClip(shapes, name, dur) {
+  vpush();
+  const a = {
+    name: "Graphic: " + name,
+    el: document.createElement("canvas"),
+    track: 2,
+    start: T,
+    in: 0,
+    dur: dur || 5,
+    src: 1e9,
+    fx: {
+      ...DEF,
+      tin: "none",
+      tout: "none"
+    },
+    g: null,
+    title: {
+      text: "",
+      size: 6,
+      y: 50,
+      bg: 0,
+      color: "#ffffff",
+      stroke: "#000000",
+      font: FONTS[0],
+      bold: 1,
+      shadow: 0,
+      bgc: "#1a1a1a",
+      shapes: shapes.map(gfxClean)
+    }
+  };
+  titleCanvas(a), clips.push(a), cs = a, tl(), fxUI(), render(T)
+}
+
+function gfxUI(e) {
+  const t = cs.title,
+    S = t.shapes;
+  cs._si = Math.min(Math.max(0, cs._si | 0), S.length - 1);
+  const s = S[cs._si],
+    esc = x => String(x).replace(/[&<>"']/g, c => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    })[c]),
+    redraw = () => {
+      cs._ak = null, playing || vui()
+    },
+    R = (lab, html) => `<label class="s" style="grid-template-columns:96px 1fr">${lab}${html}</label>`,
+    num = (k, lab, step) => R(lab, `<input type="range" data-k="${k}" min="${GFX.range[k][0]}" max="${GFX.range[k][1]}" step="${step||1}" value="${s[k]}">`),
+    col = (k, lab) => R(lab, `<input type="color" data-k="${k}" value="${s[k]}">`),
+    sel = (k, lab, o) => R(lab, `<select data-k="${k}">${Object.entries(o).map(([v,n])=>`<option value="${v}"${s[k]===v?" selected":""}>${n}</option>`).join("")}</select>`),
+    chk = (k, lab) => R(lab, `<input type="checkbox" data-k="${k}"${s[k]?" checked":""}>`),
+    txt = "text" === s.type,
+    w = document.createElement("div");
+  w.style.cssText = "display:grid;gap:6px", w.innerHTML = `<b>Motion graphic</b>
+<div class="row" style="gap:4px"><button data-a="prev" class="p">Preview</button><button data-a="save" title="Save these shapes as a reusable template file">Save template</button></div>
+<b>Shapes</b>
+<select size="5" data-a="pick" style="width:100%">${S.map((x,i)=>`<option value="${i}"${i===cs._si?" selected":""}>${i+1} · ${GFX.types[x.type]}${"text"===x.type?": "+esc(x.text.split("\n")[0].slice(0,16)):""}</option>`).join("")}</select>
+<div class="row" style="flex-wrap:wrap;gap:4px"><select data-a="newtype">${Object.entries(GFX.types).map(([v,n])=>`<option value="${v}">${n}</option>`).join("")}</select><button data-a="add">Add</button><button data-a="dup">Copy</button><button data-a="del">Delete</button><button data-a="up" title="Move forward">▲</button><button data-a="dn" title="Move back">▼</button></div>
+<b>Selected shape</b>
+${sel("type","Type",GFX.types)}${txt?R("Text",`<textarea data-k="text" rows="2" style="width:100%;background:var(--p2);color:var(--tx);border:1px solid var(--ln);border-radius:3px;padding:4px">${esc(s.text)}</textarea>`)+chk("bold","Bold"):""}
+${num("x","Position X %")}${num("y","Position Y %")}${num("h",txt?"Text size":"Height",.5)}${txt?"":num("w","Width",.5)}${num("rot","Rotation")}${num("alpha","Opacity")}${txt||"ellipse"===s.type||"line"===s.type||"triangle"===s.type||"star"===s.type?"":num("rad","Corner radius")}
+${col("color","Color")}${chk("grad","Gradient")}${s.grad?col("c2","Gradient color"):""}${col("stroke","Outline")}${num("sw","Outline width",.5)}
+<b>Animation</b>
+${sel("ain","Animate in",GFX.anims)}${sel("aout","Animate out",GFX.anims)}${num("delay","Delay (s)",.1)}${num("dur","In/out time (s)",.1)}${sel("loop","Keep moving",GFX.loops)}
+<b>Font (text shapes)</b><select id="gfxfont"></select><div class="row" style="gap:4px"><label class="bt" style="flex:1;text-align:center;cursor:pointer">Add font files…<input type="file" multiple accept=".ttf,.otf,.woff,.woff2" style="display:none" data-a="fonts"></label><button data-a="fm">Manage…</button></div>`, e.append(w);
+  const fs = w.querySelector("#gfxfont");
+  videoFontOptions(fs, t.font), fs.onchange = () => {
+    t.font = fs.value;
+    const o = fs.selectedOptions[0],
+      g = o && o.dataset.g || "";
+    t.gf = g, g && loadGoogleFont(g).then(redraw), redraw()
+  }, w.oninput = ev => {
+    const k = ev.target.dataset.k;
+    if (!k) return;
+    const el = ev.target;
+    s[k] = "checkbox" === el.type ? +el.checked : "range" === el.type ? +el.value : el.value, redraw(), ("type" === k || "grad" === k) && fxUI()
+  }, w.onchange = async ev => {
+    const a = ev.target.dataset.a;
+    if ("pick" === a) cs._si = +ev.target.value, fxUI();
+    else if ("text" === ev.target.dataset.k) fxUI();
+    else if ("fonts" === a) {
+      const files = [...ev.target.files];
+      ev.target.value = "";
+      const recs = await importFontFiles(files);
+      recs.length && (t.font = fontFamilyFor(recs[recs.length - 1].family), t.gf = "", redraw(), fxUI())
+    }
+  }, w.onclick = ev => {
+    const b = ev.target.closest("button[data-a]");
+    if (!b) return;
+    const a = b.dataset.a;
+    if ("prev" === a) return pause(), T = Math.max(0, cs.start), void play();
+    if ("fm" === a) return void openFontManager();
+    if ("save" === a) {
+      const o = {
+        pxmg: 1,
+        name: cs.name,
+        dur: cs.dur,
+        shapes: S
+      };
+      return void dl(new Blob([JSON.stringify(o, null, 1)], {
+        type: "application/json"
+      }), (cs.name || "graphic").replace(/[^\w -]+/g, "").trim() + ".pxmg.json")
+    }
+    vpush();
+    if ("add" === a) {
+      const ty = w.querySelector('[data-a="newtype"]').value;
+      S.push(gfxClean({
+        type: ty,
+        h: "text" === ty ? 8 : 20,
+        w: "text" === ty ? 0 : 30,
+        ain: "fade",
+        aout: "fade"
+      })), cs._si = S.length - 1
+    } else if ("dup" === a) S.splice(cs._si + 1, 0, gfxClean({
+      ...s,
+      x: s.x + 3,
+      y: s.y + 3
+    })), cs._si++;
+    else if ("del" === a) S.length > 1 && (S.splice(cs._si, 1), cs._si = Math.max(0, cs._si - 1));
+    else if ("up" === a) {
+      const i = cs._si;
+      i < S.length - 1 && ([S[i], S[i + 1]] = [S[i + 1], S[i]], cs._si++)
+    } else if ("dn" === a) {
+      const i = cs._si;
+      i > 0 && ([S[i], S[i - 1]] = [S[i - 1], S[i]], cs._si--)
+    }
+    redraw(), fxUI()
+  }
+}
+
+async function loadGfxFile(file) {
+  try {
+    const o = JSON.parse(await file.text());
+    if (!o || !Array.isArray(o.shapes) || !o.shapes.length) throw new Error("no shapes");
+    const d = +o.dur;
+    addGfxClip(o.shapes.slice(0, 60), String(o.name || file.name).replace(/^Graphic: /, "").replace(/\.pxmg\.json$|\.json$/i, "").slice(0, 40), Number.isFinite(d) ? Math.min(600, Math.max(.5, d)) : 5), toast("Graphic loaded.")
+  } catch (e) {
+    toast("That file is not a motion graphic template.")
+  }
+}
+
+
+/* 1.21 Develop: Lightroom-style adjustments for the Photo tab. Works on 8-bit pixel data, so the same code drives the live preview and the final apply. */
+const PXDEV = (() => {
+  const BC = [0, 30, 60, 120, 180, 240, 280, 320],
+    BN = ["Red", "Orange", "Yellow", "Green", "Aqua", "Blue", "Purple", "Magenta"],
+    def = () => ({
+      exp: 0,
+      con: 0,
+      hi: 0,
+      sh: 0,
+      wh: 0,
+      bl: 0,
+      temp: 0,
+      tint: 0,
+      vib: 0,
+      sat: 0,
+      cla: 0,
+      dhz: 0,
+      shp: 0,
+      shr: 1,
+      vig: 0,
+      vfe: 50,
+      grn: 0,
+      sth: 210,
+      sts: 0,
+      hih: 40,
+      his: 0,
+      bal: 0,
+      hh: [0, 0, 0, 0, 0, 0, 0, 0],
+      hs: [0, 0, 0, 0, 0, 0, 0, 0],
+      hl: [0, 0, 0, 0, 0, 0, 0, 0],
+      mt: "none",
+      ma: 0,
+      mp: 50,
+      mf: 40,
+      mx: 50,
+      my: 50,
+      mr: 35,
+      mi: 0
+    }),
+    PRESETS = {
+      "Vivid": {
+        con: 15,
+        vib: 35,
+        sat: 10,
+        cla: 15
+      },
+      "Matte": {
+        bl: 45,
+        con: -15,
+        sat: -10,
+        wh: -10
+      },
+      "Warm film": {
+        temp: 20,
+        tint: 5,
+        con: 10,
+        sat: -5,
+        grn: 15,
+        sts: 20,
+        sth: 35,
+        his: 15,
+        hih: 45
+      },
+      "Cool fade": {
+        temp: -25,
+        bl: 30,
+        con: -10,
+        sts: 25,
+        sth: 210,
+        sat: -8
+      },
+      "Black and white": {
+        sat: -100,
+        con: 35,
+        cla: 25,
+        wh: 10,
+        bl: -15
+      },
+      "Soft portrait": {
+        cla: -25,
+        sh: 20,
+        hi: -10,
+        vib: 10,
+        shp: 15
+      },
+      "Punchy HDR": {
+        hi: -60,
+        sh: 60,
+        cla: 35,
+        dhz: 20,
+        vib: 20
+      },
+      "Golden hour": {
+        temp: 30,
+        hi: -20,
+        sh: 15,
+        sat: 8,
+        vig: -20
+      }
+    },
+    lum = (r, g, b) => .2126 * r + .7152 * g + .0722 * b,
+    sstep = (a, b, x) => {
+      const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+      return t * t * (3 - 2 * t)
+    };
+
+  function boxH(s, d, w, h, r) {
+    const k = 2 * r + 1;
+    for (let y = 0; y < h; y++) {
+      const o = y * w;
+      let sum = 0;
+      for (let x = -r; x <= r; x++) sum += s[o + Math.min(w - 1, Math.max(0, x))];
+      for (let x = 0; x < w; x++) d[o + x] = sum / k, sum += s[o + Math.min(w - 1, x + r + 1)] - s[o + Math.max(0, x - r)]
+    }
+  }
+
+  function boxV(s, d, w, h, r) {
+    const k = 2 * r + 1;
+    for (let x = 0; x < w; x++) {
+      let sum = 0;
+      for (let y = -r; y <= r; y++) sum += s[Math.min(h - 1, Math.max(0, y)) * w + x];
+      for (let y = 0; y < h; y++) d[y * w + x] = sum / k, sum += s[Math.min(h - 1, y + r + 1) * w + x] - s[Math.max(0, y - r) * w + x]
+    }
+  }
+
+  function blur(src, w, h, r, passes) {
+    r = Math.max(1, Math.round(r));
+    const cur = Float32Array.from(src),
+      tmp = new Float32Array(src.length);
+    for (let i = 0; i < (passes || 2); i++) boxH(cur, tmp, w, h, r), boxV(tmp, cur, w, h, r);
+    return cur
+  }
+
+  function toneLUT(P) {
+    const L = new Float32Array(256),
+      ev = Math.pow(2, P.exp),
+      c = P.con / 100,
+      hi = P.hi / 100,
+      sh = P.sh / 100,
+      wh = P.wh / 100,
+      bl = P.bl / 100;
+    for (let i = 0; i < 256; i++) {
+      let x = i / 255;
+      if (P.exp && (x = Math.pow(Math.min(1, Math.pow(x, 2.2) * ev), 1 / 2.2)), x += sh * .35 * 6.75 * x * (1 - x) * (1 - x) + hi * .35 * 6.75 * (1 - x) * x * x + bl * .25 * Math.pow(1 - x, 4) + wh * .25 * Math.pow(x, 4), c > 0) {
+        const g = 1 + 5 * c,
+          s = v => 1 / (1 + Math.exp(-g * (v - .5))),
+          s0 = s(0),
+          s1 = s(1);
+        x = (s(Math.min(1.5, Math.max(-.5, x))) - s0) / (s1 - s0)
+      } else c < 0 && (x = .5 + (x - .5) * (1 + .8 * c));
+      L[i] = Math.min(1, Math.max(0, x))
+    }
+    return L
+  }
+
+  function hslRGB(h, s, l) {
+    h = (h % 360 + 360) % 360 / 360;
+    if (0 === s) return [l, l, l];
+    const q = l < .5 ? l * (1 + s) : l + s - l * s,
+      p = 2 * l - q,
+      f = t => (t < 0 && (t += 1), t > 1 && (t -= 1), t < 1 / 6 ? p + 6 * (q - p) * t : t < .5 ? q : t < 2 / 3 ? p + (q - p) * (2 / 3 - t) * 6 : p);
+    return [f(h + 1 / 3), f(h), f(h - 1 / 3)]
+  }
+
+  function maskFn(P, w, h) {
+    if ("none" === P.mt) return null;
+    const inv = P.mi ? 1 : 0;
+    if ("linear" === P.mt) {
+      const a = P.ma * Math.PI / 180,
+        sa = Math.sin(a),
+        ca = Math.cos(a),
+        p = P.mp / 100 - .5,
+        f = Math.max(.001, P.mf / 200);
+      return (x, y) => {
+        const proj = ((x + .5) / w - .5) * sa + ((y + .5) / h - .5) * ca,
+          m = sstep(0, 1, .5 + (p - proj) / (2 * f));
+        return inv ? 1 - m : m
+      }
+    }
+    const cx = P.mx / 100 * w,
+      cy = P.my / 100 * h,
+      R = Math.max(1, P.mr / 100 * Math.min(w, h)),
+      f = Math.max(.01, P.mf / 100);
+    return (x, y) => {
+      const d = Math.hypot(x - cx, y - cy) / R,
+        m = 1 - sstep(1 - f, 1, d);
+      return inv ? 1 - m : m
+    }
+  }
+
+  function apply(d, w, h, P) {
+    const n = w * h,
+      M = Math.max(w, h),
+      LT = toneLUT(P),
+      tr = 1 + .25 * P.temp / 100,
+      tb = 1 - .25 * P.temp / 100,
+      tg = 1 - .15 * P.tint / 100,
+      dh = P.dhz / 100,
+      cl = P.cla / 100,
+      sp = P.shp / 100,
+      vb = P.vib / 100,
+      sa = P.sat / 100,
+      hasHSL = P.hh.some(Boolean) || P.hs.some(Boolean) || P.hl.some(Boolean),
+      split = P.sts > 0 || P.his > 0,
+      gr = P.grn / 100,
+      vg = P.vig / 100,
+      mf = maskFn(P, w, h),
+      orig = mf ? new Uint8ClampedArray(d) : null,
+      SR = hslRGB(P.sth, 1, .5),
+      HR = hslRGB(P.hih, 1, .5);
+    let Lp = null,
+      Lb = null,
+      Hz = null,
+      Br = null,
+      Bg = null,
+      Bb = null;
+    if (cl) {
+      Lp = new Float32Array(n);
+      for (let i = 0, j = 0; i < n; i++, j += 4) Lp[i] = lum(d[j], d[j + 1], d[j + 2]) / 255;
+      Lb = blur(Lp, w, h, M / 60, 2)
+    }
+    if (dh > 0) {
+      const mn = new Float32Array(n);
+      for (let i = 0, j = 0; i < n; i++, j += 4) mn[i] = Math.min(d[j], d[j + 1], d[j + 2]) / 255;
+      Hz = blur(mn, w, h, M / 40, 2)
+    }
+    if (sp) {
+      const pr = new Float32Array(n),
+        pg = new Float32Array(n),
+        pb = new Float32Array(n);
+      for (let i = 0, j = 0; i < n; i++, j += 4) pr[i] = d[j] / 255, pg[i] = d[j + 1] / 255, pb[i] = d[j + 2] / 255;
+      const rad = Math.max(.6, P.shr * M / 1000);
+      Br = blur(pr, w, h, rad, 2), Bg = blur(pg, w, h, rad, 2), Bb = blur(pb, w, h, rad, 2)
+    }
+    const k0 = Math.min(1, Math.max(0, .25 + .6 * P.vfe / 100));
+    for (let y = 0, i = 0; y < h; y++)
+      for (let x = 0; x < w; x++, i++) {
+        const j = 4 * i;
+        let r = LT[d[j]],
+          g = LT[d[j + 1]],
+          b = LT[d[j + 2]];
+        if ((P.temp || P.tint) && (r *= tr, g *= tg, b *= tb), dh > 0) {
+          const a = dh * .7 * Hz[i],
+            k = 1 - a;
+          r = (r - a) / k, g = (g - a) / k, b = (b - a) / k
+        } else if (dh < 0) {
+          const a = -dh * .4;
+          r = r * (1 - a) + .8 * a, g = g * (1 - a) + .8 * a, b = b * (1 - a) + .8 * a
+        }
+        if (cl) {
+          const L = lum(r, g, b),
+            add = cl * 1.2 * (Lp[i] - Lb[i]) * (1 - .6 * Math.pow(2 * L - 1, 2));
+          r += add, g += add, b += add
+        }
+        if (sp) {
+          const k = 1.6 * sp;
+          r += k * (d[j] / 255 - Br[i]), g += k * (d[j + 1] / 255 - Bg[i]), b += k * (d[j + 2] / 255 - Bb[i])
+        }
+        if (vb || sa) {
+          const mx = Math.max(r, g, b),
+            mn = Math.min(r, g, b),
+            s = mx > 0 ? (mx - mn) / mx : 0,
+            L = lum(r, g, b);
+          let f = 1 + sa;
+          f *= 1 + vb * (1 - s), f = Math.max(0, f), r = L + (r - L) * f, g = L + (g - L) * f, b = L + (b - L) * f
+        }
+        if (hasHSL) {
+          const R = Math.min(1, Math.max(0, r)),
+            G = Math.min(1, Math.max(0, g)),
+            B = Math.min(1, Math.max(0, b)),
+            mx = Math.max(R, G, B),
+            mn = Math.min(R, G, B),
+            l = (mx + mn) / 2,
+            dd = mx - mn;
+          if (dd > 1e-4) {
+            let s = dd / (1 - Math.abs(2 * l - 1)),
+              hu = mx === R ? (G - B) / dd % 6 : mx === G ? (B - R) / dd + 2 : (R - G) / dd + 4;
+            hu = (60 * hu + 360) % 360;
+            let bi = 7;
+            for (let q = 0; q < 8; q++) {
+              const nx = 7 === q ? 360 : BC[q + 1];
+              if (hu >= BC[q] && hu < nx) {
+                bi = q;
+                break
+              }
+            }
+            const nx = 7 === bi ? 360 : BC[bi + 1],
+              t = (hu - BC[bi]) / (nx - BC[bi]),
+              b2 = (bi + 1) % 8,
+              ha = (1 - t) * P.hh[bi] + t * P.hh[b2],
+              sa2 = (1 - t) * P.hs[bi] + t * P.hs[b2],
+              la = (1 - t) * P.hl[bi] + t * P.hl[b2],
+              cw = Math.min(1, 2 * s);
+            hu += .3 * ha * cw, s = Math.min(1, Math.max(0, s * (1 + sa2 / 100)));
+            const l2 = Math.min(1, Math.max(0, l + la / 100 * .25 * cw)),
+              o = hslRGB(hu, s, l2);
+            r = o[0], g = o[1], b = o[2]
+          }
+        }
+        if (split) {
+          const L = lum(r, g, b),
+            m = .5 + P.bal / 100 * .25,
+            ws = L < m ? Math.pow(1 - L / m, 1.5) : 0,
+            wh = L > m ? Math.pow((L - m) / (1 - m), 1.5) : 0,
+            as = ws * P.sts / 100 * .5,
+            ah = wh * P.his / 100 * .5;
+          r += as * (SR[0] - L) + ah * (HR[0] - L), g += as * (SR[1] - L) + ah * (HR[1] - L), b += as * (SR[2] - L) + ah * (HR[2] - L)
+        }
+        if (vg) {
+          const nx = (x + .5) / w - .5,
+            ny = (y + .5) / h - .5,
+            f = sstep(k0, 1.05, Math.sqrt(nx * nx + ny * ny) / .7071);
+          if (vg < 0) {
+            const m = 1 + .95 * vg * f;
+            r *= m, g *= m, b *= m
+          } else r += vg * f * .9 * (1 - r), g += vg * f * .9 * (1 - g), b += vg * f * .9 * (1 - b)
+        }
+        if (gr) {
+          const hs = 43758.5453 * Math.sin(12.9898 * x + 78.233 * y),
+            nz = 2 * (hs - Math.floor(hs)) - 1,
+            L = lum(r, g, b),
+            a = gr * .14 * (1 - .6 * Math.abs(2 * L - 1)) * nz;
+          r += a, g += a, b += a
+        }
+        r = 255 * Math.min(1, Math.max(0, r)), g = 255 * Math.min(1, Math.max(0, g)), b = 255 * Math.min(1, Math.max(0, b));
+        if (mf) {
+          const m = mf(x, y);
+          d[j] = orig[j] + (r - orig[j]) * m, d[j + 1] = orig[j + 1] + (g - orig[j + 1]) * m, d[j + 2] = orig[j + 2] + (b - orig[j + 2]) * m
+        } else d[j] = r, d[j + 1] = g, d[j + 2] = b
+      }
+  }
+
+  function hist(d) {
+    const H = new Uint32Array(1024);
+    for (let j = 0; j < d.length; j += 4) d[j + 3] && (H[d[j]]++, H[256 + d[j + 1]]++, H[512 + d[j + 2]]++, H[768 + Math.round(lum(d[j], d[j + 1], d[j + 2]))]++);
+    return H
+  }
+
+  function auto(d) {
+    const H = hist(d);
+    let tot = 0;
+    for (let i = 0; i < 256; i++) tot += H[768 + i];
+    if (!tot) return {};
+    const pct = p => {
+      let a = 0;
+      for (let i = 0; i < 256; i++)
+        if (a += H[768 + i], a >= tot * p) return i / 255;
+      return 1
+    };
+    const lo = pct(.01),
+      mid = Math.max(.02, pct(.5)),
+      hi = pct(.99),
+      ev = Math.max(-2, Math.min(2, .8 * 2.2 * Math.log2(.47 / mid)));
+    return {
+      exp: +ev.toFixed(2),
+      bl: Math.round(Math.max(-60, Math.min(0, -lo * 160))),
+      wh: Math.round(Math.max(-30, Math.min(40, (.96 - hi) * 120))),
+      con: 8,
+      vib: 12
+    }
+  }
+  return {
+    BN,
+    def,
+    PRESETS,
+    apply,
+    hist,
+    auto,
+    maskFn
+  }
+})();
+
+const DEVSL = [
+  ["Basic", [
+    ["exp", "Exposure", -5, 5, .05],
+    ["con", "Contrast", -100, 100],
+    ["hi", "Highlights", -100, 100],
+    ["sh", "Shadows", -100, 100],
+    ["wh", "Whites", -100, 100],
+    ["bl", "Blacks", -100, 100],
+    ["temp", "Temperature", -100, 100],
+    ["tint", "Tint", -100, 100],
+    ["vib", "Vibrance", -100, 100],
+    ["sat", "Saturation", -100, 100]
+  ]],
+  ["Presence and detail", [
+    ["cla", "Clarity", -100, 100],
+    ["dhz", "Dehaze", -100, 100],
+    ["shp", "Sharpen", 0, 100],
+    ["shr", "Sharpen radius", .5, 3, .1]
+  ]],
+  ["Effects", [
+    ["vig", "Vignette", -100, 100],
+    ["vfe", "Vignette midpoint", 0, 100],
+    ["grn", "Grain", 0, 100]
+  ]],
+  ["Color grading", [
+    ["sth", "Shadow hue", 0, 360],
+    ["sts", "Shadow strength", 0, 100],
+    ["hih", "Highlight hue", 0, 360],
+    ["his", "Highlight strength", 0, 100],
+    ["bal", "Balance", -100, 100]
+  ]]
+];
+
+function openDevelop() {
+  const L = A();
+  if (!L) return void toast("Open a picture first.");
+  if (L.txt) return void toast("Pick a picture layer. Text layers have no pixels to develop.");
+  let d = document.getElementById("devdlg");
+  d || (d = document.createElement("dialog"), d.id = "devdlg", d.style.cssText = "width:min(96vw,1000px);max-width:96vw", document.body.append(d), d.addEventListener("keydown", ev => ev.stopPropagation()));
+  const P = PXDEV.def(),
+    sc = Math.min(1, 720 / Math.max(pw, ph)),
+    w = Math.max(1, Math.round(pw * sc)),
+    h = Math.max(1, Math.round(ph * sc)),
+    sv = document.createElement("canvas");
+  sv.width = w, sv.height = h, sv.getContext("2d").drawImage(L.c, 0, 0, w, h);
+  const base = sv.getContext("2d").getImageData(0, 0, w, h);
+  let band = 0,
+    raf = 0,
+    showMask = !1,
+    before = !1;
+  const slider = (k, lab, mn, mx, st) => `<label class="s" style="grid-template-columns:104px 1fr 44px" title="Double-click to reset"><span>${lab}</span><input type="range" data-k="${k}" min="${mn}" max="${mx}" step="${st||1}" value="${P[k]}"><o>${P[k]}</o></label>`,
+    ctl = () => {
+      const m = P.mt;
+      return DEVSL.map(([t, rows], i) => `<details${i<1?" open":""}><summary>${t}</summary>${rows.map(r=>slider(...r)).join("")}</details>`).join("") + `<details><summary>Color mixer (HSL)</summary><div class="row" style="flex-wrap:wrap;gap:3px;margin:4px 0">${PXDEV.BN.map((n,i)=>`<button data-band="${i}" class="${i===band?"p":""}">${n}</button>`).join("")}</div>${["hh:Hue","hs:Saturation","hl:Luminance"].map(x=>{const[k,l]=x.split(":");return`<label class="s" style="grid-template-columns:104px 1fr 44px"><span>${l}</span><input type="range" data-hk="${k}" min="-100" max="100" value="${P[k][band]}"><o>${P[k][band]}</o></label>`}).join("")}</details><details><summary>Local adjustment (mask)</summary><label class="s" style="grid-template-columns:104px 1fr"><span>Mask</span><select data-k="mt"><option value="none"${"none"===m?" selected":""}>None (whole picture)</option><option value="linear"${"linear"===m?" selected":""}>Linear gradient</option><option value="radial"${"radial"===m?" selected":""}>Radial</option></select></label>${"linear"===m?slider("ma","Angle",-180,180)+slider("mp","Position",0,100)+slider("mf","Feather",0,100):""}${"radial"===m?slider("mx","Center X",0,100)+slider("my","Center Y",0,100)+slider("mr","Radius",1,100)+slider("mf","Feather",0,100):""}${"none"!==m?`<label class="s" style="grid-template-columns:auto auto;justify-content:start;gap:6px"><input type="checkbox" data-k="mi"${P.mi?" checked":""}> Invert</label><label class="s" style="grid-template-columns:auto auto;justify-content:start;gap:6px"><input type="checkbox" id="devshowm"${showMask?" checked":""}> Show mask</label><div style="color:var(--mut);font-size:11px">All the sliders above only act inside the mask.</div>`:""}</details>`
+    },
+    draw = () => {
+      const wk = new ImageData(new Uint8ClampedArray(base.data), w, h);
+      before || PXDEV.apply(wk.data, w, h, P);
+      const pc = d.querySelector("#devpv").getContext("2d");
+      pc.putImageData(wk, 0, 0);
+      if (showMask && "none" !== P.mt && !before) {
+        const mf = PXDEV.maskFn(P, w, h),
+          ov = pc.getImageData(0, 0, w, h),
+          o = ov.data;
+        for (let y = 0, i = 0; y < h; y++)
+          for (let x = 0; x < w; x++, i += 4) {
+            const m = mf(x, y);
+            o[i] = o[i] + (255 - o[i]) * .55 * m, o[i + 1] *= 1 - .45 * m, o[i + 2] *= 1 - .45 * m
+          }
+        pc.putImageData(ov, 0, 0)
+      }
+      const H = PXDEV.hist(wk.data),
+        hc = d.querySelector("#devhist").getContext("2d");
+      hc.clearRect(0, 0, 256, 64), hc.globalCompositeOperation = "lighter";
+      let mx = 1;
+      for (let i = 0; i < 1024; i++) i % 256 > 1 && i % 256 < 254 && H[i] > mx && 768 > i && (mx = H[i]);
+      [
+        ["#e33", 0],
+        ["#3c3", 256],
+        ["#48f", 512]
+      ].forEach(([c, o]) => {
+        hc.fillStyle = c;
+        for (let i = 0; i < 256; i++) hc.fillRect(i, 64, 1, -Math.min(64, 64 * H[o + i] / mx))
+      }), hc.globalCompositeOperation = "source-over"
+    },
+    sched = () => {
+      raf || (raf = requestAnimationFrame(() => {
+        raf = 0, draw()
+      }))
+    },
+    paint = () => {
+      d.querySelector("#devctl").innerHTML = ctl()
+    };
+  d.innerHTML = `<h3>Develop</h3><div style="display:flex;gap:10px;flex-wrap:wrap"><div style="flex:1 1 300px;min-width:0"><canvas id="devhist" width="256" height="64" style="width:100%;max-width:256px;height:64px;background:#14161c;border:1px solid var(--ln);display:block;margin-bottom:6px"></canvas><div style="overflow:auto;max-height:64vh;background:repeating-conic-gradient(#555 0 25%,#666 0 50%) 0 0/16px 16px"><canvas id="devpv" width="${w}" height="${h}" style="max-width:100%;display:block"></canvas></div></div><div id="devctl" style="flex:0 1 320px;min-width:260px;max-height:70vh;overflow:auto;display:grid;gap:4px;align-content:start"></div></div><div class="row" style="margin-top:8px;flex-wrap:wrap;gap:6px"><select id="devpre"><option value="">Preset…</option>${Object.keys(PXDEV.PRESETS).map(n=>`<option>${n}</option>`).join("")}</select><button id="devauto" title="Set exposure, blacks and whites from the picture">Auto</button><button id="devreset">Reset</button><button id="devba" title="Press and hold to see the original">Hold for original</button><span style="flex:1"></span><button id="devcancel">Cancel</button><button id="devok" class="p">Apply</button></div>`, paint();
+  const q = s => d.querySelector(s),
+    set = o => {
+      Object.assign(P, PXDEV.def(), o), paint(), sched()
+    };
+  d.querySelector("#devctl").oninput = ev => {
+    const t = ev.target;
+    if (t.id === "devshowm") return showMask = t.checked, void sched();
+    if (t.dataset.hk) {
+      P[t.dataset.hk][band] = +t.value, t.nextElementSibling.textContent = t.value, sched();
+      return
+    }
+    const k = t.dataset.k;
+    if (k) {
+      P[k] = "checkbox" === t.type ? +t.checked : "SELECT" === t.tagName ? t.value : +t.value, t.nextElementSibling && "O" === t.nextElementSibling.tagName && (t.nextElementSibling.textContent = t.value), "mt" === k && paint(), sched()
+    }
+  }, d.querySelector("#devctl").onclick = ev => {
+    const b = ev.target.closest("[data-band]");
+    b && (band = +b.dataset.band, paint())
+  }, d.querySelector("#devctl").ondblclick = ev => {
+    const t = ev.target;
+    if ("range" !== t.type) return;
+    const D = PXDEV.def();
+    t.dataset.hk ? P[t.dataset.hk][band] = 0 : P[t.dataset.k] = D[t.dataset.k], paint(), sched()
+  }, q("#devpre").onchange = ev => {
+    const n = ev.target.value;
+    n && set(PXDEV.PRESETS[n]), ev.target.value = ""
+  }, q("#devauto").onclick = () => set(PXDEV.auto(base.data)), q("#devreset").onclick = () => set({});
+  const ba = q("#devba"),
+    hold = on => {
+      before = on, sched()
+    };
+  ba.onpointerdown = () => hold(!0), ba.onpointerup = ba.onpointerleave = ba.onpointercancel = () => before && hold(!1), q("#devcancel").onclick = () => d.close(), q("#devok").onclick = () => {
+    if (JSON.stringify(P) === JSON.stringify(PXDEV.def())) return void d.close();
+    d.close(), toast("Applying Develop…"), setTimeout(() => flt("Develop", px => PXDEV.apply(px, pw, ph, P)), 40)
+  }, d.showModal(), draw()
+}
+
+ACT.fredeye = () => {
+  hasSel || toast("Tip: select the eyes first so only they change."), flt("Red-eye", a => {
+    for (let o = 0; o < a.length; o += 4) {
+      const r = a[o],
+        g = a[o + 1],
+        b = a[o + 2];
+      if (r > 70 && r > 1.6 * Math.max(g, b)) {
+        const m = (g + b) / 2;
+        a[o] = Math.min(r, .85 * m + 8)
+      }
+    }
+  })
+};
+
+function healAuto(t) {
+  const R = Math.max(2, Math.round($("psz").value / 2)),
+    x = A().x,
+    mean = (cx, cy, r) => {
+      const x0 = Math.round(cx - r),
+        y0 = Math.round(cy - r);
+      if (x0 < 0 || y0 < 0 || x0 + 2 * r > pw || y0 + 2 * r > ph) return null;
+      const d = x.getImageData(x0, y0, 2 * r, 2 * r).data;
+      let a = 0,
+        b = 0,
+        c = 0,
+        n = 0;
+      for (let i = 0; i < d.length; i += 4) a += d[i], b += d[i + 1], c += d[i + 2], n++;
+      return [a / n, b / n, c / n]
+    },
+    ref = mean(t[0], t[1], Math.round(1.6 * R)) || mean(t[0], t[1], R);
+  let best = null;
+  if (ref)
+    for (const k of [2.4, 3.6])
+      for (let i = 0; i < 8; i++) {
+        const an = i * Math.PI / 4,
+          cx = t[0] + Math.cos(an) * R * k,
+          cy = t[1] + Math.sin(an) * R * k,
+          m = mean(cx, cy, Math.round(1.6 * R));
+        if (!m) continue;
+        const cost = Math.abs(m[0] - ref[0]) + Math.abs(m[1] - ref[1]) + Math.abs(m[2] - ref[2]);
+        (!best || cost < best.cost) && (best = {
+          cost,
+          ox: Math.round(cx - t[0]),
+          oy: Math.round(cy - t[1])
+        })
+      }
+  return best || {
+    ox: (t[0] + 2.4 * R < pw ? 1 : -1) * Math.round(2.4 * R),
+    oy: 0
+  }
+}
+
 
 const ANIMS = {
   none: "None",
@@ -11470,24 +13161,29 @@ function titleUI(e) {
       n(i), titleCanvas(cs), playing || vui()
     }, e.append(r)
   };
-  n("Font", "select", "", e => t.font = e.value, e => {
-    const all = FONTS.concat(CFONTS.map(f => fontFamilyFor(f.family)));
-    if (t.font && !all.includes(t.font)) all.push(t.font);
-    e.innerHTML = all.map(f => `<option value='${f}'>${(CFONTS.find(c => fontFamilyFor(c.family) === f) || {}).name || f.split(",")[0].replace(/"/g,"")}</option>`).join(""), e.value = t.font, e.id = "vtfont"
+  n("Font", "select", "", e => {
+    t.font = e.value;
+    const o = e.selectedOptions[0],
+      g = o && o.dataset.g || "";
+    t.gf = g, g && loadGoogleFont(g).then(() => {
+      cs._ak = null, cs._sig = null, titleCanvas(cs), playing || vui()
+    })
+  }, e => {
+    videoFontOptions(e, t.font), e.id = "vtfont"
   }), (() => {
+    const w = document.createElement("div");
+    w.className = "row", w.style.gap = "4px";
     const r = document.createElement("label");
-    r.className = "bt", r.style.cssText = "display:block;text-align:center;cursor:pointer", r.textContent = "Load font file (TTF, OTF, WOFF)…";
+    r.className = "bt", r.style.cssText = "flex:1;text-align:center;cursor:pointer", r.textContent = "Add font files…";
     const f = document.createElement("input");
-    f.type = "file", f.accept = ".ttf,.otf,.woff,.woff2", f.style.display = "none", f.onchange = async () => {
-      const file = f.files && f.files[0];
-      if (f.value = "", !file) return;
-      try {
-        const rec = await importFontFile(file);
-        t.font = fontFamilyFor(rec.family), fxUI(), titleCanvas(cs), playing || vui(), toast("Font “" + rec.name + "” is ready.")
-      } catch (err) {
-        toast("Could not load that font: " + err.message)
-      }
-    }, r.append(f), e.append(r)
+    f.type = "file", f.multiple = !0, f.accept = ".ttf,.otf,.woff,.woff2", f.style.display = "none", f.onchange = async () => {
+      const fs = [...(f.files || [])];
+      if (f.value = "", !fs.length) return;
+      const recs = await importFontFiles(fs);
+      recs.length && (t.font = fontFamilyFor(recs[recs.length - 1].family), t.gf = "", fxUI(), titleCanvas(cs), playing || vui())
+    }, r.append(f);
+    const m = document.createElement("button");
+    m.textContent = "Manage…", m.title = "Your fonts and installed fonts", m.onclick = () => openFontManager(), w.append(r, m), e.append(w)
   })(), [
     ["Size", "size", 2, 30],
     ["Vertical %", "y", 5, 95],
@@ -11507,7 +13203,13 @@ function applyRes() {
     t = 0 | +$("xh").value;
   e >= 64 && t >= 64 && (e !== W || t !== H) && (PS.w = e, PS.h = t, PS.ar = "custom", applyPS())
 }
-$("vtita").onclick = () => addTitle("tita"), $("vlowa").onclick = () => addTitle("lowa"), $("vtit").onclick = () => addTitle("title"), $("vlow").onclick = () => addTitle("low"), $("vsub").onclick = () => addTitle("sub"), $("vmat").onclick = () => addTitle("mat"), $("vexp").onclick = () => {
+$("pdev").onclick = openDevelop, $("vinst").onclick = openInstruments, $("vmgsel").onchange = ev => {
+  const k = ev.target.value;
+  ev.target.value = "", k && GFX.templates[k] && addGfxClip(GFX.templates[k][1], GFX.templates[k][0])
+}, $("vmgf").onchange = ev => {
+  const f = ev.target.files && ev.target.files[0];
+  ev.target.value = "", f && loadGfxFile(f)
+}, $("vtita").onclick = () => addTitle("tita"), $("vlowa").onclick = () => addTitle("lowa"), $("vtit").onclick = () => addTitle("title"), $("vlow").onclick = () => addTitle("low"), $("vsub").onclick = () => addTitle("sub"), $("vmat").onclick = () => addTitle("mat"), $("vexp").onclick = () => {
   const e = `${W}x${H}`;
   $("xr").value = [...$("xr").options].some(t => t.value === e) ? e : "c", $("xw").value = W, $("xh").value = H, [...$("xfps").options].some(e => e.value == PS.fps) && ($("xfps").value = PS.fps), $("xcs").value = PS.cs, $("vdlg").showModal()
 }, $("xr").onchange = e => {
@@ -12108,7 +13810,8 @@ const ARS = {
       ...e.fx
     },
     title: e.title && {
-      ...e.title
+      ...e.title,
+      shapes: e.title.shapes && JSON.parse(JSON.stringify(e.title.shapes))
     },
     kf: e.kf && JSON.parse(JSON.stringify(e.kf))
   }));
@@ -15689,8 +17392,8 @@ setLv(lv0), $("lvl").onchange = e => setLv(e.target.value), $("about").onclick =
   /* ------------------------------------------------------------------ *
    * 0. Version, state and small helpers
    * ------------------------------------------------------------------ */
-  const VERSION = "1.18.0";
-  const BUILD = "2026-11-11";
+  const VERSION = "1.21.0";
+  const BUILD = "2026-11-25";
   const APP_NAME = "Studio Editor PRO X";
   const qp = new URLSearchParams(location.search);
   const isHttp = /^https?:$/.test(location.protocol);
@@ -15868,7 +17571,7 @@ setLv(lv0), $("lvl").onchange = e => setLv(e.target.value), $("about").onclick =
    * 1. Branding, version, About and What's new
    * ------------------------------------------------------------------ */
   function buildBrandBar() {
-    document.title = "Studio Editor PRO X 1.18";
+    document.title = "Studio Editor PRO X 1.21";
     const top = qs(".top");
     if (!top) return;
     const old = top.querySelector(":scope > b");
@@ -15877,7 +17580,7 @@ setLv(lv0), $("lvl").onchange = e => setLv(e.target.value), $("about").onclick =
         <span class="px-brand-mark">◆</span>
         <span class="px-brand-name">Studio Editor</span>
         <em class="px-brand-pro">PRO X</em>
-        <span class="px-ver">1.18</span>
+        <span class="px-ver">1.21</span>
       </div>`;
     }
     const spacer = [...top.children].find((el) => el.tagName === "SPAN" && /flex:\s*1/.test(el.getAttribute("style") || ""));
@@ -15929,7 +17632,7 @@ setLv(lv0), $("lvl").onchange = e => setLv(e.target.value), $("about").onclick =
       <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
         <span class="px-brand-mark" style="width:24px;height:24px">◆</span>
         Studio Editor <span style="color:#34d3b1;font-size:12px;letter-spacing:.12em">PRO X</span>
-        <span class="px-badge px-info">1.18</span>
+        <span class="px-badge px-info">1.21</span>
       </h3>
       <div class="px-about-version">VERSION ${VERSION} · BUILD ${BUILD}</div>
       <p style="margin-bottom:6px">Created by ${created}</p>
@@ -16009,11 +17712,23 @@ setLv(lv0), $("lvl").onchange = e => setLv(e.target.value), $("about").onclick =
           "Note: Adobe Premiere <code>.mogrt</code> templates cannot be imported, because they need Adobe's own engine to render."
         ]]);
       }
+      if (typeof WN !== "undefined" && Array.isArray(WN) && !WN.some(([t]) => String(t).includes("Version 1.21"))) {
+        WN.unshift(["Version 1.21 — Develop panel, instruments, custom motion graphics and fonts", [
+          "Photo: new <b>Develop</b> menu with a Lightroom-style panel. Exposure, contrast, highlights, shadows, whites, blacks, temperature, tint, vibrance, saturation, clarity, dehaze, sharpening, vignette and grain, with a live histogram, a hold-to-compare button, Auto and eight presets.",
+          "Photo: <b>Color mixer</b> (hue, saturation and luminance for eight colors) and <b>color grading</b> for shadows and highlights, inside the Develop panel.",
+          "Photo: <b>local adjustments</b>. Limit any Develop settings to a linear gradient or a radial area, with feathering, invert and a Show mask preview.",
+          "Photo: new <b>Healing brush</b> (J). Click a blemish and it samples a nearby area and matches the color and brightness, or Alt-click to choose the source yourself. Also <b>Red-eye removal</b> in the Develop menu: select the eyes first.",
+          "Video: <b>Instruments</b>. Play a piano and ten other instruments (electric piano, organ, synth, bass, pad, strings, guitar, marimba, bells, brass) and five drum kits on screen, with your computer keyboard, or with a MIDI device. Press Record to play the timeline and add your take to the audio track.",
+          "Video: <b>custom motion graphics</b>. The new + Motion graphic menu starts a graphic from shapes and text. Each shape has its own position, size, color, gradient, outline and animation (in, out and keep moving). Six starting templates, <b>Save template</b> and <b>Load graphic</b> let you reuse your work.",
+          "Fonts: <b>Manage fonts</b> in Photo and Video. Add several font files at once, or drop them on the editor. Fonts are now remembered in this browser, and Chrome or Edge can use fonts installed on your computer. Video titles can also use Google fonts.",
+          "Note: Photo layer masks, liquify and Premiere <code>.mogrt</code> templates are not included."
+        ]]);
+      }
       const box = byId("wnbox");
       if (box && typeof WN !== "undefined") {
         box.innerHTML = `<h2>What's new</h2>
           <p>Everything added in this version. The latest release is at the top.</p>
-          <div class="px-note px-good"><b>PRO X 1.18 is here.</b> The editor is still a single file. This release adds animated titles and lower thirds, custom fonts in the video tab, a way to send a clip\'s audio to the Audio editor and back, and automatic text and button sizing on phones.</div>` +
+          <div class="px-note px-good"><b>PRO X 1.21 is here.</b> The editor is still a single file. This release adds a Lightroom-style Develop panel and a healing brush in Photo, instruments with recording and custom motion graphics in Video, and a font manager with installed-font support.</div>` +
           WN.map(([title, items]) => `<div class="wn"><h4>${esc(title)}</h4><ul>${items.map((i) => `<li>${i}</li>`).join("")}</ul></div>`).join("");
       }
     } catch (e) { console.warn("PRO X: could not update What's new", e); }
@@ -19063,7 +20778,7 @@ setLv(lv0), $("lvl").onchange = e => setLv(e.target.value), $("about").onclick =
     return `
     <div class="px-hub">
       <div class="px-hub-head">
-        <div class="px-hub-title"><span class="px-brand-mark">P</span> Creator Hub <span class="px-badge px-info">1.18</span></div>
+        <div class="px-hub-title"><span class="px-brand-mark">P</span> Creator Hub <span class="px-badge px-info">1.21</span></div>
         <div class="px-hub-sub" id="pxHubSub">Publishing, captions, thumbnails and audio</div>
         <div class="px-row">
           <button class="px-btn px-sm" id="pxHubHelpBtn">Help</button>
@@ -19473,7 +21188,7 @@ setLv(lv0), $("lvl").onchange = e => setLv(e.target.value), $("about").onclick =
             <h4>This build</h4>
             <div class="px-row">
               <button class="px-btn" id="pxHelpAbout">About Studio Editor PRO X</button>
-              <button class="px-btn px-ghost" id="pxHelpNew">What's new in 1.18</button>
+              <button class="px-btn px-ghost" id="pxHelpNew">What's new in 1.21</button>
             </div>
             <p class="px-hint" style="margin-top:8px">Version ${VERSION} · build ${BUILD}. Everything runs locally in this tab.</p>
           </section>
@@ -20539,7 +22254,7 @@ setLv(lv0), $("lvl").onchange = e => setLv(e.target.value), $("about").onclick =
     setTimeout(() => {
       if (!localStorage.getItem("prox.greeted")) {
         LS.set("greeted", true);
-        say("PRO X 1.18 is ready. Try animated titles and lower thirds, custom fonts in the video tab, and sending a clip's audio to the Audio editor.");
+        say("PRO X 1.21 is ready. Try the new Develop panel in Photo, instruments and custom motion graphics in Video, and the font manager.");
       }
     }, 900);
   }
@@ -20553,7 +22268,7 @@ setLv(lv0), $("lvl").onchange = e => setLv(e.target.value), $("about").onclick =
 </script>
 <script id="pxV115Script">
 /* ==========================================================================
-   Studio Editor PRO X 1.18 — upgrade layer
+   Studio Editor PRO X 1.21 — upgrade layer
    Adds: EBU R128 loudness metering (live meter + "Measure mix" + normalised
    exports), and 3D asset import (GLB / glTF, Draco) with rig, skeleton and
    animation controls. The waveform pyramid cache and OPFS snapshot storage
@@ -22978,7 +24693,7 @@ fn fs(@builtin(position) pos: vec4<f32>) -> @location(0) vec4<f32> {
 
   function send(type, extra) {
     if (!ANALYTICS_URL || !stat.on) return;
-    const body = JSON.stringify(Object.assign({ v: 1, type, uid: statStore(UID_KEY), sid: stat.sid, app: "1.18", embed: embedded(), t: Date.now() }, extra));
+    const body = JSON.stringify(Object.assign({ v: 1, type, uid: statStore(UID_KEY), sid: stat.sid, app: "1.21", embed: embedded(), t: Date.now() }, extra));
     try { if (navigator.sendBeacon && navigator.sendBeacon(ANALYTICS_URL, new Blob([body], { type: "text/plain" }))) return; } catch {}
     try { fetch(ANALYTICS_URL, { method: "POST", body, keepalive: true, mode: "no-cors", headers: { "Content-Type": "text/plain" } }).catch(() => {}); } catch {}
   }
@@ -23058,7 +24773,7 @@ fn fs(@builtin(position) pos: vec4<f32>) -> @location(0) vec4<f32> {
   hookMixdown();
   wire3D();
   window.px115 = Object.assign(window.px115 || {}, { measureBuffer, KMeter, buildRoot, setClip, applyPose, setSkeleton, rigOf, install3D });
-  console.info("Studio Editor PRO X 1.18 layer ready.");
+  console.info("Studio Editor PRO X 1.21 layer ready.");
 })();
 </script>
 </body>

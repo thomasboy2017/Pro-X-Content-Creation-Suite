@@ -1,5 +1,5 @@
 /* Studio Editor PRO X - service worker. Host next to the app's HTML file. */
-const CACHE = "studio-editor-prox-v1.18";
+const CACHE = "studio-editor-prox-v1.21";
 
 self.addEventListener("install", (e) => {
   e.waitUntil(
