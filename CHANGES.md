@@ -89,3 +89,9 @@ The app now reports version 1.21 (title, brand, About, Creator Hub, help, greeti
 ## Testing note
 
 The synth was rendered offline and checked for silence and clipping on every instrument and drum. The graphics and Develop engines were rendered on a real canvas and inspected. The new panels were exercised in a simulated browser. The full app was not run in a real browser, so please try each feature.
+
+## 11. Fixes from testing (1.21)
+
+- Clip names and sequence names are now shown as plain text, closing a script-injection hole (see `TEST_REPORT.md`).
+- The Instruments panel sits above the phone bottom bar, and shows 13 bigger keys on narrow screens.
+- Closing the Develop dialog releases keyboard focus, so Ctrl+Z works straight away.
